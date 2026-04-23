@@ -156,52 +156,77 @@ class UMinhoDSpace8Scraper:
         self.MAX_ITEMS = max_items
 
     def get_paper_info(self, url):
+        
         """
-        Given a paper URL, navigates to it and extracts metadata from the table.
+        Versão Debug: Explica passo a passo o que está a acontecer.
         """
+        # --- PASSO 1: LANDING PAGE (PDF) ---
+        print(f"      > A aceder à Landing Page: {url}")
         self.driver.get(url)
-        # Wait for the table to appear
-        self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "table.table-striped")))
-        time.sleep(self.ANGULAR_SETTLE_TIME) # Angular settle time
+        pdf_url = "N/A"
+        
+        try:
+            # Espera pelo link do PDF (bitstream)
+            wait_pdf = WebDriverWait(self.driver, 7)
+            wait_pdf.until(EC.presence_of_element_located((By.CSS_SELECTOR, "a[href*='bitstream']")))
+            links = self.driver.find_elements(By.CSS_SELECTOR, "a[href*='bitstream']")
+            for link in links:
+                href = link.get_attribute("href")
+                if href and any(term in href.lower() for term in ["download", "content", ".pdf"]):
+                    pdf_url = href
+                    print(f"        [OK] PDF encontrado: {pdf_url[:50]}...")
+                    break
+        except:
+            print("        [!] PDF não encontrado nesta página.")
 
-        # Dictionary to store the mapping we want
-        # This is our "Shopping List" - Key: what the HTML says, Value: what we want in our JSON
-        targets = {
-            "dc.title": "title",
-            "dc.date.issued": "year",
-            "dc.identifier.doi": "doi",
-            "dc.contributor.author": "authors",
-            "dc.description.abstract": "abstract"
+        # --- PASSO 2: METADADOS (/full) ---
+        full_url = url + "/full"
+        print(f"      > A mudar para Metadados: {full_url}")
+        self.driver.get(full_url)
+        
+        # Inicializamos o dicionário com o que já temos
+        data = { 
+            "title": "N/A", "year": "N/A", "doi": "N/A", 
+            "abstract": "N/A", "authors": [], "pdf_url": pdf_url 
         }
 
-        data = { "title": "N/A", "year": "N/A", "doi": "N/A", "abstract": "N/A", "authors": [] }
-
         try:
-            # Locate all rows in the metadata table
-            rows = self.driver.find_elements(By.CSS_SELECTOR, "table.table-striped tbody tr")
+            # AGORA: Espera forçada para a tabela carregar mesmo
+            wait_table = WebDriverWait(self.driver, 10)
+            wait_table.until(EC.presence_of_element_located((By.CSS_SELECTOR, "table.table-striped tbody tr")))
+            
+            # Pequena pausa extra para o Angular "pintar" os dados
+            time.sleep(1.5)
 
+            targets = {
+                "dc.title": "title",
+                "dc.date.issued": "year",
+                "dc.identifier.doi": "doi",
+                "dc.contributor.author": "authors",
+                "dc.description.abstract": "abstract"
+            }
+
+            rows = self.driver.find_elements(By.CSS_SELECTOR, "table.table-striped tbody tr")
+            found_fields = 0
+            
             for row in rows:
                 cols = row.find_elements(By.TAG_NAME, "td")
                 if len(cols) >= 2:
-                    field_label = cols[0].text.strip()
-                    field_value = cols[1].text.strip()
-
-                    if field_label in targets:
-                        key = targets[field_label]
+                    label = cols[0].text.strip()
+                    val = cols[1].text.strip()
+                    
+                    if label in targets:
+                        key = targets[label]
                         if key == "authors":
-                            data[key].append(field_value)
+                            data[key].append(val)
                         else:
-                            data[key] = field_value
-
-            # Attempt to find the document link (if available)
-            docLink = self.driver.find_elements(By.CSS_SELECTOR, "a.btn.overflow-ellipsis.mb-1[title^='Download:']")
-            if docLink:
-                data["document_link"] = docLink[0].get_attribute("href")
-            else:
-                data["document_link"] = "N/A"
+                            data[key] = val
+                        found_fields += 1
+            
+            print(f"        [OK] Extraídos {found_fields} campos de metadados.")
 
         except Exception as e:
-            print(f"Error parsing table: {e}")
+            print(f"        [ERRO] Falha crítica na tabela: {e}")
 
         return data
 
@@ -311,8 +336,7 @@ class UMinhoDSpace8Scraper:
             # Visit each paper to get the abstract and authors
             for url in paper_urls:
                 # print(f"   Opening Paper: {url}")               # Debug print
-                full_url = url + "/full"                        # add '/full' to get the full metadata view
-                paper_info = self.get_paper_info(full_url)      # get the paper info
+                paper_info = self.get_paper_info(url)     # get the paper info
                 print(f"      Title: {paper_info['title']}")    # Debug print
                 results.append(paper_info)
 
