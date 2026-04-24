@@ -1,3 +1,15 @@
+# --- Recolha de Dados ---
 selenium
+webdriver-manager
+
+# --- Processamento e Motor de Busca ---
+nltk
+scikit-learn
+
+# --- API REST  ---
+fastapi
+uvicorn
+
+# --- Testes e Qualidade (Critérios de Avaliação) ---
 pytest
 pytest-cov
