@@ -21,3 +21,6 @@ Thumbs.db
 
 # Output files
 scraper_results.json
+index_debug.json
+data/pdfs/
+data/extracted_text/

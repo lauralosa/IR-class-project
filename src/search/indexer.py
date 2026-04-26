@@ -1,5 +1,6 @@
 import json
 import math
+import os
 from src.search.processor import TextProcessor
 
 class InvertedIndex:
@@ -19,12 +20,31 @@ class InvertedIndex:
             return
 
         self.num_docs = len(data)
+        # Definimos onde estão guardados os textos extraídos dos PDFs
+        txt_folder = os.path.join("data", "extracted_text")
 
         for idx, doc in enumerate(data):
             doc_id = idx
             self.documents[doc_id] = doc
             
+            # 1. texto básico (Título + Resumo)
             full_text = f"{doc.get('title', '')} {doc.get('abstract', '')}"
+
+            # 2. NOVO: Verificar se este documento tem um ficheiro de texto integral
+            # O PDFHandler guarda como doc_0.txt, doc_1.txt, etc.
+            txt_filename = f"doc_{idx}.txt"
+            txt_path = os.path.join(txt_folder, txt_filename)
+
+            if os.path.exists(txt_path):
+                try:
+                    with open(txt_path, 'r', encoding='utf-8') as f_txt:
+                        # Lemos o conteúdo do PDF e juntamos ao título/abstract
+                        pdf_content = f_txt.read()
+                        full_text += " " + pdf_content
+                except Exception as e:
+                    print(f"Aviso: Não foi possível ler o texto integral de {txt_filename}: {e}")
+            
+            # 3. Agora processamos o texto todo (Metadados + PDF)
             tokens = self.processor.process_text(full_text, use_stemming=True)
             
             term_frequencies = {}
