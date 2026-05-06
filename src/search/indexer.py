@@ -1,6 +1,7 @@
 import json
 import math
 import os
+from datetime import datetime
 from typing import List  # NOVO: Necessário para as type hints
 from src.search.processor import TextProcessor
 
@@ -171,26 +172,125 @@ class InvertedIndex:
         return math.log10(self.num_docs / df) + 1
 
     def _add_skip_pointers(self):
-        """Implementa saltos lógicos nas listas de postings (REQ-B29)."""
-        for term, postings in self.index.items():
-            L = len(postings)
-            skip_interval = round(math.sqrt(L))
-            if L > 2 and skip_interval > 1:
-                self.skips[term] = [i for i in range(0, L, skip_interval)]
-            else:
-                self.skips[term] = []
+            """Implementa saltos lógicos nas listas de postings (REQ-B29)."""
+            for term, postings in self.index.items():
+                L = len(postings)
+                skip_interval = round(math.sqrt(L))
+                if L > 2 and skip_interval > 1:
+                    self.skips[term] = [i for i in range(0, L, skip_interval)]
+                else:
+                    self.skips[term] = []
 
-    def save_index(self, filename='inverted_index.json'):
-        """Guarda a estrutura completa para o REQ-B12."""
+    def save_index(self, filename='index.json'):
+        """
+        Guarda a estrutura completa seguindo o REQ-B12 e REQ-B30 (TF e DF).
+        """
+        # 1. Garantir que o caminho usa o storage_dir definido no projeto
         path = os.path.join(self.storage_dir, filename)
-        # Atualizamos o tamanho do vocabulário antes de gravar
+        # 2. Estruturar o vocabulário para incluir o DF (REQ-B30)
+        # Transformamos o índice simples numa estrutura rica
+        vocabulary_data = {}
+        for term, postings in self.index.items():
+            vocabulary_data[term] = {
+                "df": len(postings),      # Document Frequency: total de docs com o termo
+                "postings": postings     # Listas de [doc_id, tf] (REQ-B28)
+            }
+
+        # 3. Atualizar metadados finais
+        self.metadata['total_docs'] = self.num_docs
         self.metadata['vocab_size'] = len(self.index)
+        self.metadata['last_updated'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
+        # 4. Organizar o dicionário final para o JSON
         data_to_save = {
             'metadata': self.metadata, 
-            'index': self.index,       
-            'documents': self.documents
+            'documents': self.documents, # Metadados dos documentos (títulos, magnitudes, etc)
+            'vocabulary': vocabulary_data # O índice propriamente dito
+            
         }
         
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(data_to_save, f, indent=4)
+        # 5. Gravar no disco (usando o 'path' completo)
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(data_to_save, f, indent=4, ensure_ascii=False)
+        
+        print(f" Índice estruturado com sucesso em: {path}")
+
+    def load_index(self, filename="index.json"):
+        """
+        Carrega o índice estruturado para memória.
+        """
+        if not os.path.exists(filename):
+            print(" Ficheiro de índice não encontrado.")
+            return False
+
+        with open(filename, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        self.num_docs = data["metadata"]["total_docs"]
+        self.documents = {int(k): v for k, v in data["documents"].items()}
+        
+        # Reconstruir o índice interno
+        self.index = {}
+        for term, content in data["vocabulary"].items():
+            self.index[term] = content["postings"]
+        
+        # Restaurar metadados
+        self.metadata['reduction_strategy'] = data["metadata"].get("reduction_strategy", "stemming")
+        self.metadata['stop_words_removed'] = data["metadata"]["stop_words_removed"]
+        
+        print(f" Índice carregado: {self.num_docs} documentos.")
+        return True
+
+    def update_index(self, new_json_path):
+        """REQ-B31: Adiciona novos documentos ao índice de forma robusta."""
+        if not self.documents:
+            self.load_index()
+
+        with open(new_json_path, 'r', encoding='utf-8') as f:
+            new_data = json.load(f)
+
+        next_id = max(self.documents.keys()) + 1 if self.documents else 0
+        docs_added = 0 # Contador para sabermos se vale a pena gravar no fim
+
+        for doc in new_data:
+            if any(d['title'] == doc['title'] for d in self.documents.values()):
+                continue
+            
+            self.documents[next_id] = doc
+            text = f"{doc.get('title', '')} {doc.get('abstract', '')}"
+            
+            # 1. Atenção aos parâmetros: usa a estratégia guardada nos metadados
+            strategy = self.metadata.get('reduction_strategy', 'stemming')
+            tokens = self.processor.process_text(
+                text, 
+                use_stemming=(strategy == 'stemming'),
+                use_lemmatization=(strategy == 'lemmatization')
+            )
+            
+            term_freqs = {}
+            for token in tokens:
+                term_freqs[token] = term_freqs.get(token, 0) + 1
+                
+            for term, tf in term_freqs.items():
+                if term not in self.index:
+                    self.index[term] = []
+                self.index[term].append([next_id, tf])
+            
+            next_id += 1
+            docs_added += 1
+
+        
+        if docs_added > 0:
+            # A. Atualizar o contador global
+            self.num_docs = len(self.documents)
+            
+            # B. Recalcular Magnitudes (REQ-B37)
+            # Sem isto, o score dos novos documentos será zero ou da erro
+            self._calculate_doc_magnitudes() 
+            
+            # C. Persistir no disco (REQ-B12)
+            self.save_index()
+            
+            print(f"Sucesso: {docs_added} novos documentos indexados. Total: {self.num_docs}")
+        else:
+            print("ℹ️ Nenhum documento novo para adicionar.")
