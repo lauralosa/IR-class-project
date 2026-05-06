@@ -47,3 +47,8 @@ class TextProcessor:
             tokens = [self.stemmer.stem(t) for t in tokens]
 
         return tokens
+    
+    def add_custom_stop_words(self, words_list):
+        """REQ-B20: Permite configurar stop words adicionais específicas do domínio."""
+        if isinstance(words_list, list):
+            self.stop_words.update([w.lower() for w in words_list])
