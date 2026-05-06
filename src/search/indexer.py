@@ -18,7 +18,12 @@ class InvertedIndex:
         # 1. Limpar sempre o índice antes de começar (Garante o isolamento do teste)
         self.index = {}
         self.documents = {}
+
         """Lê os metadados e o texto integral para construir o índice."""
+        # REQ-B10: Garantir que a pasta de armazenamento existe
+        processed_dir = os.path.join("data", "processed_text")
+        os.makedirs(processed_dir, exist_ok=True) # Cria a pasta se não existir
+
         try:
             with open(json_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
@@ -28,9 +33,9 @@ class InvertedIndex:
 
         self.num_docs = len(data)
         txt_folder = os.path.join("data", "extracted_text")
-
-        # Construímos o índice de autores ao mesmo tempo (REQ-B11)
         self._build_author_index(data)
+
+        
 
         for idx, doc in enumerate(data):
             doc_id = idx
@@ -47,11 +52,23 @@ class InvertedIndex:
                 try:
                     with open(txt_path, 'r', encoding='utf-8') as f_txt:
                         full_text += " " + f_txt.read()
+
+
                 except Exception as e:
                     print(f"Aviso: Erro ao ler {txt_filename}: {e}")
             
             # Processamento NLTK (REQ-B13)
             tokens = self.processor.process_text(full_text, use_stemming=True)
+
+            # --- Persistência ---
+            processed_path = os.path.join(processed_dir, f"doc_{doc_id}.json")
+            with open(processed_path, 'w', encoding='utf-8') as f_out:
+                json.dump(tokens, f_out) # Guardamos os tokens/stems no disco
+            
+            # Atualizamos o documento com o caminho da versão processada
+            doc['processed_text_path'] = processed_path
+            self.documents[doc_id] = doc
+            # ------------------------------------------
             
             # Cálculo de Term Frequency (TF) local (REQ-B32)
             term_frequencies = {}
@@ -68,6 +85,8 @@ class InvertedIndex:
             self.index[term].sort(key=lambda x: x[0])
 
         self._add_skip_pointers()
+        # REQ-B12: No final, guardamos o índice invertido completo também
+        self.save_index()
         print(f"Índice criado: {len(self.index)} termos, {self.num_docs} documentos.")
     
     

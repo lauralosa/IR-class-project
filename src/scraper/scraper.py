@@ -187,11 +187,12 @@ class UMinhoDSpace8Scraper:
         # Inicializamos o dicionário com o que já temos
         data = { 
             "title": "N/A", "year": "N/A", "doi": "N/A", 
-            "abstract": "N/A", "authors": [], "pdf_url": pdf_url 
+            "abstract": "N/A", "authors": [], "keywords": [], 
+            "affiliations": [], "pdf_url": pdf_url 
         }
 
         try:
-            # AGORA: Espera forçada para a tabela carregar mesmo
+            # Espera forçada para a tabela carregar 
             wait_table = WebDriverWait(self.driver, 10)
             wait_table.until(EC.presence_of_element_located((By.CSS_SELECTOR, "table.table-striped tbody tr")))
             
@@ -199,11 +200,15 @@ class UMinhoDSpace8Scraper:
             time.sleep(1.5)
 
             targets = {
-                "dc.title": "title",
-                "dc.date.issued": "year",
-                "dc.identifier.doi": "doi",
-                "dc.contributor.author": "authors",
-                "dc.description.abstract": "abstract"
+            "dc.title": "title",
+            "dc.date.issued": "year",
+            "dc.identifier.doi": "doi",
+            "dc.contributor.author": "authors",
+            "dc.description.abstract": "abstract",
+            "dc.subject": "keywords",
+            "sdum.uoei": "affiliations", 
+            "dc.contributor.affiliation": "affiliations",
+            "thesis.degree.grantor": "affiliations"
             }
 
             rows = self.driver.find_elements(By.CSS_SELECTOR, "table.table-striped tbody tr")
@@ -217,7 +222,8 @@ class UMinhoDSpace8Scraper:
                     
                     if label in targets:
                         key = targets[label]
-                        if key == "authors":
+                        # Tratamos keywords, authors e affiliations como listas
+                        if key in ["authors", "keywords", "affiliations"]:
                             data[key].append(val)
                         else:
                             data[key] = val
