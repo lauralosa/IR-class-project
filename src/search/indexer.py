@@ -6,7 +6,7 @@ from src.search.processor import TextProcessor
 
 class InvertedIndex:
     def __init__(self, storage_dir="data"):
-        self.index = {}      # {termo: [[doc_id, freq], ...]}
+        self.index = {}      
         self.skips = {}      
         self.documents = {}  
         self.processor = TextProcessor()
@@ -14,6 +14,11 @@ class InvertedIndex:
         self.author_index = {}
         self.storage_dir = storage_dir 
         self.doc_magnitudes = {}
+        self.metadata = {
+            'reduction_strategy': None,
+            'indexed_at': None,
+            'vocab_size': 0
+        }
 
     def _clean_full_text(self, text):
         """Heurística para remover bibliografia e índices."""
@@ -28,10 +33,11 @@ class InvertedIndex:
                 return text[:idx]
         return text
 
-    def create_index(self, json_path):
+    def create_index(self, json_path,strategy = "stemming"):
         # 1. Limpar sempre o índice antes de começar (Garante o isolamento do teste)
         self.index = {}
         self.documents = {}
+        self.metadata['reduction_strategy'] = strategy
 
         """Lê os metadados e o texto integral para construir o índice."""
         # REQ-B10: Garantir que a pasta de armazenamento existe
@@ -62,6 +68,8 @@ class InvertedIndex:
             txt_filename = f"doc_{idx}.txt"
             txt_path = os.path.join(txt_folder, txt_filename)
 
+
+
             if os.path.exists(txt_path):
                 try:
                     with open(txt_path, 'r', encoding='utf-8') as f_txt:
@@ -74,7 +82,12 @@ class InvertedIndex:
                     print(f"Aviso: Erro ao ler {txt_filename}: {e}")
             
             # Processamento NLTK (REQ-B13)
-            tokens = self.processor.process_text(full_text, use_stemming=True)
+            if strategy == "lemmatization":
+                # REQ-B17: Usa Lematização via WordNet
+                tokens = self.processor.process_text(full_text, use_stemming=False, use_lemmatization=True)
+            else:
+                # REQ-B16: Usa Stemming de Porter (Default)
+                tokens = self.processor.process_text(full_text, use_stemming=True, use_lemmatization=False)
 
             # --- Persistência ---
             processed_path = os.path.join(processed_dir, f"doc_{doc_id}.json")
@@ -169,11 +182,14 @@ class InvertedIndex:
     def save_index(self, filename='inverted_index.json'):
         """Guarda a estrutura completa para o REQ-B12."""
         path = os.path.join(self.storage_dir, filename)
+        # Atualizamos o tamanho do vocabulário antes de gravar
+        self.metadata['vocab_size'] = len(self.index)
+        
         data_to_save = {
-            'index': self.index,
-            'skips': self.skips,
-            'documents': self.documents,
-            'num_docs': self.num_docs
+            'metadata': self.metadata, 
+            'index': self.index,       
+            'documents': self.documents
         }
-        with open(path, 'w', encoding='utf-8') as f:
+        
+        with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data_to_save, f, indent=4)
