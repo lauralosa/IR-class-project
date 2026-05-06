@@ -12,7 +12,21 @@ class InvertedIndex:
         self.processor = TextProcessor()
         self.num_docs = 0    
         self.author_index = {}
-        self.storage_dir = storage_dir # CORREÇÃO: Definir a pasta de storage
+        self.storage_dir = storage_dir 
+        self.doc_magnitudes = {}
+
+    def _clean_full_text(self, text):
+        """Heurística para remover bibliografia e índices."""
+        markers = ["referências", "references", "bibliografia", "bibliography"]
+        temp_text = text.lower()
+        
+        for marker in markers:
+            if marker in temp_text:
+                # Encontra a última ocorrência do marcador para evitar cortes precoces
+                idx = temp_text.rfind(marker)
+                # Corta o texto, mantendo apenas o que está antes da bibliografia
+                return text[:idx]
+        return text
 
     def create_index(self, json_path):
         # 1. Limpar sempre o índice antes de começar (Garante o isolamento do teste)
@@ -51,7 +65,9 @@ class InvertedIndex:
             if os.path.exists(txt_path):
                 try:
                     with open(txt_path, 'r', encoding='utf-8') as f_txt:
-                        full_text += " " + f_txt.read()
+                        raw_pdf_text = f_txt.read()
+                        cleaned_pdf_text = self._clean_full_text(raw_pdf_text) 
+                        full_text += " " + cleaned_pdf_text
 
 
                 except Exception as e:
@@ -88,6 +104,24 @@ class InvertedIndex:
         # REQ-B12: No final, guardamos o índice invertido completo também
         self.save_index()
         print(f"Índice criado: {len(self.index)} termos, {self.num_docs} documentos.")
+
+    def _calculate_doc_magnitudes(self):
+        """Calcula a norma L2 para cada documento (REQ-B37)."""
+        # Dicionário temporário para acumular a soma dos quadrados: sum(w^2)
+        sums_of_squares = {doc_id: 0.0 for doc_id in self.documents.keys()}
+
+        for term, postings in self.index.items():
+            idf = self.get_idf(term) # Usa a tua função de IDF com suavização
+            
+            for doc_id, tf in postings:
+                # Peso w = tf * idf (conforme REQ-B34)
+                weight = tf * idf
+                sums_of_squares[doc_id] += weight ** 2
+
+        # A magnitude final é a raiz quadrada da soma
+        import math
+        for doc_id, total_sum in sums_of_squares.items():
+            self.doc_magnitudes[doc_id] = math.sqrt(total_sum)
     
     
 
