@@ -33,11 +33,12 @@ class InvertedIndex:
                 return text[:idx]
         return text
 
-    def create_index(self, json_path,strategy = "stemming"):
+    def create_index(self, json_path,strategy = "stemming",remove_stopwords=True):
         # 1. Limpar sempre o índice antes de começar (Garante o isolamento do teste)
         self.index = {}
         self.documents = {}
         self.metadata['reduction_strategy'] = strategy
+        self.metadata['stop_words_removed'] = remove_stopwords
 
         """Lê os metadados e o texto integral para construir o índice."""
         # REQ-B10: Garantir que a pasta de armazenamento existe
@@ -84,10 +85,10 @@ class InvertedIndex:
             # Processamento NLTK (REQ-B13)
             if strategy == "lemmatization":
                 # REQ-B17: Usa Lematização via WordNet
-                tokens = self.processor.process_text(full_text, use_stemming=False, use_lemmatization=True)
+                tokens = self.processor.process_text(full_text, use_stemming=False, use_lemmatization=True, remove_stopwords=True)
             else:
                 # REQ-B16: Usa Stemming de Porter (Default)
-                tokens = self.processor.process_text(full_text, use_stemming=True, use_lemmatization=False)
+                tokens = self.processor.process_text(full_text, use_stemming=True, use_lemmatization=False, remove_stopwords=True)
 
             # --- Persistência ---
             processed_path = os.path.join(processed_dir, f"doc_{doc_id}.json")
@@ -114,7 +115,7 @@ class InvertedIndex:
             self.index[term].sort(key=lambda x: x[0])
 
         self._add_skip_pointers()
-        # REQ-B12: No final, guardamos o índice invertido completo também
+        self._calculate_doc_magnitudes()
         self.save_index()
         print(f"Índice criado: {len(self.index)} termos, {self.num_docs} documentos.")
 
