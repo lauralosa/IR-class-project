@@ -9,6 +9,16 @@ class QueryEngine:
         self.index_obj = index_obj
         self.processor = TextProcessor()
 
+    def get_idf(self, term):
+        """REQ-B33: Calcula o Inverse Document Frequency (IDF)."""
+        # Vamos buscar o Document Frequency (df) ao índice
+        df = len(self.index_obj.index.get(term, []))
+        if df == 0:
+            return 0.0
+        
+        # Fórmula padrão: log10(N/df)
+        return math.log10(self.index_obj.num_docs / df)
+
     def ranked_search(self, query_str, use_sklearn=False):
         """
         Módulo 3.2.4 e 3.2.5: Pesquisa por relevância.
@@ -63,34 +73,34 @@ class QueryEngine:
         return sorted(final_results, key=lambda x: x[1], reverse=True)
 
     def _ranked_search_sklearn(self, query_str):
-        """Integração com sklearn e Similaridade do Cosseno (Requisito 3.2.4)."""
-        doc_ids = list(self.index_obj.documents.keys())
-        if not doc_ids:
-            return []
+        """REQ-B35: Integração com Scikit-Learn para comparação."""
+        doc_ids = sorted(self.index_obj.documents.keys())
+        if not doc_ids: return []
 
-        # Criar o corpus com os documentos atuais
-        corpus = []
-        for d_id in doc_ids:
-            doc = self.index_obj.documents[d_id]
-            corpus.append(f"{doc.get('title', '')} {doc.get('abstract', '')}")
+        # Reconstruir corpus para o sklearn
+        corpus = [
+            f"{self.index_obj.documents[d].get('title', '')} {self.index_obj.documents[d].get('abstract', '')}"
+            for d in doc_ids
+        ]
 
-        # Vectorizer usa o nosso processador para manter a consistência (stemming/stopwords)
+        # REQ-B35: Vectorizer usa o NOSSO processor para manter consistência total
         vectorizer = TfidfVectorizer(analyzer=lambda text: self.processor.process_text(text, use_stemming=True))
         
         try:
             tfidf_matrix = vectorizer.fit_transform(corpus)
             query_vec = vectorizer.transform([query_str])
             
-            # Cálculo da Similaridade do Cosseno
+            # Similaridade do Cosseno
             cosine_sim = cosine_similarity(query_vec, tfidf_matrix).flatten()
             
             results = []
             for i, score in enumerate(cosine_sim):
                 if score > 0:
-                    results.append((doc_ids[i], float(score)))
+                    results.append((doc_ids[i], round(float(score), 4)))
             
             return sorted(results, key=lambda x: x[1], reverse=True)
-        except:
+        except Exception as e:
+            print(f"Erro no sklearn: {e}")
             return []
 
     def get_incidence_matrix(self):
