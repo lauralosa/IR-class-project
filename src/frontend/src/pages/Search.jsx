@@ -8,6 +8,9 @@ export default function Search() {
   const [removeStopWords, setRemoveStopWords] = useState(true); // Começa a remover stop words
   const [language, setLanguage] = useState('PT'); // Começa em Português
   const [algorithm, setAlgorithm] = useState('custom'); // Começa com o TF-IDF da Laura
+  // Estados para o âmbito da pesquisa
+  const [searchTarget, setSearchTarget] = useState('all');
+  const [researchArea, setResearchArea] = useState('all');
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -49,12 +52,64 @@ export default function Search() {
           <span style={{ background: '#f3f4f6', color: '#4b5563', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', border: '1px solid #e5e7eb' }}>
             Algoritmo: <strong>{algorithm === 'custom' ? 'TF-IDF Custom' : algorithm === 'sklearn' ? 'TF-IDF Sklearn' : 'Booleano'}</strong>
           </span>
+          {researchArea !== 'all' && (
+            <span style={{ background: '#eff6ff', color: '#1d4ed8', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', border: '1px solid #bfdbfe' }}>
+              Área: <strong>{researchArea === 'health' ? 'Saúde' : researchArea === 'engineering' ? 'Engenharia' : researchArea === 'humanities' ? 'Humanidades' : 'Ciências Exatas'}</strong>
+            </span>
+          )}
+          {searchTarget !== 'all' && (
+            <span style={{ background: '#eff6ff', color: '#1d4ed8', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', border: '1px solid #bfdbfe' }}>
+              Alvo: <strong>{searchTarget === 'title' ? 'Títulos' : searchTarget === 'abstract' ? 'Resumos' : 'Documento Completo'}</strong>
+            </span>
+          )}
         </div>
       </div>
 
       <div className="layout-grid">
         <aside className="sidebar">
-  
+          {/* SECÇÃO: Âmbito da Pesquisa*/}
+          <div className="sidebar-section">
+            <h3>Âmbito da Pesquisa</h3>
+            
+            <div className="filter-group">
+              <label className="filter-label">Área de Investigação:</label>
+              <select 
+                className="filter-select" 
+                value={researchArea} 
+                onChange={(e) => setResearchArea(e.target.value)}
+              >
+                <option value="all">Todas as Áreas</option>
+                <option value="health">Ciências da Saúde</option>
+                <option value="engineering">Engenharia</option>
+                <option value="humanities">Humanidades</option>
+                <option value="sciences">Ciências Exatas</option>
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label className="filter-label">Pesquisar em:</label>
+              <div className="radio-options vertical">
+                <label>
+                  <input type="radio" value="all" checked={searchTarget === 'all'} onChange={(e) => setSearchTarget(e.target.value)} /> 
+                  Todos os campos
+                </label>
+                <label>
+                  <input type="radio" value="title" checked={searchTarget === 'title'} onChange={(e) => setSearchTarget(e.target.value)} /> 
+                  Apenas Títulos
+                </label>
+                <label>
+                  <input type="radio" value="abstract" checked={searchTarget === 'abstract'} onChange={(e) => setSearchTarget(e.target.value)} /> 
+                  Apenas Resumos
+                </label>
+                <label>
+                  <input type="radio" value="fulltext" checked={searchTarget === 'fulltext'} onChange={(e) => setSearchTarget(e.target.value)} /> 
+                  Documento Completo
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <hr className="sidebar-divider" />
           {/* SECÇÃO 1: Processamento de Texto */}
           <div className="sidebar-section">
             <h3>Processamento de Texto</h3>
