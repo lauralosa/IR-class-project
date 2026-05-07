@@ -134,9 +134,17 @@ class InvertedIndex:
                 sums_of_squares[doc_id] += weight ** 2
 
         # A magnitude final é a raiz quadrada da soma
-        import math
+        
+        # 3. Calcular a raiz quadrada e GUARDAR no sítio certo
         for doc_id, total_sum in sums_of_squares.items():
-            self.doc_magnitudes[doc_id] = math.sqrt(total_sum)
+            magnitude = math.sqrt(total_sum)
+            
+            # CRÍTICO: Guardar dentro do dicionário documents para o QueryEngine ler!
+            if doc_id in self.documents:
+                self.documents[doc_id]['magnitude'] = magnitude
+            
+            # Também mantemos no doc_magnitudes se precisares para outros métodos
+            self.doc_magnitudes[doc_id] = magnitude
     
     
 

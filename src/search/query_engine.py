@@ -18,8 +18,17 @@ class QueryEngine:
         
         # Fórmula padrão: log10(N/df)
         return math.log10(self.index_obj.num_docs / df)
+    
+    def _get_weight(self, tf, term, scheme="tfidf"):
+        """REQ-B39: Suporta diferentes esquemas de pesagem."""
+        if scheme == "binary":
+            return 1.0 if tf > 0 else 0.0
+        elif scheme == "frequency":
+            return float(tf)
+        else: # Default: tfidf
+            return tf * self.get_idf(term)
 
-    def ranked_search(self, query_str, use_sklearn=False):
+    def ranked_search(self, query_str, use_sklearn=False, weighting_scheme="tfidf"):
         """
         Módulo 3.2.4 e 3.2.5: Pesquisa por relevância.
         Decide entre a nossa implementação ou o scikit-learn.
@@ -27,39 +36,46 @@ class QueryEngine:
         if use_sklearn:
             return self._ranked_search_sklearn(query_str)
         else:
-            return self._ranked_search_custom(query_str)
+            return self._ranked_search_custom(query_str, weighting_scheme)
 
-    def _ranked_search_custom(self, query_str):
+    def _ranked_search_custom(self, query_str, weighting_scheme="tfidf"):
         """Implementação VSM (Vector Space Model) com Normalização."""
         query_terms = self.processor.process_text(query_str, use_stemming=True)
         if not query_terms: return []
 
         scores = {}
-        # 1. Calcular pesos da Query (TF-IDF simples para a query)
+        # 1. Calcular pesos da Query
         query_weights = {}
-        for term in query_terms:
-            query_weights[term] = query_weights.get(term, 0) + 1
-        
-        for term, q_tf in query_weights.items():
-            idf = self.index_obj.get_idf(term)
-            query_weights[term] = q_tf * idf
+        for term in set(query_terms): # Usar set() para não repetir termos
+            if weighting_scheme == "tfidf":
+                tf_q = query_terms.count(term)
+                idf = self.index_obj.get_idf(term)
+                query_weights[term] = tf_q * idf
+            else: # BINARY (REQ-B39)
+                query_weights[term] = 1.0
 
         # 2. Acumular Dot Product
         for term, q_weight in query_weights.items():
             postings, _ = self.index_obj.get_postings(term)
             for doc_id, doc_tf in postings:
-                # w_td = doc_tf * idf
-                scores[doc_id] = scores.get(doc_id, 0) + (q_weight * (doc_tf * idf))
+                if weighting_scheme == "tfidf":
+                    # Peso real TF-IDF
+                    doc_weight = doc_tf * self.index_obj.get_idf(term)
+                else:
+                    # Peso binário (REQ-B39)
+                    doc_weight = 1.0
+                
+                scores[doc_id] = scores.get(doc_id, 0) + (q_weight * doc_weight)
 
-        # 3. Normalização (Requisito Crítico 3.2.4 e 3.2.5)
+        # 3. Normalização 
         
         # 3.1 Calcular a magnitude da Query: sqrt(sum(w_t,q^2))
         query_magnitude = math.sqrt(sum(weight**2 for weight in query_weights.values()))
 
         final_results = []
         for doc_id, dot_product in scores.items():
-            # 3.2 Obter a magnitude do documento pré-calculada no indexador
-            doc_magnitude = getattr(self.index_obj, 'doc_magnitudes', {}).get(doc_id, 1.0)
+            # Vamos buscar a magnitude que guardaste no indexador
+            doc_magnitude = self.index_obj.documents[doc_id].get('magnitude', 1.0)
             
             # 3.3 Cálculo final da Similaridade do Cosseno
             if doc_magnitude > 0 and query_magnitude > 0:
@@ -224,3 +240,45 @@ class QueryEngine:
     def difference(self, p1, p2):
         ids2 = {p[0] for p in p2}
         return [p[0] for p in p1 if p[0] not in ids2]
+    
+    def get_document_similarity_matrix(self):
+        """REQ-B40: Gera uma matriz de similaridade N x N entre todos os documentos."""
+        num_docs = self.index_obj.num_docs
+        matrix = np.zeros((num_docs, num_docs))
+        
+        print(f" A gerar matriz de similaridade para {num_docs} documentos...")
+        
+        # 1. Obter todos os vetores de documentos (esparsos)
+        doc_vectors = {}
+        for term, postings in self.index_obj.index.items():
+            idf = self.get_idf(term)
+            for doc_id, tf in postings:
+                if doc_id not in doc_vectors: doc_vectors[doc_id] = {}
+                doc_vectors[doc_id][term] = tf * idf
+
+        # 2. Calcular Cosseno entre cada par (i, j)
+        for i in range(num_docs):
+            for j in range(i, num_docs): # Matriz é simétrica, calculamos apenas metade
+                if i == j:
+                    matrix[i, j] = 1.0
+                    continue
+                
+                # Produto escalar entre doc i e doc j
+                dot_product = 0
+                vec_i = doc_vectors.get(i, {})
+                vec_j = doc_vectors.get(j, {})
+                
+                # Iterar sobre os termos do documento mais pequeno para eficiência
+                if len(vec_i) > len(vec_j): vec_i, vec_j = vec_j, vec_i
+                
+                for term, weight in vec_i.items():
+                    if term in vec_j:
+                        dot_product += weight * vec_j[term]
+                
+                mag_i = self.index_obj.documents[i].get('magnitude', 1.0)
+                mag_j = self.index_obj.documents[j].get('magnitude', 1.0)
+                
+                sim = dot_product / (mag_i * mag_j) if (mag_i * mag_j) > 0 else 0
+                matrix[i, j] = matrix[j, i] = round(float(sim), 4)
+                
+        return matrix
