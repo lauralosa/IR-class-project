@@ -4,6 +4,8 @@ import os
 from datetime import datetime
 from typing import List  # NOVO: Necessário para as type hints
 from src.search.processor import TextProcessor
+import time
+import psutil
 
 class InvertedIndex:
     def __init__(self, storage_dir="data"):
@@ -34,7 +36,13 @@ class InvertedIndex:
                 return text[:idx]
         return text
 
-    def create_index(self, json_path,strategy = "stemming",remove_stopwords=True):
+    def create_index(self, json_path,strategy = "stemming",remove_stopwords=True, batch_size=50):
+        # --- [INÍCIO B56 & B58] MONITORIZAÇÃO ---
+        process = psutil.Process(os.getpid())
+        mem_antes = process.memory_info().rss / (1024 * 1024) # MB
+        tempo_inicio = time.perf_counter()
+        # ---------------------------------------
+
         # 1. Limpar sempre o índice antes de começar (Garante o isolamento do teste)
         self.index = {}
         self.documents = {}
@@ -57,62 +65,68 @@ class InvertedIndex:
         txt_folder = os.path.join("data", "extracted_text")
         self._build_author_index(data)
 
-        
+        # --- [B59] PROCESSAMENTO POR LOTES (BATCH PROCESSING) ---
+        print(f" A processar {self.num_docs} documentos em lotes de {batch_size}...")
 
-        for idx, doc in enumerate(data):
-            doc_id = idx
-            self.documents[doc_id] = doc
-            
-            # Texto básico
-            full_text = f"{doc.get('title', '')} {doc.get('abstract', '')}"
+        for i in range(0, self.num_docs, batch_size):
+            lote = data[i : i + batch_size]
 
-            # REQ-B10: Integrar texto integral do PDF
-            txt_filename = f"doc_{idx}.txt"
-            txt_path = os.path.join(txt_folder, txt_filename)
+            for sub_idx, doc in enumerate(lote):
+                doc_id = i + sub_idx
+                self.documents[doc_id] = doc
+                
+                # Texto básico
+                full_text = f"{doc.get('title', '')} {doc.get('abstract', '')}"
 
-
-
-            if os.path.exists(txt_path):
-                try:
-                    with open(txt_path, 'r', encoding='utf-8') as f_txt:
-                        raw_pdf_text = f_txt.read()
-                        cleaned_pdf_text = self._clean_full_text(raw_pdf_text) 
-                        full_text += " " + cleaned_pdf_text
+                # REQ-B10: Integrar texto integral do PDF
+                txt_filename = f"doc_{doc_id}.txt"
+                txt_path = os.path.join(txt_folder, txt_filename)
 
 
-                except Exception as e:
-                    print(f"Aviso: Erro ao ler {txt_filename}: {e}")
-            
-            # Processamento NLTK (REQ-B13)
-            if strategy == "lemmatization":
-                # REQ-B17: Usa Lematização via WordNet
-                tokens = self.processor.process_text(full_text, use_stemming=False, use_lemmatization=True, remove_stopwords=True)
-            else:
-                # REQ-B16: Usa Stemming de Porter (Default)
-                tokens = self.processor.process_text(full_text, use_stemming=True, use_lemmatization=False, remove_stopwords=True)
 
-            # --- Persistência ---
-            processed_path = os.path.join(processed_dir, f"doc_{doc_id}.json")
-            with open(processed_path, 'w', encoding='utf-8') as f_out:
-                json.dump(tokens, f_out) # Guardamos os tokens/stems no disco
-            
-            # Atualizamos o documento com o caminho da versão processada
-            doc['processed_text_path'] = processed_path
-            self.documents[doc_id] = doc
-            # ------------------------------------------
-            
-            # REQ-B48: Guardar posições para permitir Phrase Queries
-            term_data = {} # Vamos guardar as posições de cada token
-            for pos, token in enumerate(tokens):
-                if token not in term_data:
-                    term_data[token] = []
-                term_data[token].append(pos)
+                if os.path.exists(txt_path):
+                    try:
+                        with open(txt_path, 'r', encoding='utf-8') as f_txt:
+                            raw_pdf_text = f_txt.read()
+                            cleaned_pdf_text = self._clean_full_text(raw_pdf_text) 
+                            full_text += " " + cleaned_pdf_text
 
-            for token, positions in term_data.items():
-                if token not in self.index:
-                    self.index[token] = []
-                # Agora guardamos a lista de posições em vez de um número fixo
-                self.index[token].append([doc_id, positions])
+
+                    except Exception as e:
+                        print(f"Aviso: Erro ao ler {txt_filename}: {e}")
+                
+                # Processamento NLTK (REQ-B13)
+                if strategy == "lemmatization":
+                    # REQ-B17: Usa Lematização via WordNet
+                    tokens = self.processor.process_text(full_text, use_stemming=False, use_lemmatization=True, remove_stopwords=True)
+                else:
+                    # REQ-B16: Usa Stemming de Porter (Default)
+                    tokens = self.processor.process_text(full_text, use_stemming=True, use_lemmatization=False, remove_stopwords=True)
+
+                # --- Persistência ---
+                processed_path = os.path.join(processed_dir, f"doc_{doc_id}.json")
+                with open(processed_path, 'w', encoding='utf-8') as f_out:
+                    json.dump(tokens, f_out) # Guardamos os tokens/stems no disco
+                
+                # Atualizamos o documento com o caminho da versão processada
+                doc['processed_text_path'] = processed_path
+                self.documents[doc_id] = doc
+                # ------------------------------------------
+                
+                # REQ-B48: Guardar posições para permitir Phrase Queries
+                term_data = {} # Vamos guardar as posições de cada token
+                for pos, token in enumerate(tokens):
+                    if token not in term_data:
+                        term_data[token] = []
+                    term_data[token].append(pos)
+
+                for token, positions in term_data.items():
+                    if token not in self.index:
+                        self.index[token] = []
+                    # Agora guardamos a lista de posições em vez de um número fixo
+                    self.index[token].append([doc_id, positions])
+
+            print(f" Lote concluído: {min(i + batch_size, self.num_docs)}/{self.num_docs}")
         
         # Ordenar postings por doc_id para permitir Skip Pointers (REQ-B29)
         for term in self.index:
@@ -121,7 +135,26 @@ class InvertedIndex:
         self._add_skip_pointers()
         self._calculate_doc_magnitudes()
         self.save_index()
-        print(f"Índice criado: {len(self.index)} termos, {self.num_docs} documentos.")
+        # --- [FIM B56 & B58] CÁLCULO DE MÉTRICAS ---
+        tempo_fim = time.perf_counter()
+        mem_depois = process.memory_info().rss / (1024 * 1024) # MB
+        
+        tempo_total = tempo_fim - tempo_inicio
+        mem_consumida = mem_depois - mem_antes
+
+        # Guardar nos metadados para o REQ-B12
+        self.metadata['performance'] = {
+            'indexing_time_sec': round(tempo_total, 4),
+            'memory_usage_mb': round(mem_consumida, 2),
+            'batch_size': batch_size
+        }
+
+        print("\n" + "="*40)
+        print(f" RELATÓRIO DE PERFORMANCE ({strategy.upper()})")
+        print(f" Tempo: {tempo_total:.4f} segundos")
+        print(f" RAM Consumida: {mem_consumida:.2f} MB")
+        print(f" Vocabulário: {len(self.index)} termos")
+        print("="*40 + "\n")
 
     def _calculate_doc_magnitudes(self):
         """Calcula a norma L2 para cada documento (REQ-B37)."""
