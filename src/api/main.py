@@ -37,7 +37,7 @@ def home():
     }
 
 @app.get("/search")
-def search(q: str, method: str = "custom", format: str = "json"):
+def search(q: str, method: str = "custom",scheme: str = "ltc", format: str = "json"):
     """
     REQ-B49: Ranked results com scores
     REQ-B50: Snippets de texto
@@ -45,7 +45,7 @@ def search(q: str, method: str = "custom", format: str = "json"):
     REQ-B52: JSON/XML
     """
     use_sklearn = (method.lower() == "sklearn")
-    results = engine.ranked_search(q, use_sklearn=use_sklearn)
+    results = engine.ranked_search(q, use_sklearn=use_sklearn, weighting_scheme=scheme)
     
     query_stems = engine.processor.process_text(q)
     output = []

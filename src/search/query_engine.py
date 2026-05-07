@@ -32,10 +32,10 @@ class QueryEngine:
         else: # Default: tfidf
             return tf * self.get_idf(term)
 
-    def ranked_search(self, query_str, use_sklearn=False, weighting_scheme="tfidf"):
+    def ranked_search(self, query_str, use_sklearn=False, weighting_scheme="ltc"):
         """
-        Módulo 3.2.4 e 3.2.5: Pesquisa por relevância.
-        Decide entre a nossa implementação ou o scikit-learn.
+        REQ-B37 / REQ-F20: Pesquisa por relevância com suporte a esquemas SMART.
+        O weighting_scheme recebe strings como 'ltc', 'lnc', 'nnn'.
         """
         if use_sklearn:
             return self._ranked_search_sklearn(query_str)
@@ -43,34 +43,51 @@ class QueryEngine:
             return self._ranked_search_custom(query_str, weighting_scheme)
 
     def _ranked_search_custom(self, query_str, weighting_scheme="tfidf"):
-        """Implementação VSM (Vector Space Model) com Normalização."""
+        """Implementação VSM (Vector Space Model) com suporte a esquemas SMART.
+        Default 'ltc': log tf, idf, cosine normalization."""
+        # 0. Mapeamento para retrocompatibilidade (se vier "tfidf" ou "binary")
+        if weighting_scheme == "tfidf": weighting_scheme = "ltc"
+        elif weighting_scheme == "binary": weighting_scheme = "nnn"
+        
+        # Extrair os componentes do esquema (ex: ltc -> l, t, c)
+        tf_type = weighting_scheme[0].lower()
+        df_type = weighting_scheme[1].lower()
+        norm_type = weighting_scheme[2].lower()
+
         query_terms = self.processor.process_text(query_str, use_stemming=True)
         if not query_terms: return []
+        
 
         scores = {}
         # 1. Calcular pesos da Query
         query_weights = {}
         for term in set(query_terms): # Usar set() para não repetir termos
-            if weighting_scheme == "tfidf":
-                tf_q = query_terms.count(term)
-                idf = self.index_obj.get_idf(term)
-                query_weights[term] = tf_q * idf
-            else: # BINARY (REQ-B39)
-                query_weights[term] = 1.0
+            raw_tf_q = query_terms.count(term)
+        
+            # Componente TF (l ou n)
+            tf_q = (1 + math.log10(raw_tf_q)) if tf_type == 'l' and raw_tf_q > 0 else raw_tf_q
+            
+            # Componente DF/IDF (t ou n)
+            idf = self.index_obj.get_idf(term) if df_type == 't' else 1.0
+            
+            query_weights[term] = tf_q * idf
 
         # 2. Acumular Dot Product
         for term, q_weight in query_weights.items():
             postings, _ = self.index_obj.get_postings(term)
             for posting in postings:
-                if weighting_scheme == "tfidf":
-                    doc_id = posting[0]
-                    positions = posting[1]
-                    doc_tf = len(positions) # Extrair a contagem a partir das posições
-                    # Peso real TF-IDF
-                    doc_weight = doc_tf * self.index_obj.get_idf(term)
-                else:
-                    # Peso binário (REQ-B39)
-                    doc_weight = 1.0
+                doc_id = posting[0]
+                positions = posting[1]
+                raw_tf_d = len(positions)
+                
+                # Componente TF do Documento (l ou n)
+                tf_d = (1 + math.log10(raw_tf_d)) if tf_type == 'l' and raw_tf_d > 0 else raw_tf_d
+                
+                # Componente IDF do Documento (t ou n)
+                # Nota: O IDF é aplicado no documento se a 2ª letra for 't'
+                doc_idf = self.index_obj.get_idf(term) if df_type == 't' else 1.0
+                
+                doc_weight = tf_d * doc_idf
                 
                 scores[doc_id] = scores.get(doc_id, 0) + (q_weight * doc_weight)
 
@@ -81,15 +98,19 @@ class QueryEngine:
 
         final_results = []
         for doc_id, dot_product in scores.items():
-            # Vamos buscar a magnitude que guardaste no indexador
-            doc_magnitude = self.index_obj.documents[doc_id].get('magnitude', 1.0)
+            # Aceder aos metadados do documento (garantindo que o ID é string se necessário)
+            doc_info = self.index_obj.documents.get(doc_id) or self.index_obj.documents.get(str(doc_id))
+            doc_magnitude = doc_info.get('magnitude', 1.0) if doc_info else 1.0
             
-            # 3.3 Cálculo final da Similaridade do Cosseno
-            if doc_magnitude > 0 and query_magnitude > 0:
-                # similarity = (Q · D) / (|Q| * |D|)
-                similarity = dot_product / (query_magnitude * doc_magnitude)
-            else:
-                similarity = 0.0
+            # 3.3 Cálculo da Similaridade
+            if norm_type == 'c': # Cosseno
+                if doc_magnitude > 0 and query_magnitude > 0:
+                    # similarity = (Q · D) / (|Q| * |D|)
+                    similarity = dot_product / (query_magnitude * doc_magnitude)
+                else:
+                    similarity = 0.0
+            else: # 'n' (Nenhuma normalização - apenas Dot Product bruto)
+                similarity = dot_product
                 
             final_results.append((doc_id, round(float(similarity), 4)))
 
