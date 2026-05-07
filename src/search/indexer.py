@@ -101,15 +101,18 @@ class InvertedIndex:
             self.documents[doc_id] = doc
             # ------------------------------------------
             
-            # Cálculo de Term Frequency (TF) local (REQ-B32)
-            term_frequencies = {}
-            for token in tokens:
-                term_frequencies[token] = term_frequencies.get(token, 0) + 1
-            
-            for token, count in term_frequencies.items():
+            # REQ-B48: Guardar posições para permitir Phrase Queries
+            term_data = {} # Vamos guardar as posições de cada token
+            for pos, token in enumerate(tokens):
+                if token not in term_data:
+                    term_data[token] = []
+                term_data[token].append(pos)
+
+            for token, positions in term_data.items():
                 if token not in self.index:
                     self.index[token] = []
-                self.index[token].append([doc_id, count])
+                # Agora guardamos a lista de posições em vez de um número fixo
+                self.index[token].append([doc_id, positions])
         
         # Ordenar postings por doc_id para permitir Skip Pointers (REQ-B29)
         for term in self.index:
@@ -128,7 +131,10 @@ class InvertedIndex:
         for term, postings in self.index.items():
             idf = self.get_idf(term) # Usa a tua função de IDF com suavização
             
-            for doc_id, tf in postings:
+            for posting in postings:
+                doc_id = posting[0]
+                positions = posting[1] # Lista de posições
+                tf = len(positions)
                 # Peso w = tf * idf (conforme REQ-B34)
                 weight = tf * idf
                 sums_of_squares[doc_id] += weight ** 2

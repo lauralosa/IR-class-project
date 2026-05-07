@@ -3,6 +3,8 @@ import numpy as np # Recomendado para operações vetoriais
 from src.search.processor import TextProcessor
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from nltk.corpus import wordnet
+import re
 
 class QueryEngine:
     def __init__(self, index_obj):
@@ -57,8 +59,11 @@ class QueryEngine:
         # 2. Acumular Dot Product
         for term, q_weight in query_weights.items():
             postings, _ = self.index_obj.get_postings(term)
-            for doc_id, doc_tf in postings:
+            for posting in postings:
                 if weighting_scheme == "tfidf":
+                    doc_id = posting[0]
+                    positions = posting[1]
+                    doc_tf = len(positions) # Extrair a contagem a partir das posições
                     # Peso real TF-IDF
                     doc_weight = doc_tf * self.index_obj.get_idf(term)
                 else:
@@ -135,61 +140,92 @@ class QueryEngine:
         return matrix, all_terms
 
     
-    def execute_boolean_query(self, query_str):
+    
+
+    def execute_boolean_query(self, query_str, expand=False):
         """
-        Executa pesquisas complexas com precedência e AND implícito.
-        Suporta: AND, OR, NOT e termos separados por espaço (REQ-B23, REQ-B26).
+        REQ-B45: Precedência (NOT > AND > OR)
+        REQ-B47: Expansão de Query
+        REQ-B48: Phrase Queries
         """
-        # 1. Pré-processamento: Injetar AND implícito (REQ-B26)
+        # 1. Extração de Frases ("termo termo") - REQ-B48
+        # Substituímos frases entre aspas por um token especial para não as partir no split
+        phrases = re.findall(r'"([^"]*)"', query_str)
+        for i, p in enumerate(phrases):
+            query_str = query_str.replace(f'"{p}"', f'PHRASE_{i}')
+
+        # 2. Tokenização e AND implícito - REQ-B26
         raw_tokens = query_str.split()
-        if not raw_tokens: return []
-        
         tokens = []
         operators = {"AND", "OR", "NOT"}
+        
         for i, token in enumerate(raw_tokens):
             tokens.append(token)
             if i < len(raw_tokens) - 1:
-                curr_upper = token.upper()
-                next_upper = raw_tokens[i+1].upper()
-                if curr_upper not in operators and next_upper not in operators:
+                curr = token.upper()
+                nxt = raw_tokens[i+1].upper()
+                if curr not in operators and nxt not in operators:
                     tokens.append("AND")
 
-        # 2. Processamento de Postings com Otimização de Frequência (REQ-B25)
-        # Vamos resolver primeiro os NOT, depois os AND, depois os OR (Precedência REQ-B23)
-        
-        # Simplificação para esta fase: Processamos sequencialmente
-        result_docs = None
-        current_op = "AND"
+        # 3. Converter para Notação Polaca Inversa (Shunting-yard) - REQ-B45
+        # Define a precedência: NOT (3) > AND (2) > OR (1)
+        precedence = {"NOT": 3, "AND": 2, "OR": 1}
+        output_queue = []
+        operator_stack = []
 
-        i = 0
-        while i < len(tokens):
-            token = tokens[i]
-            if token.upper() in operators:
-                current_op = token.upper()
-                i += 1
-                continue
-
-            # Obter postings do termo atual (processado pelo NLTK)
-            term_processed = self.processor.process_text(token)[0] if self.processor.process_text(token) else ""
-            p_list, s_list = self.index_obj.get_postings(term_processed)
-            current_ids = [p[0] for p in p_list]
-
-            if result_docs is None:
-                result_docs = set(current_ids) if current_op != "NOT" else set()
+        for token in tokens:
+            token_upper = token.upper()
+            if token_upper in operators:
+                while (operator_stack and operator_stack[-1] in operators and 
+                    precedence[operator_stack[-1]] >= precedence[token_upper]):
+                    output_queue.append(operator_stack.pop())
+                operator_stack.append(token_upper)
             else:
-                if current_op == "AND":
-                    # REQ-B25: Aqui usaríamos a ordenação se tivéssemos múltiplos ANDs seguidos
-                    # Para este motor, intersectamos com skips
-                    p_res = [[doc_id, 0] for doc_id in sorted(list(result_docs))]
-                    # (A lógica de skips é aplicada entre result_docs e current_ids)
-                    result_docs = set(self.intersect_with_skips(p_res, [], p_list, s_list))
-                elif current_op == "OR":
-                    result_docs.update(current_ids)
-                elif current_op == "NOT":
-                    result_docs.difference_update(current_ids)
-            i += 1
+                output_queue.append(token)
+        
+        while operator_stack:
+            output_queue.append(operator_stack.pop())
 
-        return sorted(list(result_docs)) if result_docs else []
+        # 4. Avaliação da Query usando uma Pilha
+        results_stack = []
+        all_doc_ids = set(self.index_obj.documents.keys())
+
+        for token in output_queue:
+            if token == "NOT":
+                s1 = results_stack.pop()
+                results_stack.append(all_doc_ids - s1)
+            elif token == "AND":
+                s2, s1 = results_stack.pop(), results_stack.pop()
+                results_stack.append(s1 & s2)
+            elif token == "OR":
+                s2, s1 = results_stack.pop(), results_stack.pop()
+                results_stack.append(s1 | s2)
+            else:
+                # É um termo ou uma frase
+                if token.startswith("PHRASE_"):
+                    # Resolver Frase - REQ-B48
+                    idx = int(token.split("_")[1])
+                    phrase_raw = phrases[idx]
+                    phrase_terms = self.processor.process_text(phrase_raw)
+                    results_stack.append(set(self.search_phrase(phrase_terms)))
+                else:
+                    # Resolver Termo Único com Expansão Opcional - REQ-B47
+                    processed = self.processor.process_text(token)
+                    term = processed[0] if processed else ""
+                    
+                    # Se expand=True, buscamos sinónimos
+                    terms_to_search = [term]
+                    if expand and term:
+                        terms_to_search = self.expand_query([term])
+                    
+                    # Unimos os resultados de todos os sinónimos (OR entre eles)
+                    term_results = set()
+                    for t in terms_to_search:
+                        p_list, _ = self.index_obj.get_postings(t)
+                        term_results.update([p[0] for p in p_list])
+                    results_stack.append(term_results)
+
+        return sorted(list(results_stack[0])) if results_stack else []
 
     def intersect_with_skips(self, p1, s1, p2, s2):
         """Versão rigorosa da interseção otimizada."""
@@ -282,3 +318,53 @@ class QueryEngine:
                 matrix[i, j] = matrix[j, i] = round(float(sim), 4)
                 
         return matrix
+
+    def search_phrase(self, terms):
+        """REQ-B48: Procura por uma frase exata usando posições."""
+        if not terms: return []
+        
+        # 1. Obter postings para todos os termos
+        postings_list = []
+        for term in terms:
+            p, _ = self.index_obj.get_postings(term)
+            if not p: return [] # Se um termo não existe, a frase não existe
+            postings_list.append(dict(p)) # Convertemos para dicionário {doc_id: [pos]}
+
+        # 2. Intersetar documentos que contêm todos os termos
+        common_docs = set(postings_list[0].keys())
+        for p_dict in postings_list[1:]:
+            common_docs &= set(p_dict.keys())
+
+        # 3. Verificar contiguidade (posições seguidas)
+        results = []
+        for doc_id in common_docs:
+            # Pegamos nas posições do primeiro termo
+            possible_starts = postings_list[0][doc_id]
+            
+            for start_pos in possible_starts:
+                is_match = True
+                for i in range(1, len(terms)):
+                    next_term_positions = postings_list[i][doc_id]
+                    # O próximo termo tem de estar na posição (start_pos + i)
+                    if (start_pos + i) not in next_term_positions:
+                        is_match = False
+                        break
+                
+                if is_match:
+                    results.append(doc_id)
+                    break # Encontramos a frase neste doc, passamos ao próximo doc
+
+        return sorted(list(set(results)))
+    
+    def expand_query(self, query_terms):
+        """REQ-B47: Expande a query com sinónimos para aumentar o Recall."""
+        expanded = set(query_terms)
+        for term in query_terms:
+            syns = wordnet.synsets(term)
+            for syn in syns:
+                for lemma in syn.lemmas():
+                    synonym = lemma.name().replace('_', ' ').lower()
+                    # Apenas adicionamos sinónimos de uma palavra para não complicar
+                    if ' ' not in synonym:
+                        expanded.add(synonym)
+        return list(expanded)
