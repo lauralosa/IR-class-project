@@ -5,6 +5,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.corpus import wordnet
 import re
+import json
+import os
 
 class QueryEngine:
     def __init__(self, index_obj):
@@ -368,3 +370,68 @@ class QueryEngine:
                     if ' ' not in synonym:
                         expanded.add(synonym)
         return list(expanded)
+
+    
+
+    
+
+    def generate_snippet(self, doc_id, query_terms, window_chars=150):
+        doc = self.index_obj.documents.get(doc_id) or self.index_obj.documents.get(str(doc_id))
+        if not doc: return ""
+
+        # 1. Tentar ler o texto literal (TXT) em vez dos tokens (JSON)
+        # Convertemos: data\processed_text\doc_11.json -> data\extracted_text\doc_11.txt
+        proc_path = doc.get('processed_text_path', "")
+        raw_text_path = proc_path.replace('processed_text', 'extracted_text').replace('.json', '.txt')
+        
+        content = ""
+        if os.path.exists(raw_text_path):
+            try:
+                with open(raw_text_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+
+                    # --- A LIMPEZA ACONTECE AQUI ---
+                    # 1. Substitui quebras de linha (\n ou \r) por espaços
+                    content = content.replace('\n', ' ').replace('\r', ' ')
+                    # 2. Transforma múltiplos espaços seguidos em apenas um
+                    content = re.sub(r'\s+', ' ', content)
+                    # 3. Limpa sequências de pontos excessivas (ex: . . . . .)
+                    content = re.sub(r'\.\s?\.\s?\.\s?', '...', content)
+                    # -------------------------------
+            except Exception as e:
+                print(f"Erro ao ler TXT: {e}")
+        
+        # Fallback para o abstract se o TXT falhar
+        if not content:
+            content = doc.get('abstract', '')
+
+        # 2. Procurar o termo da query no texto literal
+        # Procuramos a posição de um dos termos (usando regex para ignorar case)
+        match_pos = -1
+        found_term = ""
+        
+        for term in query_terms:
+            # Procuramos o termo ou o seu início (por causa do stemming)
+            # Usamos re.search para encontrar a posição da palavra no texto original
+            match = re.search(rf'\b{re.escape(term[:4])}\w*', content, re.IGNORECASE)
+            if match:
+                match_pos = match.start()
+                found_term = match.group()
+                break
+
+        # 3. Criar a janela de visualização baseada em caracteres (fica mais bonito)
+        if match_pos != -1:
+            start = max(0, match_pos - window_chars)
+            end = min(len(content), match_pos + window_chars)
+            
+            snippet = content[start:end]
+            
+            # 4. Highlight: Meter em negrito no texto original
+            # Substituímos todas as ocorrências dos termos da query por eles mesmos entre <b>
+            for term in query_terms:
+                pattern = rf'(\b{re.escape(term[:4])}\w*)'
+                snippet = re.sub(pattern, r'<b>\1</b>', snippet, flags=re.IGNORECASE)
+                
+            return ("... " if start > 0 else "") + snippet + (" ..." if end < len(content) else "")
+
+        return content[:250] + "..."
