@@ -12,6 +12,12 @@ export default function Search() {
   const [searchTarget, setSearchTarget] = useState('all');
   const [researchArea, setResearchArea] = useState('all');
 
+  // Modo de pesquisa por autor
+  const [authorMode, setAuthorMode] = useState(false);
+  
+  // Esquema de pesos alinhados com o algoritmo escolhido
+  const [weightingScheme, setWeightingScheme] = useState('ltc');
+
   const handleSearch = (e) => {
     e.preventDefault();
     console.log("A pesquisar por:", query);
@@ -62,6 +68,17 @@ export default function Search() {
               Alvo: <strong>{searchTarget === 'title' ? 'Títulos' : searchTarget === 'abstract' ? 'Resumos' : 'Documento Completo'}</strong>
             </span>
           )}
+
+          {authorMode && (
+            <span style={{ background: '#fef08a', color: '#854d0e', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', border: '1px solid #fde047' }}>
+              <strong>Modo Autor</strong>
+            </span>
+          )}
+          {algorithm === 'custom' && (
+            <span style={{ background: '#f3f4f6', color: '#4b5563', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', border: '1px solid #e5e7eb' }}>
+              Pesos: <strong>{weightingScheme === 'ltc' ? 'TF-IDF (ltc)' : weightingScheme === 'lnc' ? 'Logarítmico (lnc)' : 'Natural (nnn)'}</strong>
+            </span>
+          )}
         </div>
       </div>
 
@@ -106,6 +123,18 @@ export default function Search() {
                   Documento Completo
                 </label>
               </div>
+            </div>
+
+            {/*Toggle de Autor*/}
+            <div className="filter-group" style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px dashed #e5e7eb' }}>
+              <label className="checkbox-label" style={{ fontWeight: 'bold', color: '#AA192B' }}>
+                <input 
+                  type="checkbox" 
+                  checked={authorMode} 
+                  onChange={(e) => setAuthorMode(e.target.checked)} 
+                />
+                Modo Pesquisa de Autor
+              </label>
             </div>
           </div>
 
@@ -195,6 +224,28 @@ export default function Search() {
                 />
                 Modelo Booleano
               </label>
+            </div>
+
+            {/* Esquema de Pesos*/}
+            {algorithm === 'custom' && (
+              <div className="filter-group" style={{ marginTop: '15px', padding: '10px', background: '#f9fafb', borderRadius: '6px' }}>
+                <label className="filter-label">Esquema de Pesos:</label>
+                <select 
+                  className="filter-select" 
+                  value={weightingScheme} 
+                  onChange={(e) => setWeightingScheme(e.target.value)}
+                >
+                  <option value="ltc">TF-IDF Padrão (ltc)</option>
+                  <option value="lnc">TF Logarítmico (lnc)</option>
+                  <option value="nnn">Frequência Natural (nnn)</option>
+                </select>
+              </div>
+            )}
+
+            {/* REQ-F19: Mostrar cálculo de semelhança fixo */}
+            <div style={{ marginTop: '15px', fontSize: '0.85rem', color: '#6b7280', lineHeight: '1.4', padding: '10px', background: '#f0fdf4', borderRadius: '6px', border: '1px solid #bbf7d0' }}>
+              <strong>Cálculo de Semelhança:</strong><br/>
+              <span style={{ color: '#166534' }}>Similaridade do Cosseno</span>
             </div>
           </div>
 
