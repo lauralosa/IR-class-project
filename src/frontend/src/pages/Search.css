@@ -59,19 +59,28 @@
   margin-top: 10px;
 }
 
+/* ESTRUTURA PRINCIPAL (GRELHA LADO A LADO) */
 .layout-grid {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 320px 1fr;
   gap: 2rem;
+  align-items: start;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-
+/* SIDEBAR E SCROLL */
 .sidebar {
   background: white;
   padding: 2rem;
-  border-radius: 12px; /* Cantos mais redondos */
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06); /* Sombra mais suave e moderna */
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
   border-top: 5px solid #AA192B;
+  max-height: 85vh; 
+  overflow-y: auto; 
+  position: sticky; 
+  top: 20px;
 }
 
 .sidebar-section h3 {
@@ -80,6 +89,25 @@
   color: #1a1a1a;
   margin-bottom: 1.2rem;
   font-weight: 600;
+}
+
+/* A CAIXA DA DIREITA */
+.results-area {
+  width: 100%;
+}
+
+.results-placeholder {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  border: 1px dashed #ccc;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-size: 1.1rem;
 }
 
 /* O Dropdown (Select) */
