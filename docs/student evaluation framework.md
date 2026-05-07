@@ -1,4 +1,4 @@
-## Student Group Self-Evaluation Table
+# Student Evaluation Framework
 
 The following self-evaluation table must be filled out jointly by all team members. Its purpose is to help differentiate the final grade of each student based on their involvement in the project.
 
@@ -9,7 +9,7 @@ The following self-evaluation table must be filled out jointly by all team membe
 | Student 3 |  |  |  |  |  |
 | Student 4 |  |  |  |  |  |
 
-### Field Explanations
+## Field Explanations
 
 - **Development Effort (0-5):** Contribution to the core development and technical aspects of the project.
 - **Documentation & Reporting (0-5):** Effort in writing the project report, documentation, and other written materials.
