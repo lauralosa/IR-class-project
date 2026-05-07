@@ -19,7 +19,7 @@ export default function Search() {
   return (
     <div className="search-page">
       <div className="search-container">
-        <h2>Pesquisar no Acervo</h2>
+        <h2>Pesquisar na Coleção</h2>
         <form onSubmit={handleSearch} className="search-form">
           <input 
             type="text" 
@@ -32,6 +32,23 @@ export default function Search() {
         </form>
         <div className="search-tips">
           <small><strong>Dica:</strong> Podes usar operadores booleanos como <code>AND</code>, <code>OR</code> e <code>NOT</code>.</small>
+        </div>
+        {/* Mostrar configuração atual */}
+        <div className="active-configs" style={{ marginTop: '15px', display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <span style={{ background: '#fef2f2', color: '#AA192B', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', border: '1px solid #fecaca' }}>
+            Idioma: <strong>{language}</strong>
+          </span>
+          <span style={{ background: '#fef2f2', color: '#AA192B', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', border: '1px solid #fecaca' }}>
+            Técnica: <strong>{processing === 'stemming' ? 'Stemming' : 'Lematização'}</strong>
+          </span>
+          {removeStopWords && (
+            <span style={{ background: '#fef2f2', color: '#AA192B', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', border: '1px solid #fecaca' }}>
+              Sem Stop Words
+            </span>
+          )}
+          <span style={{ background: '#f3f4f6', color: '#4b5563', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', border: '1px solid #e5e7eb' }}>
+            Algoritmo: <strong>{algorithm === 'custom' ? 'TF-IDF Custom' : algorithm === 'sklearn' ? 'TF-IDF Sklearn' : 'Booleano'}</strong>
+          </span>
         </div>
       </div>
 
