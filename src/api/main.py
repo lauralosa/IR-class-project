@@ -44,8 +44,17 @@ def search(q: str, method: str = "custom",scheme: str = "ltc", format: str = "js
     REQ-B51: Links de acesso
     REQ-B52: JSON/XML
     """
+
+    # --- REQ-B60: Início da medição de tempo ---
+    start_time = time.perf_counter()
+    
     use_sklearn = (method.lower() == "sklearn")
     results = engine.ranked_search(q, use_sklearn=use_sklearn, weighting_scheme=scheme)
+    
+    end_time = time.perf_counter()
+    query_time = end_time - start_time
+    # -------------------------------------------
+    
     
     query_stems = engine.processor.process_text(q)
     output = []
@@ -64,7 +73,7 @@ def search(q: str, method: str = "custom",scheme: str = "ltc", format: str = "js
             "authors": doc.get("authors")
         })
     
-    return format_response({"query": q, "results": output}, format)
+    return format_response({"query": q, "search_metadata": {"query_time_sec": round(query_time, 4), "total_results": len(results),"algorithm": f"VSM with {scheme.upper()}"},"results": output}, format)
 
 @app.get("/boolean")
 def boolean_search(q: str, format: str = "json"):
