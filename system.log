@@ -421,3 +421,6 @@
 2026-05-08 17:01:24,662 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
 2026-05-08 17:01:24,665 [WARNING] INDEXER: Ficheiro de índice não encontrado.
 2026-05-08 17:01:24,665 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 17:19:30,275 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-08 17:19:30,285 [WARNING] INDEXER: Ficheiro de índice não encontrado.
+2026-05-08 17:19:30,286 [INFO] QUERY-ENGINE: QueryEngine inicializado.
