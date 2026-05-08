@@ -1,5 +1,5 @@
 import json
-import scraper
+from src.scraper import scraper
 import logging
 import os
 from src.config import settings
