@@ -43,7 +43,7 @@ indexer = InvertedIndex()
 try:
     indexer.load_index() # Evita re-indexar 110 docs a cada save do código
 except:
-    json_path = 'data/raw_metadata/scraper_results.json'
+    json_path = settings.RAW_DATA_PATH
     indexer.create_index(json_path)
 
 engine = QueryEngine(indexer)
@@ -64,53 +64,65 @@ def home():
     }
 
 @app.get("/search", tags=["Search"])
-def search(q: str = Query(..., min_length=2, description="Termo de pesquisa (mínimo 2 caracteres)"), method: str = "custom",scheme: WeightingScheme = WeightingScheme.ltc, limit: int = Query(10, ge=1, le=50, description="Número máximo de resultados"),
-    format: str = Query("json", pattern="^(json|xml)$")):
-    """
-    REQ-B49: Ranked results com scores
-    REQ-B50: Snippets de texto
-    REQ-B51: Links de acesso
-    REQ-B52: JSON/XML
-    """
-
-    # --- REQ-B60: Início da medição de tempo ---
+def search(
+    q: str = Query(..., min_length=2),
+    # REQ-F11, F12: Parâmetros de processamento dinâmico
+    stemming: bool = True,
+    lemmatization: bool = False,
+    stopwords: bool = True,
+    # REQ-F15: Escopo da pesquisa
+    scope: str = Query("all", pattern="^(all|title|abstract)$"),
+    # REQ-F31, F32: Paginação
+    page: int = Query(1, ge=1),
+    page_size: int = Query(10, ge=1, le=50),
+    # REQ-F18, F20: Algoritmo e Pesos
+    method: str = "custom",
+    scheme: WeightingScheme = WeightingScheme.ltc
+):
     start_time = time.perf_counter()
     
-    use_sklearn = (method.lower() == "sklearn")
-    results = engine.ranked_search(q, use_sklearn=use_sklearn, weighting_scheme=scheme)
-    
-    end_time = time.perf_counter()
-    query_time = end_time - start_time
-    # -------------------------------------------
-    
-    
-    # Processamento dos resultados (Stemming/Lemma alinhado com o índice)
-    # Aqui usamos a estratégia guardada no indexer para o snippet ser perfeito
-    strategy = indexer.metadata.get('reduction_strategy', 'stemming')
-    query_tokens = engine.processor.process_text(
+    # 1. Executa a pesquisa (O motor precisa de aceitar estes novos filtros)
+    results = engine.ranked_search(
         q, 
-        use_stemming=(strategy == 'stemming'),
-        use_lemmatization=(strategy == 'lemmatization')
+        use_stemming=stemming, 
+        use_lemmatization=lemmatization,
+        remove_stopwords=stopwords,
+        scope=scope # Precisamos de implementar este filtro no engine
     )
-
-    output = []
     
-    for doc_id, score in results:
-        # Garantir que acedemos à chave correta (int ou str)
-        doc = indexer.documents.get(doc_id) or indexer.documents.get(str(doc_id))
-        if not doc: continue
+    # 2. Lógica de Paginação (REQ-F31)
+    total_results = len(results)
+    start_idx = (page - 1) * page_size
+    end_idx = start_idx + page_size
+    paginated_results = results[start_idx:end_idx]
+    
+    query_time = time.perf_counter() - start_time
 
+    # 3. Formatação da resposta para o Frontend
+    output = []
+    for doc_id, score in paginated_results:
+        doc = indexer.documents.get(str(doc_id))
+        if not doc: continue
         output.append({
             "id": doc_id,
-            "score": round(score, 4), # REQ-B49
+            "score": round(score, 4),
             "title": doc.get("title"),
-            "snippet": engine.generate_snippet(doc_id, query_tokens), # REQ-B50
-            "url": doc.get("pdf_url"), # REQ-B51
-            "authors": doc.get("authors")
+            "year": doc.get("year"), # REQ-F25
+            "snippet": engine.generate_snippet(doc_id, q), # REQ-F26
+            "url": doc.get("pdf_url"), # REQ-F27
+            "authors": doc.get("authors") # REQ-F24
         })
-    
-    return format_response({"query": q, "search_metadata": {"query_time_sec": round(query_time, 4), "total_results": len(results),"algorithm": f"VSM with {scheme.upper()}"},"results": output}, format)
 
+    return {
+        "metadata": {
+            "total": total_results,
+            "page": page,
+            "page_size": page_size,
+            "time": round(query_time, 4),
+            "config": {"stemming": stemming, "lemma": lemmatization, "scope": scope}
+        },
+        "results": output
+    }
 @app.get("/boolean", tags=["Search"], summary="Pesquisa Booleana")
 def boolean_search(q: str = Query(..., description="Query booleana (ex: 'data AND security')"),
     format: str = "json"):

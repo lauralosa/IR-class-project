@@ -6,22 +6,31 @@ from typing import List  # NOVO: Necessário para as type hints
 from src.search.processor import TextProcessor
 import time
 import psutil
+import logging
+from src.config import settings
+
+# Configuração do Logger (REQ-B69)
+logger = logging.getLogger("INDEXER")
 
 class InvertedIndex:
-    def __init__(self, storage_dir="data"):
+    def __init__(self):
         self.index = {}      
         self.skips = {}      
         self.documents = {}  
         self.processor = TextProcessor()
         self.num_docs = 0    
         self.author_index = {}
-        self.storage_dir = storage_dir 
         self.doc_magnitudes = {}
         self.metadata = {
-            'reduction_strategy': None,
+            'reduction_strategy': 'stemming',
             'indexed_at': None,
-            'vocab_size': 0
+            'vocab_size': 0,
+            'stop_words_removed': True
         }
+
+        # REQ-B67: Centralizar pastas usando settings
+        self.storage_dir = settings.STORAGE_DIR
+        os.makedirs(self.storage_dir, exist_ok=True)
 
     def _clean_full_text(self, text):
         """Heurística para remover bibliografia e índices."""
@@ -36,7 +45,12 @@ class InvertedIndex:
                 return text[:idx]
         return text
 
-    def create_index(self, json_path,strategy = "stemming",remove_stopwords=True, batch_size=50):
+    def create_index(self, json_path=None, strategy="stemming", remove_stopwords=True, batch_size=None):
+        
+        # --- Alteração: Uso de caminhos dinâmicos do settings ---
+        target_path = json_path or settings.RAW_DATA_PATH
+        b_size = batch_size or settings.DEFAULT_BATCH_SIZE
+
         # --- [INÍCIO B56 & B58] MONITORIZAÇÃO ---
         process = psutil.Process(os.getpid())
         mem_antes = process.memory_info().rss / (1024 * 1024) # MB
@@ -51,7 +65,7 @@ class InvertedIndex:
 
         """Lê os metadados e o texto integral para construir o índice."""
         # REQ-B10: Garantir que a pasta de armazenamento existe
-        processed_dir = os.path.join("data", "processed_text")
+        processed_dir = os.path.join(self.storage_dir, "processed_text")
         os.makedirs(processed_dir, exist_ok=True) # Cria a pasta se não existir
 
         try:
@@ -62,14 +76,13 @@ class InvertedIndex:
             return
 
         self.num_docs = len(data)
-        txt_folder = os.path.join("data", "extracted_text")
+        txt_folder = settings.TXT_STORAGE_PATH
         self._build_author_index(data)
 
-        # --- [B59] PROCESSAMENTO POR LOTES (BATCH PROCESSING) ---
-        print(f" A processar {self.num_docs} documentos em lotes de {batch_size}...")
+        logger.info(f"A processar {self.num_docs} documentos em lotes de {b_size}...")
 
-        for i in range(0, self.num_docs, batch_size):
-            lote = data[i : i + batch_size]
+        for i in range(0, self.num_docs, b_size):
+            lote = data[i : i + b_size]
 
             for sub_idx, doc in enumerate(lote):
                 doc_id = i + sub_idx
@@ -95,13 +108,13 @@ class InvertedIndex:
                     except Exception as e:
                         print(f"Aviso: Erro ao ler {txt_filename}: {e}")
                 
-                # Processamento NLTK (REQ-B13)
-                if strategy == "lemmatization":
-                    # REQ-B17: Usa Lematização via WordNet
-                    tokens = self.processor.process_text(full_text, use_stemming=False, use_lemmatization=True, remove_stopwords=True)
-                else:
-                    # REQ-B16: Usa Stemming de Porter (Default)
-                    tokens = self.processor.process_text(full_text, use_stemming=True, use_lemmatization=False, remove_stopwords=True)
+                # Processamento NLP
+                tokens = self.processor.process_text(
+                    full_text, 
+                    use_stemming=(strategy == "stemming"), 
+                    use_lemmatization=(strategy == "lemmatization"), 
+                    remove_stopwords=remove_stopwords
+                )
 
                 # --- Persistência ---
                 processed_path = os.path.join(processed_dir, f"doc_{doc_id}.json")
@@ -126,7 +139,7 @@ class InvertedIndex:
                     # Agora guardamos a lista de posições em vez de um número fixo
                     self.index[token].append([doc_id, positions])
 
-            print(f" Lote concluído: {min(i + batch_size, self.num_docs)}/{self.num_docs}")
+            logger.info(f"Lote concluído: {min(i + b_size, self.num_docs)}/{self.num_docs}")
         
         # Ordenar postings por doc_id para permitir Skip Pointers (REQ-B29)
         for term in self.index:
@@ -145,16 +158,10 @@ class InvertedIndex:
         # Guardar nos metadados para o REQ-B12
         self.metadata['performance'] = {
             'indexing_time_sec': round(tempo_total, 4),
-            'memory_usage_mb': round(mem_consumida, 2),
-            'batch_size': batch_size
+            'memory_usage_mb': round(mem_consumida, 2)
         }
+        logger.info(f"Indexação concluída: {tempo_total:.2f}s | Vocabulário: {len(self.index)} termos.")
 
-        print("\n" + "="*40)
-        print(f" RELATÓRIO DE PERFORMANCE ({strategy.upper()})")
-        print(f" Tempo: {tempo_total:.4f} segundos")
-        print(f" RAM Consumida: {mem_consumida:.2f} MB")
-        print(f" Vocabulário: {len(self.index)} termos")
-        print("="*40 + "\n")
 
     def _calculate_doc_magnitudes(self):
         """Calcula a norma L2 para cada documento (REQ-B37)."""
@@ -228,12 +235,12 @@ class InvertedIndex:
                 else:
                     self.skips[term] = []
 
-    def save_index(self, filename='index.json'):
+    def save_index(self, filename=None):
         """
         Guarda a estrutura completa seguindo o REQ-B12 e REQ-B30 (TF e DF).
         """
         # 1. Garantir que o caminho usa o storage_dir definido no projeto
-        path = os.path.join(self.storage_dir, filename)
+        path = filename or settings.INDEX_FILE
         # 2. Estruturar o vocabulário para incluir o DF (REQ-B30)
         # Transformamos o índice simples numa estrutura rica
         vocabulary_data = {}
@@ -252,7 +259,8 @@ class InvertedIndex:
         data_to_save = {
             'metadata': self.metadata, 
             'documents': self.documents, # Metadados dos documentos (títulos, magnitudes, etc)
-            'vocabulary': vocabulary_data # O índice propriamente dito
+            'vocabulary': vocabulary_data, # O índice propriamente dito
+            'skips': self.skips
             
         }
         
@@ -262,15 +270,18 @@ class InvertedIndex:
         
         print(f" Índice estruturado com sucesso em: {path}")
 
-    def load_index(self, filename="index.json"):
+    def load_index(self, filename="None"):
+        
         """
         Carrega o índice estruturado para memória.
         """
-        if not os.path.exists(filename):
-            print(" Ficheiro de índice não encontrado.")
+        path = filename or settings.INDEX_FILE
+
+        if not os.path.exists(path):
+            logger.warning("Ficheiro de índice não encontrado.")
             return False
 
-        with open(filename, 'r', encoding='utf-8') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             data = json.load(f)
 
         self.num_docs = data["metadata"]["total_docs"]
@@ -285,7 +296,7 @@ class InvertedIndex:
         self.metadata['reduction_strategy'] = data["metadata"].get("reduction_strategy", "stemming")
         self.metadata['stop_words_removed'] = data["metadata"]["stop_words_removed"]
         
-        print(f" Índice carregado: {self.num_docs} documentos.")
+        logger.info(f"Índice carregado ({self.metadata['reduction_strategy']}).")
         return True
 
     def update_index(self, new_json_path):

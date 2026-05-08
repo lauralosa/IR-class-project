@@ -3,39 +3,54 @@ import requests
 import fitz  # PyMuPDF
 import json
 import time
+import logging
+from src.config import settings
+
+# Configuração do Logger (REQ-B69)
+logger = logging.getLogger("PDF-HANDLER")
 
 class PDFHandler:
     def __init__(self, base_path="data"):
-        self.pdf_path = os.path.join(base_path, "pdfs")
-        self.txt_path = os.path.join(base_path, "extracted_text")
+        self.pdf_path = settings.PDF_STORAGE_PATH
+        self.txt_path = settings.TXT_STORAGE_PATH
         
         # Cria as pastas se não existirem
         os.makedirs(self.pdf_path, exist_ok=True)
         os.makedirs(self.txt_path, exist_ok=True)
 
-    def process_pipeline(self, json_path):
+        logger.info("PDFHandler inicializado e pastas de armazenamento prontas.")
+
+    def process_pipeline(self, json_path=None):
         """Lê o JSON, baixa os PDFs, extrai para TXT e atualiza o JSON."""
-        with open(json_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+
+        target_json = json_path or settings.RAW_DATA_PATH
+
+        try:
+            with open(target_json, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            logger.error(f"Ficheiro JSON não encontrado em: {target_json}")
+            return
 
         count = 0
-        print(f"---  Iniciando Download e Extração de PDFs (Alvo: 20) ---")
+        limit = 20
+        logger.info(f"--- Iniciando Download e Extração (Alvo: {limit} documentos) ---")
 
         for idx, item in enumerate(data):
             # Limpa lixo de tentativas antigas, se existir
             if 'full_content' in item:
                 del item['full_content']
 
-            if count >= 20: 
+            if count >= limit: 
                 item['has_full_text'] = False
                 continue
             
             url = item.get('pdf_url', '')
-            if url and ("bitstreams" in url or url.endswith('.pdf')):
+            if url and ("bitstreams" in url or url.lower().endswith('.pdf')):
                 pdf_file = f"doc_{idx}.pdf"
                 txt_file = f"doc_{idx}.txt"
                 
-                print(f"[{count+1}/20] A extrair: {item.get('title', 'Sem título')[:40]}...")
+                logger.info(f"[{count+1}/{limit}] A processar: {item.get('title', 'Sem título')[:50]}...")
                 
                 try:
                     # 1. Download com timeout de 30s
