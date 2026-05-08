@@ -1,5 +1,6 @@
 import math
-import numpy as np # Recomendado para operações vetoriais
+import numpy as np 
+import logging
 from src.search.processor import TextProcessor
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -7,15 +8,19 @@ from nltk.corpus import wordnet
 import re
 import json
 import os
+from src.config import settings
+
+# Configuração do Logger 
+logger = logging.getLogger("QUERY-ENGINE")
 
 class QueryEngine:
     def __init__(self, index_obj):
         self.index_obj = index_obj
         self.processor = TextProcessor()
+        logger.info("QueryEngine inicializado.")
 
     def get_idf(self, term):
-        """REQ-B33: Calcula o Inverse Document Frequency (IDF)."""
-        # Vamos buscar o Document Frequency (df) ao índice
+        """Calcula o IDF com base no estado atual do índice."""
         df = len(self.index_obj.index.get(term, []))
         if df == 0:
             return 0.0
@@ -32,20 +37,28 @@ class QueryEngine:
         else: # Default: tfidf
             return tf * self.get_idf(term)
 
-    def ranked_search(self, query_str, use_sklearn=False, weighting_scheme="ltc"):
+    def ranked_search(self, query_str, use_sklearn=False, weighting_scheme="ltc", 
+                      use_stemming=None, use_lemmatization=None, remove_stopwords=True, 
+                      scope="all"):
         """
         REQ-B37 / REQ-F20: Pesquisa por relevância com suporte a esquemas SMART.
         O weighting_scheme recebe strings como 'ltc', 'lnc', 'nnn'.
         """
+        # Se os parâmetros de NLP forem None, usamos a estratégia original do índice (REQ-F52)
+        idx_strategy = self.index_obj.metadata.get('reduction_strategy', 'stemming')
+        s = use_stemming if use_stemming is not None else (idx_strategy == 'stemming')
+        l = use_lemmatization if use_lemmatization is not None else (idx_strategy == 'lemmatization')
+
+        logger.info(f"Pesquisa iniciada: '{query_str}' [Scope: {scope}] [Method: {'Sklearn' if use_sklearn else 'Custom'}]")
+
         if use_sklearn:
             return self._ranked_search_sklearn(query_str)
         else:
-            return self._ranked_search_custom(query_str, weighting_scheme)
+            return self._ranked_search_custom(query_str, weighting_scheme, s, l, remove_stopwords, scope)
 
-    def _ranked_search_custom(self, query_str, weighting_scheme="tfidf"):
-        """Implementação VSM (Vector Space Model) com suporte a esquemas SMART.
-        Default 'ltc': log tf, idf, cosine normalization."""
-        # 0. Mapeamento para retrocompatibilidade (se vier "tfidf" ou "binary")
+    def _ranked_search_custom(self, query_str, weighting_scheme, s, l, stopwords, scope):
+        """Implementação VSM com filtros de escopo."""
+        # Normalização de nomes de esquemas
         if weighting_scheme == "tfidf": weighting_scheme = "ltc"
         elif weighting_scheme == "binary": weighting_scheme = "nnn"
         
@@ -54,7 +67,7 @@ class QueryEngine:
         df_type = weighting_scheme[1].lower()
         norm_type = weighting_scheme[2].lower()
 
-        query_terms = self.processor.process_text(query_str, use_stemming=True)
+        query_terms = self.processor.process_text(query_str, use_stemming=True, use_lemmatization=l, remove_stopwords=stopwords)
         if not query_terms: return []
         
 
@@ -76,27 +89,30 @@ class QueryEngine:
         for term, q_weight in query_weights.items():
             postings, _ = self.index_obj.get_postings(term)
             for posting in postings:
-                doc_id = posting[0]
-                positions = posting[1]
-                raw_tf_d = len(positions)
+                doc_id = str(posting[0])
+                doc_info = self.index_obj.documents.get(doc_id)
+                if not doc_info: continue
+
+                # Lógica de Filtro por Escopo (Título / Resumo / Tudo)
+                if scope != "all":
+                    text_to_check = doc_info.get('title', '').lower() if scope == "title" else doc_info.get('abstract', '').lower()
+                    # Verifica se o termo processado existe no campo específico
+                    # (Nota: Esta é uma simplificação para os 110 docs)
+                    if term not in self.processor.process_text(text_to_check, use_stemming=s, use_lemmatization=l):
+                        continue
                 
-                # Componente TF do Documento (l ou n)
+                raw_tf_d = len(posting[1])
                 tf_d = (1 + math.log10(raw_tf_d)) if tf_type == 'l' and raw_tf_d > 0 else raw_tf_d
-                
-                # Componente IDF do Documento (t ou n)
-                # Nota: O IDF é aplicado no documento se a 2ª letra for 't'
                 doc_idf = self.index_obj.get_idf(term) if df_type == 't' else 1.0
                 
-                doc_weight = tf_d * doc_idf
-                
-                scores[doc_id] = scores.get(doc_id, 0) + (q_weight * doc_weight)
+                scores[doc_id] = scores.get(doc_id, 0) + (q_weight * tf_d * doc_idf)
 
         # 3. Normalização 
         
         # 3.1 Calcular a magnitude da Query: sqrt(sum(w_t,q^2))
         query_magnitude = math.sqrt(sum(weight**2 for weight in query_weights.values()))
-
         final_results = []
+
         for doc_id, dot_product in scores.items():
             # Aceder aos metadados do documento (garantindo que o ID é string se necessário)
             doc_info = self.index_obj.documents.get(doc_id) or self.index_obj.documents.get(str(doc_id))
@@ -171,6 +187,8 @@ class QueryEngine:
         REQ-B47: Expansão de Query
         REQ-B48: Phrase Queries
         """
+        logger.debug(f"Executando query booleana: {query_str}")
+        
         # 1. Extração de Frases ("termo termo") - REQ-B48
         # Substituímos frases entre aspas por um token especial para não as partir no split
         phrases = re.findall(r'"([^"]*)"', query_str)

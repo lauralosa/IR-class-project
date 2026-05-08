@@ -13,3 +13,9 @@ uvicorn
 # --- Testes e Qualidade (Critérios de Avaliação) ---
 pytest
 pytest-cov
+
+pydantic
+pydantic_settings
+dicttoxml
+psutil
+python-dotenv

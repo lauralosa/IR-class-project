@@ -8,10 +8,13 @@ class Settings(BaseSettings):
     STORAGE_DIR: str = "data"
     INDEX_FILE: str = "data/index.json"
     RAW_DATA_PATH: str = "data/raw_metadata/scraper_results.json"
+    PDF_STORAGE_PATH: str = "data/pdfs"
+    TXT_STORAGE_PATH: str = "data/extracted_text"
     
     DEFAULT_BATCH_SIZE: int = 50
+    DEFAULT_SCHEME: str = "ltc"
 
-    # Procura o ficheiro .env na raiz
-    model_config = SettingsConfigDict(env_file=".env")
+    # Carrega automaticamente do ficheiro .env
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 settings = Settings()

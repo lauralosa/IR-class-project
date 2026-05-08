@@ -1,9 +1,15 @@
 import numpy as np
+import logging
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import classification_report, accuracy_score
 from src.search.processor import TextProcessor
+from src.config import settings
+from collections import Counter
+
+# Configuração do Logger
+logger = logging.getLogger("CLASSIFIER")
 
 class DocumentClassifier:
     def __init__(self):
@@ -12,6 +18,7 @@ class DocumentClassifier:
         # Um alpha menor ajuda o modelo a ser mais sensível a termos raros
         self.model = MultinomialNB(alpha=0.1)
         self.vectorizer = TfidfVectorizer(max_features=5000)
+
         self.categories_map = {
     'AI & Robotics': [
         'intelligence', 'ia', 'inteligência', 'robótica', 'robot', 
@@ -41,6 +48,11 @@ class DocumentClassifier:
 
     def prepare_and_train(self, documents):
         """REQ-B42: Train classifier on research publication categories."""
+        if not documents:
+            logger.error("Tentativa de treinar classificador com lista de documentos vazia.")
+            return 0
+        logger.info(f"A iniciar treino do classificador com {len(documents)} documentos...")
+
         texts = []
         labels = []
 
@@ -57,7 +69,7 @@ class DocumentClassifier:
         X = self.vectorizer.fit_transform(texts)
         y = np.array(labels)
 
-        from collections import Counter
+        
         print(f" Distribuição das categorias: {Counter(labels)}")
 
         # REQ-B44: Dividir para avaliação (80% treino, 20% teste)
@@ -68,12 +80,24 @@ class DocumentClassifier:
 
         # Avaliação
         y_pred = self.model.predict(X_test)
-        print("\n---  PERFORMANCE DO CLASSIFICADOR (REQ-B44) ---")
-        print(classification_report(y_test, y_pred, zero_division=0))
-        return accuracy_score(y_test, y_pred)
+        acc = accuracy_score(y_test, y_pred)
+        report = classification_report(y_test, y_pred, zero_division=0)
+
+        # Guardar relatório nos logs
+        logger.info("--- PERFORMANCE DO CLASSIFICADOR ---")
+        logger.info(f"Precisão Global (Accuracy): {acc:.4f}")
+        logger.debug(f"\n{report}")
+        
+        return acc
 
     def predict_category(self, title, abstract):
-        """REQ-B43: Categorize documents into subject areas automatically."""
-        text = f"{title} {abstract}"
-        vec = self.vectorizer.transform([text])
-        return self.model.predict(vec)[0]
+        """Categorizar novos documentos automaticamente."""
+        try:
+            text = f"{title} {abstract}"
+            vec = self.vectorizer.transform([text])
+            prediction = self.model.predict(vec)[0]
+            logger.debug(f"Predição efetuada: '{title[:30]}...' -> {prediction}")
+            return prediction
+        except Exception as e:
+            logger.error(f"Erro na predição: {str(e)}")
+            return "General Engineering"
