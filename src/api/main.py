@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Query, HTTPException, Response, Path
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import time
 from enum import Enum
 from src.search.indexer import InvertedIndex
@@ -37,6 +38,16 @@ app = FastAPI(
     version="1.0.0"
 )
 logger.info(f"Sistema {settings.APP_NAME} a iniciar em modo {settings.ENV}...")
+
+# 2. ADICIONAR O CORS AQUI (REQ-F75)
+# Isto permite que o React da tua colega consiga ler os teus dados
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"], # Portas comuns do Vite/React
+    allow_credentials=True,
+    allow_methods=["*"], # Permite GET, POST, etc.
+    allow_headers=["*"], # Permite todos os headers (importante para JSON)
+)
 
 # 2. Carregar o Motor (Otimizado: tentamos carregar primeiro)
 indexer = InvertedIndex()
