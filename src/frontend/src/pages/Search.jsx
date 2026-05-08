@@ -18,11 +18,57 @@ export default function Search() {
   // Esquema de pesos alinhados com o algoritmo escolhido
   const [weightingScheme, setWeightingScheme] = useState('ltc');
 
-  const handleSearch = (e) => {
+  // API e Resultados
+  const [results, setResults] = useState([]); // Vai guardar os documentos que vêm do Backend
+  const [isLoading, setIsLoading] = useState(false); // Controla se mostramos "A carregar..."
+  const [error, setError] = useState(null); // Guarda mensagens de erro se a API falhar
+
+  const handleSearch = async (e) => {
     e.preventDefault();
-    console.log("A pesquisar por:", query);
-    // Isto vai imprimir no inspecionar elemento as opções escolhidas
-    console.log("Opções da Sidebar:", { processing, removeStopWords, language, algorithm });
+    if (!query.trim()) return; // Não pesquisa se a barra estiver vazia
+
+    setIsLoading(true); // Começa o estado de loading
+    setError(null); // Limpa erros de pesquisas anteriores
+
+    try {
+      // Sincronizar UI com backend. Vamos construir os parâmetros do URL dinamicamente!
+      const params = new URLSearchParams({
+        q: query,
+        lang: language,
+        processing: processing,
+        stop_words: removeStopWords,
+        algo: algorithm,
+        target: searchTarget,
+        area: researchArea,
+        author_mode: authorMode
+      });
+
+      // Só envia o esquema de pesos se o algoritmo for o customizado
+      if (algorithm === 'custom') {
+        params.append('weights', weightingScheme);
+      }
+
+      // Comunicação API RESTful
+      // Fazemos o fetch à porta 8000 do Backend
+      const response = await fetch(`http://localhost:8000/search?${params.toString()}`);
+
+      // Tratamento de erros do servidor (ex: erro 500 ou 404)
+      if (!response.ok) {
+        throw new Error(`Erro do servidor: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      
+      setResults(data.results || []); 
+
+    } catch (err) {
+      console.error("Erro na pesquisa:", err);
+      // Feedback claro ao utilizador
+      setError("Não foi possível ligar ao servidor. Verifica se a API está a correr na porta 8000."); 
+    } finally {
+      setIsLoading(false); // Para o loading, quer tenha dado erro ou sucesso
+    }
   };
 
   return (
@@ -242,7 +288,7 @@ export default function Search() {
               </div>
             )}
 
-            {/* REQ-F19: Mostrar cálculo de semelhança fixo */}
+            {/* Mostrar cálculo de semelhança fixo */}
             <div style={{ marginTop: '15px', fontSize: '0.85rem', color: '#6b7280', lineHeight: '1.4', padding: '10px', background: '#f0fdf4', borderRadius: '6px', border: '1px solid #bbf7d0' }}>
               <strong>Cálculo de Semelhança:</strong><br/>
               <span style={{ color: '#166534' }}>Similaridade do Cosseno</span>
@@ -250,8 +296,32 @@ export default function Search() {
           </div>
 
         </aside>
-        <section className="results-placeholder">
-          <p>Resultados da pesquisa aparecerão aqui.</p>
+        <section className="results-placeholder" style={{ flexDirection: 'column' }}>
+          {/* Estado de Loading */}
+          {isLoading ? (
+            <div className="loading-state">
+              <div className="spinner"></div>
+              <p>A procurar no RepositóriUM...</p>
+            </div>
+          ) : error ? (
+            /* Estado de Erro */
+            <div className="error-state" style={{ color: '#AA192B', textAlign: 'center', maxWidth: '400px' }}>
+              <span style={{ fontSize: '2rem' }}>⚠️</span>
+              <p style={{ fontWeight: 'bold', marginTop: '10px' }}>Oops! Algo correu mal.</p>
+              <p style={{ fontSize: '0.9rem' }}>{error}</p>
+            </div>
+          ) : results.length > 0 ? (
+            /* Estado de Sucesso (Será formatado na Fase 5) */
+            <div className="results-success" style={{ width: '100%', textAlign: 'left' }}>
+              <p style={{ color: '#16a34a', fontWeight: 'bold' }}>✅ Ligação bem-sucedida! Recebemos {results.length} resultados.</p>
+              <pre style={{ background: '#f3f4f6', padding: '15px', borderRadius: '8px', marginTop: '10px', fontSize: '0.8rem', overflowX: 'auto' }}>
+                {JSON.stringify(results, null, 2)}
+              </pre>
+            </div>
+          ) : (
+            /* Estado Vazio Inicial */
+            <p>Resultados da pesquisa aparecerão aqui.</p>
+          )}
         </section>
       </div>
     </div>
