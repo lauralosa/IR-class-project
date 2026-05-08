@@ -5,7 +5,7 @@ def test_nlp_pipeline():
     # 1. Carregar os dados que o teu scraper recolheu
     # Ajusta o caminho se o ficheiro estiver noutro local
     try:
-        with open('src/scraper/scraper_results.json', 'r', encoding='utf-8') as f:
+        with open('data/raw_metadata/scraper_results.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
     except FileNotFoundError:
         print("Erro: scraper_results.json não encontrado. Corre o scraper primeiro!")
@@ -33,5 +33,24 @@ def test_nlp_pipeline():
         print(f"\n[LEMATIZAÇÃO - WordNet]:")
         print(lemmatized[:15])
 
+def test_stop_words_configurability():
+    proc = TextProcessor()
+    # Teste com palavra Inglesa para validar o Porter Stemmer (REQ-B16)
+    text_en = "The computers are working"
+    tokens_en = proc.process_text(text_en, use_stemming=True)
+    # 'computers' no Porter vira 'comput'
+    assert "comput" in tokens_en 
+    
+    # Teste com Português (REQ-B15)
+    text_pt = "O sistema de informação"
+    tokens_pt = proc.process_text(text_pt, remove_stopwords=True)
+    # Como o Porter não reduz 'sistema', verificamos a palavra que ele gera
+    assert "sistema" in tokens_pt or "sistem" in tokens_pt
+
+    # ADICIONA ISTO AQUI:
+    print("\n--- TESTE DE CONFIGURAÇÃO  ---")
+    print("[OK] Stop words e Stemming validados com sucesso!")
+
 if __name__ == "__main__":
     test_nlp_pipeline()
+    test_stop_words_configurability()

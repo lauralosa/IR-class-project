@@ -13,10 +13,10 @@ def test_indexing():
     print(f"--- TESTE DO ÍNDICE INVERTIDO ---")
     
     # 2. Inicializar o Indexante
-    indexer = InvertedIndex()
+    idx = InvertedIndex()
     
     # 3. Criar o Índice
-    indexer.create_index(json_path)
+    idx.create_index(json_path, strategy="lemmatization", batch_size=50)
     
     # 4. Verificar alguns termos
     # Vamos testar termos que sabemos que existem nos teus 15 docs
@@ -24,11 +24,11 @@ def test_indexing():
     
     print("\nResultados da Pesquisa no Índice (Postings):")
     for term in test_terms:
-        postings = indexer.get_postings(term)
+        postings = idx.get_postings(term)
         print(f"Palavra '{term}': encontrada nos documentos {postings}")
 
     # 5. Guardar o índice para ver o ficheiro JSON final
-    indexer.save_index('index.json')
+    idx.save_index('index.json')
     print("\n[OK] Índice guardado em 'index.json' para inspeção visual.")
 
 if __name__ == "__main__":
