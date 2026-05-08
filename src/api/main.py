@@ -6,6 +6,23 @@ from src.search.indexer import InvertedIndex
 from src.search.query_engine import QueryEngine
 from typing import Optional, List
 import dicttoxml
+import logging
+import os
+from src.config import settings
+
+# Configuração do Logger (REQ-B69)
+logging.basicConfig(
+    level=logging.INFO if not settings.DEBUG else logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    handlers=[
+        logging.FileHandler("system.log"), # Escreve no ficheiro
+        logging.StreamHandler()            # Escreve no terminal
+    ]
+)
+logger = logging.getLogger("API-REPOSITORIUM")
+
+
+
 
 # REQ-B66: Usar Enums garante que o utilizador só escolhe esquemas válidos
 class WeightingScheme(str, Enum):
@@ -19,6 +36,7 @@ app = FastAPI(
     description="API REST para recuperação de informação científica",
     version="1.0.0"
 )
+logger.info(f"Sistema {settings.APP_NAME} a iniciar em modo {settings.ENV}...")
 
 # 2. Carregar o Motor (Otimizado: tentamos carregar primeiro)
 indexer = InvertedIndex()
