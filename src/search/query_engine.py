@@ -188,7 +188,7 @@ class QueryEngine:
         REQ-B48: Phrase Queries
         """
         logger.debug(f"Executando query booleana: {query_str}")
-        
+
         # 1. Extração de Frases ("termo termo") - REQ-B48
         # Substituímos frases entre aspas por um token especial para não as partir no split
         phrases = re.findall(r'"([^"]*)"', query_str)
@@ -417,6 +417,12 @@ class QueryEngine:
     def generate_snippet(self, doc_id, query_terms, window_chars=150):
         doc = self.index_obj.documents.get(doc_id) or self.index_obj.documents.get(str(doc_id))
         if not doc: return ""
+
+        # Se query_terms for uma string (ex: "machine learning"), processar em lista de termos
+        if isinstance(query_terms, str):
+            query_terms = self.processor.process_text(query_terms, use_stemming=True)
+        
+        if not query_terms: return doc.get('abstract', '')[:250] + "..."
 
         # 1. Tentar ler o texto literal (TXT) em vez dos tokens (JSON)
         # Convertemos: data\processed_text\doc_11.json -> data\extracted_text\doc_11.txt
