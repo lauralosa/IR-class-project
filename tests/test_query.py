@@ -64,7 +64,7 @@ def test_search_engine():
 
     print(f"Query de Ranking: '{query_rank}'")
     for doc_id, score in rank_results[:5]:
-        doc_data = indexer.documents.get(first_id) or indexer.documents.get(str(first_id))
+        doc_data = indexer.documents.get(doc_id) or indexer.documents.get(str(doc_id))
         title = doc_data.get('title', 'N/A') if doc_data else 'Documento não encontrado'
         print(f"  - Score: {score:.4f} | [{doc_id}] {title[:60]}...")
 

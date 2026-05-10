@@ -170,7 +170,6 @@ def search_by_author(author_name: str = Path(..., min_length=3, description="Nom
     name_lower = author_name.lower()
     
     for doc_id, doc in indexer.documents.items():
-        authors = doc.get("authors", [])
         # Verifica se o nome do autor está na lista de autores do doc
         if any(name_lower in a.lower() for a in doc.get("authors", [])):
             results.append({
