@@ -51,9 +51,9 @@ app.add_middleware(
 
 # 2. Carregar o Motor (Otimizado: tentamos carregar primeiro)
 indexer = InvertedIndex()
-try:
-    indexer.load_index() # Evita re-indexar 110 docs a cada save do código
-except:
+# HACK: Corrige o bug do try/except da Laura
+if not indexer.load_index():
+    print("Índice não encontrado! A iniciar criação de um novo índice...")
     json_path = settings.RAW_DATA_PATH
     indexer.create_index(json_path)
 

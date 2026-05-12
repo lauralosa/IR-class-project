@@ -69,10 +69,10 @@ class InvertedIndex:
         os.makedirs(processed_dir, exist_ok=True) # Cria a pasta se não existir
 
         try:
-            with open(json_path, 'r', encoding='utf-8') as f:
+            with open(target_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
         except FileNotFoundError:
-            print(f"Erro: Ficheiro {json_path} não encontrado.")
+            print(f"Erro: Ficheiro {target_path} não encontrado.")
             return
 
         self.num_docs = len(data)
@@ -285,7 +285,7 @@ class InvertedIndex:
             data = json.load(f)
 
         self.num_docs = data["metadata"]["total_docs"]
-        self.documents = {int(k): v for k, v in data["documents"].items()}
+        self.documents = {k: v for k, v in data["documents"].items()}
         
         # Reconstruir o índice interno
         self.index = {}

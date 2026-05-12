@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     
     STORAGE_DIR: str = "data"
-    INDEX_FILE: str = "data/index.json"
+    INDEX_FILE: str = "data/indexes/index.json"
     RAW_DATA_PATH: str = "data/raw_metadata/scraper_results.json"
     PDF_STORAGE_PATH: str = "data/pdfs"
     TXT_STORAGE_PATH: str = "data/extracted_text"
