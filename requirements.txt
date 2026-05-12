@@ -1,22 +1,24 @@
-# --- Recolha de Dados ---
+# --- Recolha de Dados (Web Scraping & PDFs) ---
 selenium
 webdriver-manager
+PyMuPDF
 
-# --- Processamento e Motor de Busca ---
+# --- Processamento, Machine Learning e Motor de Busca ---
 nltk
 scikit-learn
+numpy
 
-# --- API REST  ---
+# --- API REST e Frontend Integration ---
 fastapi
 uvicorn
-
-# --- Testes e Qualidade (Critérios de Avaliação) ---
-pytest
-pytest-cov
-
 pydantic
-pydantic_settings
+pydantic-settings
 dicttoxml
+
+# --- Utilitários de Sistema e Configuração ---
 psutil
 python-dotenv
-PyMuPDF
+
+# --- Testes e Qualidade ---
+pytest
+pytest-cov

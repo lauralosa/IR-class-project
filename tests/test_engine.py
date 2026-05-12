@@ -11,7 +11,7 @@ with open("mini_docs.json", "w") as f:
     json.dump(mini_data, f)
 
 # 2. Inicializar e Indexar
-index = InvertedIndex(storage_dir="data/test") # Usa uma pasta de teste limpa
+index = InvertedIndex()
 index.index = {} # Garante que o dicionário está vazio
 index.create_index("mini_docs.json")
 

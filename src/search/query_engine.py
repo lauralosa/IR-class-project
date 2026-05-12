@@ -20,13 +20,8 @@ class QueryEngine:
         logger.info("QueryEngine inicializado.")
 
     def get_idf(self, term):
-        """Calcula o IDF com base no estado atual do índice."""
-        df = len(self.index_obj.index.get(term, []))
-        if df == 0:
-            return 0.0
-        
-        # Fórmula padrão: log10(N/df)
-        return math.log10(self.index_obj.num_docs / df)
+        """Calcula o IDF delegado ao index_obj para garantir mesma suavização."""
+        return self.index_obj.get_idf(term)
     
     def _get_weight(self, tf, term, scheme="tfidf"):
         """REQ-B39: Suporta diferentes esquemas de pesagem."""
@@ -89,8 +84,10 @@ class QueryEngine:
         for term, q_weight in query_weights.items():
             postings, _ = self.index_obj.get_postings(term)
             for posting in postings:
-                doc_id = str(posting[0])
-                doc_info = self.index_obj.documents.get(doc_id)
+                doc_id_int = posting[0]
+                doc_id = str(doc_id_int)
+                # Correção: Tentar as duas chaves (str ou int) dependendo se foi carregado JSON ou criado fresco
+                doc_info = self.index_obj.documents.get(doc_id) or self.index_obj.documents.get(doc_id_int)
                 if not doc_info: continue
 
                 # Lógica de Filtro por Escopo (Título / Resumo / Tudo)
@@ -189,11 +186,17 @@ class QueryEngine:
         """
         logger.debug(f"Executando query booleana: {query_str}")
         
-        # 1. Extração de Frases ("termo termo") - REQ-B48
-        # Substituímos frases entre aspas por um token especial para não as partir no split
-        phrases = re.findall(r'"([^"]*)"', query_str)
-        for i, p in enumerate(phrases):
-            query_str = query_str.replace(f'"{p}"', f'PHRASE_{i}')
+        # 1. Extração de Frases e Proximidade ("termo termo" ou "termo termo"~N) - REQ-B48
+        phrases_data = []
+        def replace_phrase(match):
+            idx = len(phrases_data)
+            phrase_text = match.group(1)
+            dist_str = match.group(2)
+            dist = int(dist_str) if dist_str else 1
+            phrases_data.append((phrase_text, dist))
+            return f"PHRASE_{idx}"
+            
+        query_str = re.sub(r'"([^"]*)"(?:~(\d+))?', replace_phrase, query_str)
 
         # 2. Tokenização e AND implícito - REQ-B26
         raw_tokens = query_str.split()
@@ -233,56 +236,66 @@ class QueryEngine:
 
         for token in output_queue:
             if token == "NOT":
-                s1 = results_stack.pop()
-                results_stack.append(all_doc_ids - s1)
+                p1, _ = results_stack.pop()
+                all_postings = [[doc_id, []] for doc_id in sorted(all_doc_ids)]
+                diff = self.difference(all_postings, p1)
+                results_stack.append((diff, []))
             elif token == "AND":
-                s2, s1 = results_stack.pop(), results_stack.pop()
-                results_stack.append(s1 & s2)
+                p2, s2 = results_stack.pop()
+                p1, s1 = results_stack.pop()
+                res = self.intersect_with_skips(p1, s1, p2, s2)
+                results_stack.append((res, []))
             elif token == "OR":
-                s2, s1 = results_stack.pop(), results_stack.pop()
-                results_stack.append(s1 | s2)
+                p2, _ = results_stack.pop()
+                p1, _ = results_stack.pop()
+                res = self.union(p1, p2)
+                results_stack.append((res, []))
             else:
                 # É um termo ou uma frase
                 if token.startswith("PHRASE_"):
-                    # Resolver Frase - REQ-B48
+                    # Resolver Frase e Proximidade - REQ-B48
                     idx = int(token.split("_")[1])
-                    phrase_raw = phrases[idx]
+                    phrase_raw, max_dist = phrases_data[idx]
                     phrase_terms = self.processor.process_text(phrase_raw)
-                    results_stack.append(set(self.search_phrase(phrase_terms)))
+                    phrase_docs = self.search_phrase(phrase_terms, max_distance=max_dist)
+                    dummy_postings = [[doc_id, []] for doc_id in phrase_docs]
+                    results_stack.append((dummy_postings, []))
                 else:
                     # Resolver Termo Único com Expansão Opcional - REQ-B47
                     processed = self.processor.process_text(token)
                     term = processed[0] if processed else ""
                     
-                    # Se expand=True, buscamos sinónimos
-                    terms_to_search = [term]
                     if expand and term:
                         terms_to_search = self.expand_query([term])
-                    
-                    # Unimos os resultados de todos os sinónimos (OR entre eles)
-                    term_results = set()
-                    for t in terms_to_search:
-                        p_list, _ = self.index_obj.get_postings(t)
-                        term_results.update([p[0] for p in p_list])
-                    results_stack.append(term_results)
+                        combined_p = []
+                        for t in terms_to_search:
+                            p_list, _ = self.index_obj.get_postings(t)
+                            combined_p = self.union(combined_p, p_list)
+                        results_stack.append((combined_p, []))
+                    else:
+                        p_list, s_list = self.index_obj.get_postings(term)
+                        results_stack.append((p_list, s_list))
 
-        return sorted(list(results_stack[0])) if results_stack else []
+        if results_stack:
+            final_p, _ = results_stack[0]
+            return [p[0] for p in final_p]
+        return []
 
     def intersect_with_skips(self, p1, s1, p2, s2):
-        """Versão rigorosa da interseção otimizada."""
+        """Versão rigorosa da interseção otimizada com skips."""
         answer = []
+        if not p1 or not p2: return [] # Segurança contra divisões por zero
         i, j = 0, 0
         skip_interval_1 = round(math.sqrt(len(p1)))
         skip_interval_2 = round(math.sqrt(len(p2)))
 
         while i < len(p1) and j < len(p2):
             if p1[i][0] == p2[j][0]:
-                answer.append(p1[i][0])
+                answer.append([p1[i][0], []]) # Formato de posting
                 i += 1
                 j += 1
             elif p1[i][0] < p2[j][0]:
-                # Tenta saltar em p1
-                if i in s1:
+                if i in s1 and skip_interval_1 > 0:
                     next_skip_idx = i + skip_interval_1
                     if next_skip_idx < len(p1) and p1[next_skip_idx][0] <= p2[j][0]:
                         while next_skip_idx < len(p1) and p1[next_skip_idx][0] <= p2[j][0]:
@@ -291,8 +304,7 @@ class QueryEngine:
                     else: i += 1
                 else: i += 1
             else:
-                # Tenta saltar em p2
-                if j in s2:
+                if j in s2 and skip_interval_2 > 0:
                     next_skip_idx = j + skip_interval_2
                     if next_skip_idx < len(p2) and p2[next_skip_idx][0] <= p1[i][0]:
                         while next_skip_idx < len(p2) and p2[next_skip_idx][0] <= p1[i][0]:
@@ -312,15 +324,18 @@ class QueryEngine:
     def union(self, p1, p2):
         ids1 = {p[0] for p in p1}
         ids2 = {p[0] for p in p2}
-        return sorted(list(ids1 | ids2))
+        return [[doc_id, []] for doc_id in sorted(list(ids1 | ids2))]
 
     def difference(self, p1, p2):
         ids2 = {p[0] for p in p2}
-        return [p[0] for p in p1 if p[0] not in ids2]
+        return [[p[0], []] for p in p1 if p[0] not in ids2]
     
     def get_document_similarity_matrix(self):
         """REQ-B40: Gera uma matriz de similaridade N x N entre todos os documentos."""
-        num_docs = self.index_obj.num_docs
+        doc_ids = sorted(list(self.index_obj.documents.keys()))
+        num_docs = len(doc_ids)
+        doc_id_to_idx = {str(doc_id): i for i, doc_id in enumerate(doc_ids)}
+        
         matrix = np.zeros((num_docs, num_docs))
         
         print(f" A gerar matriz de similaridade para {num_docs} documentos...")
@@ -329,9 +344,11 @@ class QueryEngine:
         doc_vectors = {}
         for term, postings in self.index_obj.index.items():
             idf = self.get_idf(term)
-            for doc_id, tf in postings:
-                if doc_id not in doc_vectors: doc_vectors[doc_id] = {}
-                doc_vectors[doc_id][term] = tf * idf
+            for doc_id, pos_list in postings:
+                idx = doc_id_to_idx.get(str(doc_id))
+                if idx is None: continue
+                if idx not in doc_vectors: doc_vectors[idx] = {}
+                doc_vectors[idx][term] = len(pos_list) * idf
 
         # 2. Calcular Cosseno entre cada par (i, j)
         for i in range(num_docs):
@@ -352,16 +369,18 @@ class QueryEngine:
                     if term in vec_j:
                         dot_product += weight * vec_j[term]
                 
-                mag_i = self.index_obj.documents[i].get('magnitude', 1.0)
-                mag_j = self.index_obj.documents[j].get('magnitude', 1.0)
+                real_doc_i = doc_ids[i]
+                real_doc_j = doc_ids[j]
+                mag_i = self.index_obj.documents.get(real_doc_i, {}).get('magnitude', 1.0)
+                mag_j = self.index_obj.documents.get(real_doc_j, {}).get('magnitude', 1.0)
                 
                 sim = dot_product / (mag_i * mag_j) if (mag_i * mag_j) > 0 else 0
                 matrix[i, j] = matrix[j, i] = round(float(sim), 4)
                 
         return matrix
 
-    def search_phrase(self, terms):
-        """REQ-B48: Procura por uma frase exata usando posições."""
+    def search_phrase(self, terms, max_distance=1):
+        """REQ-B48: Procura por uma frase exata ou termos próximos usando posições."""
         if not terms: return []
         
         # 1. Obter postings para todos os termos
@@ -376,20 +395,26 @@ class QueryEngine:
         for p_dict in postings_list[1:]:
             common_docs &= set(p_dict.keys())
 
-        # 3. Verificar contiguidade (posições seguidas)
+        # 3. Verificar proximidade (distância máxima)
         results = []
         for doc_id in common_docs:
-            # Pegamos nas posições do primeiro termo
             possible_starts = postings_list[0][doc_id]
             
             for start_pos in possible_starts:
                 is_match = True
+                current_pos = start_pos
+                
                 for i in range(1, len(terms)):
                     next_term_positions = postings_list[i][doc_id]
-                    # O próximo termo tem de estar na posição (start_pos + i)
-                    if (start_pos + i) not in next_term_positions:
+                    # O próximo termo tem de estar a uma distância <= max_distance do atual
+                    # E à frente do termo anterior (current_pos < pos <= current_pos + max_distance)
+                    valid_positions = [pos for pos in next_term_positions if current_pos < pos <= current_pos + max_distance]
+                    
+                    if not valid_positions:
                         is_match = False
                         break
+                    # Atualiza o current_pos para a posição encontrada mais próxima
+                    current_pos = valid_positions[0] 
                 
                 if is_match:
                     results.append(doc_id)
@@ -415,6 +440,11 @@ class QueryEngine:
     
 
     def generate_snippet(self, doc_id, query_terms, window_chars=150):
+        # Correção: Se passarem string em vez de lista, separar para não iterar letra a letra
+        if isinstance(query_terms, str):
+            # Limpar pontuação básica para não falhar no highlight
+            query_terms = [t for t in re.split(r'\W+', query_terms) if t]
+            
         doc = self.index_obj.documents.get(doc_id) or self.index_obj.documents.get(str(doc_id))
         if not doc: return ""
 

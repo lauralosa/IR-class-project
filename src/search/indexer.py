@@ -8,6 +8,7 @@ import time
 import psutil
 import logging
 from src.config import settings
+from src.ml.classifier import DocumentClassifier
 
 # Configuração do Logger (REQ-B69)
 logger = logging.getLogger("INDEXER")
@@ -18,6 +19,7 @@ class InvertedIndex:
         self.skips = {}      
         self.documents = {}  
         self.processor = TextProcessor()
+        self.classifier = DocumentClassifier() # Integrou o modelo de ML
         self.num_docs = 0    
         self.author_index = {}
         self.doc_magnitudes = {}
@@ -33,15 +35,17 @@ class InvertedIndex:
         os.makedirs(self.storage_dir, exist_ok=True)
 
     def _clean_full_text(self, text):
-        """Heurística para remover bibliografia e índices."""
+        """Heurística para remover bibliografia e índices, restrita ao final do documento."""
         markers = ["referências", "references", "bibliografia", "bibliography"]
         temp_text = text.lower()
         
+        # Procuramos os marcadores apenas nos últimos 30% do documento
+        # para evitar cortes se a palavra for usada no abstract.
+        search_start = int(len(temp_text) * 0.70)
+        
         for marker in markers:
-            if marker in temp_text:
-                # Encontra a última ocorrência do marcador para evitar cortes precoces
-                idx = temp_text.rfind(marker)
-                # Corta o texto, mantendo apenas o que está antes da bibliografia
+            idx = temp_text.find(marker, search_start)
+            if idx != -1:
                 return text[:idx]
         return text
 
@@ -79,6 +83,10 @@ class InvertedIndex:
         txt_folder = settings.TXT_STORAGE_PATH
         self._build_author_index(data)
 
+        # REQ-B42: Treinar classificador ML antes da indexação
+        docs_dict = {i: d for i, d in enumerate(data)}
+        self.classifier.prepare_and_train(docs_dict)
+
         logger.info(f"A processar {self.num_docs} documentos em lotes de {b_size}...")
 
         for i in range(0, self.num_docs, b_size):
@@ -115,6 +123,9 @@ class InvertedIndex:
                     use_lemmatization=(strategy == "lemmatization"), 
                     remove_stopwords=remove_stopwords
                 )
+
+                # REQ-B43: Categorização Automática
+                doc['category'] = self.classifier.predict_category(doc.get('title', ''), doc.get('abstract', ''))
 
                 # --- Persistência ---
                 processed_path = os.path.join(processed_dir, f"doc_{doc_id}.json")
@@ -296,6 +307,9 @@ class InvertedIndex:
         self.metadata['reduction_strategy'] = data["metadata"].get("reduction_strategy", "stemming")
         self.metadata['stop_words_removed'] = data["metadata"]["stop_words_removed"]
         
+        # Treinar o classificador com os dados carregados
+        self.classifier.prepare_and_train(self.documents)
+        
         logger.info(f"Índice carregado ({self.metadata['reduction_strategy']}).")
         return True
 
@@ -314,8 +328,10 @@ class InvertedIndex:
             if any(d['title'] == doc['title'] for d in self.documents.values()):
                 continue
             
+            # REQ-B43: Classificar novo documento
+            doc['category'] = self.classifier.predict_category(doc.get('title', ''), doc.get('abstract', ''))
             self.documents[next_id] = doc
-            text = f"{doc.get('title', '')} {doc.get('abstract', '')}"
+            text = f"{doc.get('title', '')} {doc.get('abstract', '')} {doc.get('category', '')}"
             
             # 1. Atenção aos parâmetros: usa a estratégia guardada nos metadados
             strategy = self.metadata.get('reduction_strategy', 'stemming')
@@ -325,14 +341,33 @@ class InvertedIndex:
                 use_lemmatization=(strategy == 'lemmatization')
             )
             
-            term_freqs = {}
-            for token in tokens:
-                term_freqs[token] = term_freqs.get(token, 0) + 1
+            # --- Correção: Persistir tokenização do documento ---
+            processed_dir = os.path.join(self.storage_dir, "processed_text")
+            os.makedirs(processed_dir, exist_ok=True)
+            processed_path = os.path.join(processed_dir, f"doc_{next_id}.json")
+            with open(processed_path, 'w', encoding='utf-8') as f_out:
+                json.dump(tokens, f_out)
+            self.documents[next_id]['processed_text_path'] = processed_path
+
+            # --- Correção: Atualizar índice de autores ---
+            authors = doc.get('authors', [])
+            for author in authors:
+                if author not in self.author_index:
+                    self.author_index[author] = []
+                if next_id not in self.author_index[author]:
+                    self.author_index[author].append(next_id)
+            
+            # --- Correção: Estrutura [doc_id, positions] em vez de [doc_id, tf] ---
+            term_positions = {}
+            for pos, token in enumerate(tokens):
+                if token not in term_positions:
+                    term_positions[token] = []
+                term_positions[token].append(pos)
                 
-            for term, tf in term_freqs.items():
+            for term, positions in term_positions.items():
                 if term not in self.index:
                     self.index[term] = []
-                self.index[term].append([next_id, tf])
+                self.index[term].append([next_id, positions])
             
             next_id += 1
             docs_added += 1
