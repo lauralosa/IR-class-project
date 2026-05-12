@@ -270,7 +270,7 @@ class InvertedIndex:
         
         print(f" Índice estruturado com sucesso em: {path}")
 
-    def load_index(self, filename="None"):
+    def load_index(self, filename=None):
         
         """
         Carrega o índice estruturado para memória.

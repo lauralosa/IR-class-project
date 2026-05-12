@@ -2,6 +2,7 @@ import os
 from src.search.indexer import InvertedIndex
 from src.search.query_engine import QueryEngine
 from src.config import settings
+import logging
 
 logger = logging.getLogger("TEST-PROCESSOR")
 

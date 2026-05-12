@@ -45,7 +45,8 @@ class TextProcessor:
         tokens = [t for t in tokens if t.isalpha() and t not in string.punctuation and len(t) > 2]
 
         # 3. Remoção de Stop Words (REQ-B15)
-        tokens = [t for t in tokens if t not in self.stop_words]
+        if remove_stopwords:
+            tokens = [t for t in tokens if t not in self.stop_words]
 
         # 3. Lematização (REQ-B17) - Prioritária se ativada
         if use_lemmatization:

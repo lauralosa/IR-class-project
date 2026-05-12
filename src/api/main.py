@@ -77,31 +77,104 @@ def home():
 @app.get("/search", tags=["Search"])
 def search(
     q: str = Query(..., min_length=2),
-    # REQ-F11, F12: Parâmetros de processamento dinâmico
-    stemming: bool = True,
-    lemmatization: bool = False,
-    stopwords: bool = True,
-    # REQ-F15: Escopo da pesquisa
-    scope: str = Query("all", pattern="^(all|title|abstract)$"),
+    # --- Parâmetros alinhados com o Frontend (Search.jsx) ---
+    # REQ-F11: Idioma (português/inglês)
+    lang: str = Query("PT", pattern="^(PT|EN)$"),
+    # REQ-F12: Técnica de processamento (stemming ou lemmatization)
+    processing: str = Query("stemming", pattern="^(stemming|lemmatization)$"),
+    # REQ-F15: Remoção de stop words
+    stop_words: bool = True,
+    # REQ-F18: Algoritmo de ordenação (custom, sklearn, boolean)
+    algo: str = Query("custom", pattern="^(custom|sklearn|boolean)$"),
+    # REQ-F15: Escopo da pesquisa (all, title, abstract, fulltext)
+    target: str = Query("all", pattern="^(all|title|abstract|fulltext)$"),
+    # REQ-F25: Área de investigação
+    area: str = "all",
+    # REQ-F27: Modo de pesquisa por autor
+    author_mode: bool = False,
+    # REQ-F20: Esquema de pesos SMART (só para algoritmo custom)
+    weights: WeightingScheme = WeightingScheme.ltc,
     # REQ-F31, F32: Paginação
     page: int = Query(1, ge=1),
     page_size: int = Query(10, ge=1, le=50),
-    # REQ-F18, F20: Algoritmo e Pesos
-    method: str = "custom",
-    scheme: WeightingScheme = WeightingScheme.ltc
 ):
     start_time = time.perf_counter()
-    
-    # 1. Executa a pesquisa (O motor precisa de aceitar estes novos filtros)
+    logger.info(f"Pesquisa recebida: q='{q}' lang={lang} processing={processing} algo={algo} target={target}")
+
+    # --- Traduzir parâmetros do Frontend para o motor de busca ---
+    use_stemming = (processing == "stemming")
+    use_lemmatization = (processing == "lemmatization")
+    # Mapear 'fulltext' para 'all' (o motor já indexa o texto completo)
+    scope = "all" if target == "fulltext" else target
+
+    # --- Modo Autor: pesquisa pelo endpoint de autor internamente ---
+    if author_mode:
+        results_output = []
+        name_lower = q.lower()
+        for doc_id, doc in indexer.documents.items():
+            authors = doc.get("authors", [])
+            if any(name_lower in a.lower() for a in authors):
+                results_output.append({
+                    "id": doc_id,
+                    "score": 1.0,
+                    "title": doc.get("title"),
+                    "year": doc.get("year"),
+                    "snippet": doc.get("abstract", "")[:200] + "...",
+                    "url": doc.get("pdf_url"),
+                    "authors": authors
+                })
+        query_time = time.perf_counter() - start_time
+        return {
+            "metadata": {
+                "total": len(results_output), "page": 1, "page_size": len(results_output),
+                "time": round(query_time, 4),
+                "config": {"mode": "author", "lang": lang}
+            },
+            "results": results_output
+        }
+
+    # --- Modo Booleano: usar o motor booleano ---
+    if algo == "boolean":
+        try:
+            results_ids = engine.execute_boolean_query(q)
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Erro na sintaxe da query booleana: {str(e)}")
+        
+        output = []
+        for doc_id in results_ids:
+            doc = indexer.documents.get(doc_id) or indexer.documents.get(str(doc_id))
+            if not doc: continue
+            output.append({
+                "id": doc_id,
+                "score": 1.0,
+                "title": doc.get("title"),
+                "year": doc.get("year"),
+                "snippet": engine.generate_snippet(doc_id, q),
+                "url": doc.get("pdf_url"),
+                "authors": doc.get("authors")
+            })
+        query_time = time.perf_counter() - start_time
+        return {
+            "metadata": {
+                "total": len(output), "page": 1, "page_size": len(output),
+                "time": round(query_time, 4),
+                "config": {"algo": "boolean", "lang": lang}
+            },
+            "results": output
+        }
+
+    # --- Modo Ranked (custom ou sklearn) ---
     results = engine.ranked_search(
-        q, 
-        use_stemming=stemming, 
-        use_lemmatization=lemmatization,
-        remove_stopwords=stopwords,
-        scope=scope # Precisamos de implementar este filtro no engine
+        q,
+        use_sklearn=(algo == "sklearn"),
+        weighting_scheme=weights.value,
+        use_stemming=use_stemming,
+        use_lemmatization=use_lemmatization,
+        remove_stopwords=stop_words,
+        scope=scope
     )
     
-    # 2. Lógica de Paginação (REQ-F31)
+    # Lógica de Paginação (REQ-F31)
     total_results = len(results)
     start_idx = (page - 1) * page_size
     end_idx = start_idx + page_size
@@ -109,19 +182,19 @@ def search(
     
     query_time = time.perf_counter() - start_time
 
-    # 3. Formatação da resposta para o Frontend
+    # Formatação da resposta para o Frontend
     output = []
     for doc_id, score in paginated_results:
-        doc = indexer.documents.get(str(doc_id))
+        doc = indexer.documents.get(doc_id) or indexer.documents.get(str(doc_id))
         if not doc: continue
         output.append({
             "id": doc_id,
             "score": round(score, 4),
             "title": doc.get("title"),
-            "year": doc.get("year"), # REQ-F25
-            "snippet": engine.generate_snippet(doc_id, q), # REQ-F26
-            "url": doc.get("pdf_url"), # REQ-F27
-            "authors": doc.get("authors") # REQ-F24
+            "year": doc.get("year"),
+            "snippet": engine.generate_snippet(doc_id, q),
+            "url": doc.get("pdf_url"),
+            "authors": doc.get("authors")
         })
 
     return {
@@ -130,7 +203,14 @@ def search(
             "page": page,
             "page_size": page_size,
             "time": round(query_time, 4),
-            "config": {"stemming": stemming, "lemma": lemmatization, "scope": scope}
+            "config": {
+                "lang": lang,
+                "processing": processing,
+                "stop_words": stop_words,
+                "algo": algo,
+                "scope": scope,
+                "weights": weights.value
+            }
         },
         "results": output
     }

@@ -1,24 +1,24 @@
-2026-05-08 19:00:10,644 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
-2026-05-08 19:00:10,649 [WARNING] INDEXER: Ficheiro de índice não encontrado.
+2026-05-08 19:00:10,644 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 19:00:10,649 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
 2026-05-08 19:00:10,651 [INFO] QUERY-ENGINE: QueryEngine inicializado.
 2026-05-08 19:00:42,722 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'cognitive' [Scope: all] [Method: Custom]
 2026-05-08 19:00:55,152 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
 2026-05-08 19:00:57,716 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
 2026-05-08 19:01:11,326 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
-2026-05-08 19:21:46,428 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
-2026-05-08 19:21:46,482 [WARNING] INDEXER: Ficheiro de índice não encontrado.
+2026-05-08 19:21:46,428 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 19:21:46,482 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
 2026-05-08 19:21:46,486 [INFO] QUERY-ENGINE: QueryEngine inicializado.
-2026-05-08 19:22:05,987 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
-2026-05-08 19:22:05,998 [WARNING] INDEXER: Ficheiro de índice não encontrado.
+2026-05-08 19:22:05,987 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 19:22:05,998 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
 2026-05-08 19:22:06,002 [INFO] QUERY-ENGINE: QueryEngine inicializado.
 2026-05-08 19:22:12,342 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
-2026-05-08 19:23:42,769 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
-2026-05-08 19:23:42,779 [WARNING] INDEXER: Ficheiro de índice não encontrado.
+2026-05-08 19:23:42,769 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 19:23:42,779 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
 2026-05-08 19:23:42,787 [INFO] INDEXER: A processar 110 documentos em lotes de 50...
-2026-05-08 19:23:55,505 [INFO] INDEXER: Lote concluído: 50/110
-2026-05-08 19:23:55,726 [INFO] INDEXER: Lote concluído: 100/110
-2026-05-08 19:23:55,783 [INFO] INDEXER: Lote concluído: 110/110
-2026-05-08 19:23:56,925 [INFO] INDEXER: Indexação concluída: 14.14s | Vocabulário: 21302 termos.
+2026-05-08 19:23:55,505 [INFO] INDEXER: Lote concluï¿½do: 50/110
+2026-05-08 19:23:55,726 [INFO] INDEXER: Lote concluï¿½do: 100/110
+2026-05-08 19:23:55,783 [INFO] INDEXER: Lote concluï¿½do: 110/110
+2026-05-08 19:23:56,925 [INFO] INDEXER: Indexaï¿½ï¿½o concluï¿½da: 14.14s | Vocabulï¿½rio: 21302 termos.
 2026-05-08 19:23:56,935 [INFO] QUERY-ENGINE: QueryEngine inicializado.
 2026-05-08 19:23:57,001 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
 2026-05-08 19:24:43,949 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'Filipa' [Scope: all] [Method: Custom]
@@ -26,13 +26,13 @@
 2026-05-08 19:24:47,581 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'Filipa' [Scope: all] [Method: Custom]
 2026-05-08 19:26:02,272 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'tese NOT blockchain' [Scope: all] [Method: Custom]
 2026-05-08 19:27:01,488 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
-2026-05-08 19:33:17,668 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
-2026-05-08 19:33:17,681 [WARNING] INDEXER: Ficheiro de índice não encontrado.
+2026-05-08 19:33:17,668 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 19:33:17,681 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
 2026-05-08 19:33:17,697 [INFO] INDEXER: A processar 110 documentos em lotes de 50...
-2026-05-08 19:33:29,820 [INFO] INDEXER: Lote concluído: 50/110
-2026-05-08 19:33:30,056 [INFO] INDEXER: Lote concluído: 100/110
-2026-05-08 19:33:30,114 [INFO] INDEXER: Lote concluído: 110/110
-2026-05-08 19:33:31,318 [INFO] INDEXER: Indexação concluída: 13.64s | Vocabulário: 21302 termos.
+2026-05-08 19:33:29,820 [INFO] INDEXER: Lote concluï¿½do: 50/110
+2026-05-08 19:33:30,056 [INFO] INDEXER: Lote concluï¿½do: 100/110
+2026-05-08 19:33:30,114 [INFO] INDEXER: Lote concluï¿½do: 110/110
+2026-05-08 19:33:31,318 [INFO] INDEXER: Indexaï¿½ï¿½o concluï¿½da: 13.64s | Vocabulï¿½rio: 21302 termos.
 2026-05-08 19:33:31,320 [INFO] QUERY-ENGINE: QueryEngine inicializado.
 2026-05-08 19:33:49,356 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'cognitive' [Scope: all] [Method: Custom]
 2026-05-08 19:34:06,745 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'cognitive' [Scope: all] [Method: Custom]
@@ -43,11 +43,486 @@
 2026-05-08 19:34:09,394 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'cognitive' [Scope: all] [Method: Custom]
 2026-05-08 19:34:09,592 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'cognitive' [Scope: all] [Method: Custom]
 2026-05-08 19:34:09,766 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'cognitive' [Scope: all] [Method: Custom]
-2026-05-12 16:38:01,564 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
-2026-05-12 16:38:01,606 [WARNING] INDEXER: Ficheiro de índice não encontrado.
+2026-05-12 16:38:01,564 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-12 16:38:01,606 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
 2026-05-12 16:38:01,642 [INFO] INDEXER: A processar 110 documentos em lotes de 50...
-2026-05-12 16:38:19,612 [INFO] INDEXER: Lote concluído: 50/110
-2026-05-12 16:38:19,785 [INFO] INDEXER: Lote concluído: 100/110
-2026-05-12 16:38:19,828 [INFO] INDEXER: Lote concluído: 110/110
-2026-05-12 16:38:20,585 [INFO] INDEXER: Indexação concluída: 18.98s | Vocabulário: 21302 termos.
+2026-05-12 16:38:19,612 [INFO] INDEXER: Lote concluï¿½do: 50/110
+2026-05-12 16:38:19,785 [INFO] INDEXER: Lote concluï¿½do: 100/110
+2026-05-12 16:38:19,828 [INFO] INDEXER: Lote concluï¿½do: 110/110
+2026-05-12 16:38:20,585 [INFO] INDEXER: Indexaï¿½ï¿½o concluï¿½da: 18.98s | Vocabulï¿½rio: 21302 termos.
 2026-05-12 16:38:20,587 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 15:17:36,763 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 15:21:17,379 [INFO] dicttoxml: Inside unicode_me(). val = "{'author_queried': 'Machado', 'total_publications': 2, 'publications': [{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}, {'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}]}"
+2026-05-08 15:21:17,379 [INFO] dicttoxml: Inside dicttoxml(): type(obj) is: "dict", obj="{'author_queried': 'Machado', 'total_publications': 2, 'publications': [{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}, {'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}]}"
+2026-05-08 15:21:17,379 [INFO] dicttoxml: Inside unicode_me(). val = "{'author_queried': 'Machado', 'total_publications': 2, 'publications': [{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}, {'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}]}"
+2026-05-08 15:21:17,379 [INFO] dicttoxml: Inside convert(). obj type is: "dict", obj="{'author_queried': 'Machado', 'total_publications': 2, 'publications': [{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}, {'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}]}"
+2026-05-08 15:21:17,379 [INFO] dicttoxml: Inside default_item_func(). parent = "response"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside unicode_me(). val = "{'author_queried': 'Machado', 'total_publications': 2, 'publications': [{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}, {'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}]}"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside convert_dict(): obj type is: "dict", obj="{'author_queried': 'Machado', 'total_publications': 2, 'publications': [{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}, {'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}]}"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside default_item_func(). parent = "response"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside unicode_me(). val = "author_queried"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside unicode_me(). val = "Machado"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Looping inside convert_dict(): key="author_queried", val="Machado", type(val)="str"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside unicode_me(). val = "author_queried"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "author_queried" with attr "{}"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside escape_xml(). s = "author_queried" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside unicode_me(). val = "author_queried"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside unicode_me(). val = "author_queried"
+2026-05-08 15:21:17,383 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "author_queried"
+2026-05-08 15:21:17,392 [INFO] dicttoxml: Inside unicode_me(). val = "author_queried"
+2026-05-08 15:21:17,393 [INFO] dicttoxml: Inside unicode_me(). val = "Machado"
+2026-05-08 15:21:17,393 [INFO] dicttoxml: Inside convert_kv(): key="author_queried", val="Machado", type(val) is: "str"
+2026-05-08 15:21:17,394 [INFO] dicttoxml: Inside unicode_me(). val = "author_queried"
+2026-05-08 15:21:17,394 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,395 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "author_queried" with attr "{}"
+2026-05-08 15:21:17,395 [INFO] dicttoxml: Inside escape_xml(). s = "author_queried" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,395 [INFO] dicttoxml: Inside unicode_me(). val = "author_queried"
+2026-05-08 15:21:17,395 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,396 [INFO] dicttoxml: Inside unicode_me(). val = "author_queried"
+2026-05-08 15:21:17,396 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "author_queried"
+2026-05-08 15:21:17,396 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,396 [INFO] dicttoxml: Inside escape_xml(). s = "Machado" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,396 [INFO] dicttoxml: Inside unicode_me(). val = "Machado"
+2026-05-08 15:21:17,397 [INFO] dicttoxml: Inside unicode_me(). val = "total_publications"
+2026-05-08 15:21:17,397 [INFO] dicttoxml: Inside unicode_me(). val = "2"
+2026-05-08 15:21:17,397 [INFO] dicttoxml: Looping inside convert_dict(): key="total_publications", val="2", type(val)="int"
+2026-05-08 15:21:17,397 [INFO] dicttoxml: Inside unicode_me(). val = "total_publications"
+2026-05-08 15:21:17,397 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,399 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "total_publications" with attr "{}"
+2026-05-08 15:21:17,399 [INFO] dicttoxml: Inside escape_xml(). s = "total_publications" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,399 [INFO] dicttoxml: Inside unicode_me(). val = "total_publications"
+2026-05-08 15:21:17,399 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,399 [INFO] dicttoxml: Inside unicode_me(). val = "total_publications"
+2026-05-08 15:21:17,400 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "total_publications"
+2026-05-08 15:21:17,400 [INFO] dicttoxml: Inside unicode_me(). val = "total_publications"
+2026-05-08 15:21:17,400 [INFO] dicttoxml: Inside unicode_me(). val = "2"
+2026-05-08 15:21:17,400 [INFO] dicttoxml: Inside convert_kv(): key="total_publications", val="2", type(val) is: "int"
+2026-05-08 15:21:17,400 [INFO] dicttoxml: Inside unicode_me(). val = "total_publications"
+2026-05-08 15:21:17,401 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,402 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "total_publications" with attr "{}"
+2026-05-08 15:21:17,402 [INFO] dicttoxml: Inside escape_xml(). s = "total_publications" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,402 [INFO] dicttoxml: Inside unicode_me(). val = "total_publications"
+2026-05-08 15:21:17,402 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,402 [INFO] dicttoxml: Inside unicode_me(). val = "total_publications"
+2026-05-08 15:21:17,402 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "total_publications"
+2026-05-08 15:21:17,402 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,402 [INFO] dicttoxml: Inside escape_xml(). s = "2" and type(s) = "<class 'int'>"
+2026-05-08 15:21:17,404 [INFO] dicttoxml: Inside unicode_me(). val = "publications"
+2026-05-08 15:21:17,404 [INFO] dicttoxml: Inside unicode_me(). val = "[{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}, {'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}]"
+2026-05-08 15:21:17,404 [INFO] dicttoxml: Looping inside convert_dict(): key="publications", val="[{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}, {'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}]", type(val)="list"
+2026-05-08 15:21:17,404 [INFO] dicttoxml: Inside unicode_me(). val = "publications"
+2026-05-08 15:21:17,404 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,405 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "publications" with attr "{}"
+2026-05-08 15:21:17,405 [INFO] dicttoxml: Inside escape_xml(). s = "publications" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,405 [INFO] dicttoxml: Inside unicode_me(). val = "publications"
+2026-05-08 15:21:17,405 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,405 [INFO] dicttoxml: Inside unicode_me(). val = "publications"
+2026-05-08 15:21:17,405 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "publications"
+2026-05-08 15:21:17,406 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,406 [INFO] dicttoxml: Inside convert_list()
+2026-05-08 15:21:17,406 [INFO] dicttoxml: Inside default_item_func(). parent = "publications"
+2026-05-08 15:21:17,407 [INFO] dicttoxml: Inside unicode_me(). val = "{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}"
+2026-05-08 15:21:17,407 [INFO] dicttoxml: Looping inside convert_list(): item="{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}", item_name="item", type="dict"
+2026-05-08 15:21:17,407 [INFO] dicttoxml: Inside unicode_me(). val = "{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}"
+2026-05-08 15:21:17,407 [INFO] dicttoxml: Inside convert_dict(): obj type is: "dict", obj="{'id': 81, 'title': 'Readout circuit for time-based automotive sensors', 'year': '2020-07-24', 'url': 'https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download', 'authors': ['Machado, Rui Pedro Oliveira'], 'snippet': 'The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...'}"
+2026-05-08 15:21:17,407 [INFO] dicttoxml: Inside default_item_func(). parent = "publications"
+2026-05-08 15:21:17,407 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,407 [INFO] dicttoxml: Inside unicode_me(). val = "81"
+2026-05-08 15:21:17,407 [INFO] dicttoxml: Looping inside convert_dict(): key="id", val="81", type(val)="int"
+2026-05-08 15:21:17,410 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,410 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,410 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "id" with attr "{}"
+2026-05-08 15:21:17,410 [INFO] dicttoxml: Inside escape_xml(). s = "id" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,410 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,410 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,410 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,410 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "id"
+2026-05-08 15:21:17,410 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,411 [INFO] dicttoxml: Inside unicode_me(). val = "81"
+2026-05-08 15:21:17,411 [INFO] dicttoxml: Inside convert_kv(): key="id", val="81", type(val) is: "int"
+2026-05-08 15:21:17,411 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,411 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,412 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "id" with attr "{}"
+2026-05-08 15:21:17,412 [INFO] dicttoxml: Inside escape_xml(). s = "id" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,412 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,412 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,412 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,412 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "id"
+2026-05-08 15:21:17,414 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,414 [INFO] dicttoxml: Inside escape_xml(). s = "81" and type(s) = "<class 'int'>"
+2026-05-08 15:21:17,414 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,414 [INFO] dicttoxml: Inside unicode_me(). val = "Readout circuit for time-based automotive sensors"
+2026-05-08 15:21:17,414 [INFO] dicttoxml: Looping inside convert_dict(): key="title", val="Readout circuit for time-based automotive sensors", type(val)="str"
+2026-05-08 15:21:17,415 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,415 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,415 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "title" with attr "{}"
+2026-05-08 15:21:17,415 [INFO] dicttoxml: Inside escape_xml(). s = "title" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,416 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,416 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,416 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,417 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "title"
+2026-05-08 15:21:17,417 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,417 [INFO] dicttoxml: Inside unicode_me(). val = "Readout circuit for time-based automotive sensors"
+2026-05-08 15:21:17,418 [INFO] dicttoxml: Inside convert_kv(): key="title", val="Readout circuit for time-based automotive sensors", type(val) is: "str"
+2026-05-08 15:21:17,418 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,418 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,419 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "title" with attr "{}"
+2026-05-08 15:21:17,419 [INFO] dicttoxml: Inside escape_xml(). s = "title" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,419 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,419 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,419 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,419 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "title"
+2026-05-08 15:21:17,419 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,420 [INFO] dicttoxml: Inside escape_xml(). s = "Readout circuit for time-based automotive sensors" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,421 [INFO] dicttoxml: Inside unicode_me(). val = "Readout circuit for time-based automotive sensors"
+2026-05-08 15:21:17,421 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,421 [INFO] dicttoxml: Inside unicode_me(). val = "2020-07-24"
+2026-05-08 15:21:17,421 [INFO] dicttoxml: Looping inside convert_dict(): key="year", val="2020-07-24", type(val)="str"
+2026-05-08 15:21:17,421 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,422 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,422 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "year" with attr "{}"
+2026-05-08 15:21:17,422 [INFO] dicttoxml: Inside escape_xml(). s = "year" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,422 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,422 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,423 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,423 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "year"
+2026-05-08 15:21:17,423 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,423 [INFO] dicttoxml: Inside unicode_me(). val = "2020-07-24"
+2026-05-08 15:21:17,423 [INFO] dicttoxml: Inside convert_kv(): key="year", val="2020-07-24", type(val) is: "str"
+2026-05-08 15:21:17,423 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,423 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,424 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "year" with attr "{}"
+2026-05-08 15:21:17,424 [INFO] dicttoxml: Inside escape_xml(). s = "year" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,424 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,425 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,425 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,425 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "year"
+2026-05-08 15:21:17,425 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,425 [INFO] dicttoxml: Inside escape_xml(). s = "2020-07-24" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,425 [INFO] dicttoxml: Inside unicode_me(). val = "2020-07-24"
+2026-05-08 15:21:17,426 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,426 [INFO] dicttoxml: Inside unicode_me(). val = "https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download"
+2026-05-08 15:21:17,426 [INFO] dicttoxml: Looping inside convert_dict(): key="url", val="https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download", type(val)="str"
+2026-05-08 15:21:17,426 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,426 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,427 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "url" with attr "{}"
+2026-05-08 15:21:17,427 [INFO] dicttoxml: Inside escape_xml(). s = "url" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,427 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,427 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,427 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,428 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "url"
+2026-05-08 15:21:17,428 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,429 [INFO] dicttoxml: Inside unicode_me(). val = "https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download"
+2026-05-08 15:21:17,429 [INFO] dicttoxml: Inside convert_kv(): key="url", val="https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download", type(val) is: "str"
+2026-05-08 15:21:17,429 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,429 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,430 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "url" with attr "{}"
+2026-05-08 15:21:17,430 [INFO] dicttoxml: Inside escape_xml(). s = "url" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,430 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,430 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,430 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,431 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "url"
+2026-05-08 15:21:17,432 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,432 [INFO] dicttoxml: Inside escape_xml(). s = "https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,432 [INFO] dicttoxml: Inside unicode_me(). val = "https://repositorium.uminho.pt/bitstreams/2971ec37-dedb-4735-b0be-498dcd5fc01b/download"
+2026-05-08 15:21:17,432 [INFO] dicttoxml: Inside unicode_me(). val = "authors"
+2026-05-08 15:21:17,432 [INFO] dicttoxml: Inside unicode_me(). val = "['Machado, Rui Pedro Oliveira']"
+2026-05-08 15:21:17,433 [INFO] dicttoxml: Looping inside convert_dict(): key="authors", val="['Machado, Rui Pedro Oliveira']", type(val)="list"
+2026-05-08 15:21:17,433 [INFO] dicttoxml: Inside unicode_me(). val = "authors"
+2026-05-08 15:21:17,433 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,433 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "authors" with attr "{}"
+2026-05-08 15:21:17,434 [INFO] dicttoxml: Inside escape_xml(). s = "authors" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,434 [INFO] dicttoxml: Inside unicode_me(). val = "authors"
+2026-05-08 15:21:17,434 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,435 [INFO] dicttoxml: Inside unicode_me(). val = "authors"
+2026-05-08 15:21:17,435 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "authors"
+2026-05-08 15:21:17,436 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,436 [INFO] dicttoxml: Inside convert_list()
+2026-05-08 15:21:17,436 [INFO] dicttoxml: Inside default_item_func(). parent = "authors"
+2026-05-08 15:21:17,437 [INFO] dicttoxml: Inside unicode_me(). val = "Machado, Rui Pedro Oliveira"
+2026-05-08 15:21:17,437 [INFO] dicttoxml: Looping inside convert_list(): item="Machado, Rui Pedro Oliveira", item_name="item", type="str"
+2026-05-08 15:21:17,437 [INFO] dicttoxml: Inside unicode_me(). val = "item"
+2026-05-08 15:21:17,437 [INFO] dicttoxml: Inside unicode_me(). val = "Machado, Rui Pedro Oliveira"
+2026-05-08 15:21:17,438 [INFO] dicttoxml: Inside convert_kv(): key="item", val="Machado, Rui Pedro Oliveira", type(val) is: "str"
+2026-05-08 15:21:17,438 [INFO] dicttoxml: Inside unicode_me(). val = "item"
+2026-05-08 15:21:17,438 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,439 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "item" with attr "{}"
+2026-05-08 15:21:17,439 [INFO] dicttoxml: Inside escape_xml(). s = "item" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,439 [INFO] dicttoxml: Inside unicode_me(). val = "item"
+2026-05-08 15:21:17,439 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,439 [INFO] dicttoxml: Inside unicode_me(). val = "item"
+2026-05-08 15:21:17,440 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "item"
+2026-05-08 15:21:17,440 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,440 [INFO] dicttoxml: Inside escape_xml(). s = "Machado, Rui Pedro Oliveira" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,440 [INFO] dicttoxml: Inside unicode_me(). val = "Machado, Rui Pedro Oliveira"
+2026-05-08 15:21:17,440 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside unicode_me(). val = "The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl..."
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Looping inside convert_dict(): key="snippet", val="The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...", type(val)="str"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "snippet" with attr "{}"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside escape_xml(). s = "snippet" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "snippet"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside unicode_me(). val = "The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl..."
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside convert_kv(): key="snippet", val="The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl...", type(val) is: "str"
+2026-05-08 15:21:17,441 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,444 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,444 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "snippet" with attr "{}"
+2026-05-08 15:21:17,444 [INFO] dicttoxml: Inside escape_xml(). s = "snippet" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,444 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,444 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,444 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,445 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "snippet"
+2026-05-08 15:21:17,445 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,445 [INFO] dicttoxml: Inside escape_xml(). s = "The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl..." and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,445 [INFO] dicttoxml: Inside unicode_me(). val = "The pursue for autonomous car started long ago with multiple smaller and smarter systems being researched and introduced gradually in our daily vehicl..."
+2026-05-08 15:21:17,446 [INFO] dicttoxml: Inside unicode_me(). val = "{'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}"
+2026-05-08 15:21:17,446 [INFO] dicttoxml: Looping inside convert_list(): item="{'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}", item_name="item", type="dict"
+2026-05-08 15:21:17,446 [INFO] dicttoxml: Inside unicode_me(). val = "{'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}"
+2026-05-08 15:21:17,446 [INFO] dicttoxml: Inside convert_dict(): obj type is: "dict", obj="{'id': 103, 'title': 'Advancing the design and implementation of Big Data Warehousing Systems', 'year': '2019-04-11', 'url': 'https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download', 'authors': ['Costa, Carlos Filipe Machado Silva'], 'snippet': 'Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...'}"
+2026-05-08 15:21:17,448 [INFO] dicttoxml: Inside default_item_func(). parent = "publications"
+2026-05-08 15:21:17,448 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,448 [INFO] dicttoxml: Inside unicode_me(). val = "103"
+2026-05-08 15:21:17,448 [INFO] dicttoxml: Looping inside convert_dict(): key="id", val="103", type(val)="int"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "id" with attr "{}"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside escape_xml(). s = "id" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "id"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside unicode_me(). val = "103"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside convert_kv(): key="id", val="103", type(val) is: "int"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "id" with attr "{}"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside escape_xml(). s = "id" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside unicode_me(). val = "id"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "id"
+2026-05-08 15:21:17,449 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,454 [INFO] dicttoxml: Inside escape_xml(). s = "103" and type(s) = "<class 'int'>"
+2026-05-08 15:21:17,454 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,454 [INFO] dicttoxml: Inside unicode_me(). val = "Advancing the design and implementation of Big Data Warehousing Systems"
+2026-05-08 15:21:17,454 [INFO] dicttoxml: Looping inside convert_dict(): key="title", val="Advancing the design and implementation of Big Data Warehousing Systems", type(val)="str"
+2026-05-08 15:21:17,454 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,454 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,454 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "title" with attr "{}"
+2026-05-08 15:21:17,456 [INFO] dicttoxml: Inside escape_xml(). s = "title" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,456 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,456 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,456 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,456 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "title"
+2026-05-08 15:21:17,456 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,456 [INFO] dicttoxml: Inside unicode_me(). val = "Advancing the design and implementation of Big Data Warehousing Systems"
+2026-05-08 15:21:17,457 [INFO] dicttoxml: Inside convert_kv(): key="title", val="Advancing the design and implementation of Big Data Warehousing Systems", type(val) is: "str"
+2026-05-08 15:21:17,457 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,457 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,457 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "title" with attr "{}"
+2026-05-08 15:21:17,457 [INFO] dicttoxml: Inside escape_xml(). s = "title" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,458 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,458 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside unicode_me(). val = "title"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "title"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside escape_xml(). s = "Advancing the design and implementation of Big Data Warehousing Systems" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside unicode_me(). val = "Advancing the design and implementation of Big Data Warehousing Systems"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside unicode_me(). val = "2019-04-11"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Looping inside convert_dict(): key="year", val="2019-04-11", type(val)="str"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "year" with attr "{}"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside escape_xml(). s = "year" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "year"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside unicode_me(). val = "2019-04-11"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside convert_kv(): key="year", val="2019-04-11", type(val) is: "str"
+2026-05-08 15:21:17,459 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,462 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,462 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "year" with attr "{}"
+2026-05-08 15:21:17,462 [INFO] dicttoxml: Inside escape_xml(). s = "year" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,462 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,462 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,463 [INFO] dicttoxml: Inside unicode_me(). val = "year"
+2026-05-08 15:21:17,463 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "year"
+2026-05-08 15:21:17,463 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,463 [INFO] dicttoxml: Inside escape_xml(). s = "2019-04-11" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,464 [INFO] dicttoxml: Inside unicode_me(). val = "2019-04-11"
+2026-05-08 15:21:17,464 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,464 [INFO] dicttoxml: Inside unicode_me(). val = "https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download"
+2026-05-08 15:21:17,464 [INFO] dicttoxml: Looping inside convert_dict(): key="url", val="https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download", type(val)="str"
+2026-05-08 15:21:17,464 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,464 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,465 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "url" with attr "{}"
+2026-05-08 15:21:17,465 [INFO] dicttoxml: Inside escape_xml(). s = "url" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,465 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,465 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,465 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,465 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "url"
+2026-05-08 15:21:17,466 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,466 [INFO] dicttoxml: Inside unicode_me(). val = "https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download"
+2026-05-08 15:21:17,466 [INFO] dicttoxml: Inside convert_kv(): key="url", val="https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download", type(val) is: "str"
+2026-05-08 15:21:17,466 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,466 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,467 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "url" with attr "{}"
+2026-05-08 15:21:17,467 [INFO] dicttoxml: Inside escape_xml(). s = "url" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,467 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,467 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,468 [INFO] dicttoxml: Inside unicode_me(). val = "url"
+2026-05-08 15:21:17,468 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "url"
+2026-05-08 15:21:17,469 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,469 [INFO] dicttoxml: Inside escape_xml(). s = "https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,469 [INFO] dicttoxml: Inside unicode_me(). val = "https://repositorium.uminho.pt/bitstreams/867e68d8-c106-43d8-b4a5-21af42e4734d/download"
+2026-05-08 15:21:17,469 [INFO] dicttoxml: Inside unicode_me(). val = "authors"
+2026-05-08 15:21:17,470 [INFO] dicttoxml: Inside unicode_me(). val = "['Costa, Carlos Filipe Machado Silva']"
+2026-05-08 15:21:17,470 [INFO] dicttoxml: Looping inside convert_dict(): key="authors", val="['Costa, Carlos Filipe Machado Silva']", type(val)="list"
+2026-05-08 15:21:17,470 [INFO] dicttoxml: Inside unicode_me(). val = "authors"
+2026-05-08 15:21:17,470 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,470 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "authors" with attr "{}"
+2026-05-08 15:21:17,471 [INFO] dicttoxml: Inside escape_xml(). s = "authors" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,471 [INFO] dicttoxml: Inside unicode_me(). val = "authors"
+2026-05-08 15:21:17,471 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,472 [INFO] dicttoxml: Inside unicode_me(). val = "authors"
+2026-05-08 15:21:17,472 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "authors"
+2026-05-08 15:21:17,472 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,472 [INFO] dicttoxml: Inside convert_list()
+2026-05-08 15:21:17,472 [INFO] dicttoxml: Inside default_item_func(). parent = "authors"
+2026-05-08 15:21:17,472 [INFO] dicttoxml: Inside unicode_me(). val = "Costa, Carlos Filipe Machado Silva"
+2026-05-08 15:21:17,472 [INFO] dicttoxml: Looping inside convert_list(): item="Costa, Carlos Filipe Machado Silva", item_name="item", type="str"
+2026-05-08 15:21:17,472 [INFO] dicttoxml: Inside unicode_me(). val = "item"
+2026-05-08 15:21:17,474 [INFO] dicttoxml: Inside unicode_me(). val = "Costa, Carlos Filipe Machado Silva"
+2026-05-08 15:21:17,474 [INFO] dicttoxml: Inside convert_kv(): key="item", val="Costa, Carlos Filipe Machado Silva", type(val) is: "str"
+2026-05-08 15:21:17,474 [INFO] dicttoxml: Inside unicode_me(). val = "item"
+2026-05-08 15:21:17,474 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,474 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "item" with attr "{}"
+2026-05-08 15:21:17,475 [INFO] dicttoxml: Inside escape_xml(). s = "item" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,475 [INFO] dicttoxml: Inside unicode_me(). val = "item"
+2026-05-08 15:21:17,475 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,475 [INFO] dicttoxml: Inside unicode_me(). val = "item"
+2026-05-08 15:21:17,475 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "item"
+2026-05-08 15:21:17,476 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,476 [INFO] dicttoxml: Inside escape_xml(). s = "Costa, Carlos Filipe Machado Silva" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,476 [INFO] dicttoxml: Inside unicode_me(). val = "Costa, Carlos Filipe Machado Silva"
+2026-05-08 15:21:17,476 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,476 [INFO] dicttoxml: Inside unicode_me(). val = "Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ..."
+2026-05-08 15:21:17,476 [INFO] dicttoxml: Looping inside convert_dict(): key="snippet", val="Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...", type(val)="str"
+2026-05-08 15:21:17,476 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,476 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,477 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "snippet" with attr "{}"
+2026-05-08 15:21:17,477 [INFO] dicttoxml: Inside escape_xml(). s = "snippet" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,477 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,477 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,477 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,478 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "snippet"
+2026-05-08 15:21:17,479 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,479 [INFO] dicttoxml: Inside unicode_me(). val = "Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ..."
+2026-05-08 15:21:17,479 [INFO] dicttoxml: Inside convert_kv(): key="snippet", val="Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ...", type(val) is: "str"
+2026-05-08 15:21:17,479 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,479 [INFO] dicttoxml: Inside unicode_me(). val = "{}"
+2026-05-08 15:21:17,479 [INFO] dicttoxml: Inside make_valid_xml_name(). Testing key "snippet" with attr "{}"
+2026-05-08 15:21:17,479 [INFO] dicttoxml: Inside escape_xml(). s = "snippet" and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,480 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,480 [INFO] dicttoxml: Inside escape_xml(). s = "{}" and type(s) = "<class 'dict'>"
+2026-05-08 15:21:17,480 [INFO] dicttoxml: Inside unicode_me(). val = "snippet"
+2026-05-08 15:21:17,480 [INFO] dicttoxml: Inside key_is_valid_xml(). Testing "snippet"
+2026-05-08 15:21:17,481 [INFO] dicttoxml: Inside make_attstring(). attr = "{}"
+2026-05-08 15:21:17,481 [INFO] dicttoxml: Inside escape_xml(). s = "Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ..." and type(s) = "<class 'str'>"
+2026-05-08 15:21:17,481 [INFO] dicttoxml: Inside unicode_me(). val = "Os avanï¿½os atuais das Tecnologias da Informaï¿½ï¿½o tï¿½m levado as organizaï¿½ï¿½es a procurar um elevado valor do negï¿½cio e vantagens competitivas atravï¿½s da ..."
+2026-05-08 15:44:00,697 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:01:49,869 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:02:11,665 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:02:51,993 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:02:52,592 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 16:16:06,654 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:16:07,548 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 16:22:47,196 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:22:47,783 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 16:23:42,459 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:23:42,949 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 16:49:49,891 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:49:50,439 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 16:50:28,498 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:50:29,189 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 16:52:39,959 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:52:39,966 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
+2026-05-08 16:52:39,967 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 16:56:48,097 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:56:48,100 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
+2026-05-08 16:56:48,101 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 16:57:48,793 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:57:48,802 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
+2026-05-08 16:57:48,804 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 16:58:15,588 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:58:15,592 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
+2026-05-08 16:58:15,593 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 16:58:31,369 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 16:58:31,373 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
+2026-05-08 16:58:31,373 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 17:01:24,662 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 17:01:24,665 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
+2026-05-08 17:01:24,665 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-08 17:19:30,275 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-08 17:19:30,285 [WARNING] INDEXER: Ficheiro de ï¿½ndice nï¿½o encontrado.
+2026-05-08 17:19:30,286 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-10 14:51:35,295 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-10 14:51:36,158 [INFO] INDEXER: ï¿½ndice carregado (stemming).
+2026-05-10 14:51:36,158 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-10 14:57:49,923 [INFO] API-REPOSITORIUM: Sistema Repositï¿½riUM Search Engine a iniciar em modo development...
+2026-05-10 14:57:50,510 [INFO] INDEXER: ï¿½ndice carregado (stemming).
+2026-05-10 14:57:50,521 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-10 14:59:31,043 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=all
+2026-05-10 14:59:31,043 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-10 14:59:32,066 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=all
+2026-05-10 14:59:32,068 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-10 15:02:40,798 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=title
+2026-05-10 15:02:40,802 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: title] [Method: Custom]
+2026-05-10 15:02:54,163 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=abstract
+2026-05-10 15:02:54,163 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: abstract] [Method: Custom]
+2026-05-10 15:03:08,411 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=fulltext
+2026-05-10 15:03:08,411 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-10 15:03:21,677 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=fulltext
+2026-05-10 15:03:21,678 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-10 15:03:30,560 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=fulltext
+2026-05-10 15:03:45,111 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machado' lang=PT processing=stemming algo=custom target=fulltext
+2026-05-10 15:04:00,906 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machado' lang=PT processing=stemming algo=sklearn target=fulltext
+2026-05-10 15:04:22,306 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=boolean target=fulltext
+2026-05-10 15:04:22,306 [DEBUG] QUERY-ENGINE: Executando query booleana: sector
+2026-05-10 15:04:30,685 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=sklearn target=fulltext
+2026-05-10 15:04:30,687 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Sklearn]
+2026-05-10 15:04:43,062 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=fulltext
+2026-05-10 15:04:43,064 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-10 15:04:58,429 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector AND machine' lang=PT processing=stemming algo=boolean target=fulltext
+2026-05-10 15:04:58,429 [DEBUG] QUERY-ENGINE: Executando query booleana: sector AND machine
+2026-05-10 15:05:18,936 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector NOT machine' lang=PT processing=stemming algo=boolean target=fulltext
+2026-05-10 15:05:18,942 [DEBUG] QUERY-ENGINE: Executando query booleana: sector NOT machine
+2026-05-10 15:07:36,788 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector AND machine' lang=EN processing=lemmatization algo=boolean target=fulltext
+2026-05-10 15:07:36,788 [DEBUG] QUERY-ENGINE: Executando query booleana: sector AND machine
+2026-05-10 15:08:22,097 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector NOT machine' lang=EN processing=lemmatization algo=boolean target=fulltext
+2026-05-10 15:08:22,099 [DEBUG] QUERY-ENGINE: Executando query booleana: sector NOT machine
+2026-05-10 15:08:34,000 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector AND machine' lang=EN processing=lemmatization algo=boolean target=fulltext
+2026-05-10 15:08:34,000 [DEBUG] QUERY-ENGINE: Executando query booleana: sector AND machine
+2026-05-10 15:08:43,631 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector NOT machine' lang=EN processing=lemmatization algo=boolean target=fulltext
+2026-05-10 15:08:43,631 [DEBUG] QUERY-ENGINE: Executando query booleana: sector NOT machine
+2026-05-10 15:09:05,532 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector NOT machine' lang=EN processing=lemmatization algo=boolean target=all
+2026-05-10 15:09:05,532 [DEBUG] QUERY-ENGINE: Executando query booleana: sector NOT machine
+2026-05-10 15:09:17,376 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector AND NOT machine' lang=EN processing=lemmatization algo=boolean target=all
+2026-05-10 15:09:17,377 [DEBUG] QUERY-ENGINE: Executando query booleana: sector AND NOT machine
+2026-05-10 15:09:25,318 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector OR machine' lang=EN processing=lemmatization algo=boolean target=all
+2026-05-10 15:09:25,318 [DEBUG] QUERY-ENGINE: Executando query booleana: sector OR machine
+2026-05-10 15:09:27,962 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector OR machine' lang=EN processing=lemmatization algo=boolean target=all
+2026-05-10 15:09:27,963 [DEBUG] QUERY-ENGINE: Executando query booleana: sector OR machine
+2026-05-10 15:10:04,459 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine NOT sector' lang=EN processing=lemmatization algo=boolean target=all
+2026-05-10 15:10:04,459 [DEBUG] QUERY-ENGINE: Executando query booleana: machine NOT sector
