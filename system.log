@@ -424,3 +424,52 @@
 2026-05-08 17:19:30,275 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
 2026-05-08 17:19:30,285 [WARNING] INDEXER: Ficheiro de índice não encontrado.
 2026-05-08 17:19:30,286 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-10 14:51:35,295 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-10 14:51:36,158 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-10 14:51:36,158 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-10 14:57:49,923 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-10 14:57:50,510 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-10 14:57:50,521 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-10 14:59:31,043 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=all
+2026-05-10 14:59:31,043 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-10 14:59:32,066 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=all
+2026-05-10 14:59:32,068 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-10 15:02:40,798 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=title
+2026-05-10 15:02:40,802 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: title] [Method: Custom]
+2026-05-10 15:02:54,163 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=abstract
+2026-05-10 15:02:54,163 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: abstract] [Method: Custom]
+2026-05-10 15:03:08,411 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=fulltext
+2026-05-10 15:03:08,411 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-10 15:03:21,677 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=fulltext
+2026-05-10 15:03:21,678 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-10 15:03:30,560 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=fulltext
+2026-05-10 15:03:45,111 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machado' lang=PT processing=stemming algo=custom target=fulltext
+2026-05-10 15:04:00,906 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machado' lang=PT processing=stemming algo=sklearn target=fulltext
+2026-05-10 15:04:22,306 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=boolean target=fulltext
+2026-05-10 15:04:22,306 [DEBUG] QUERY-ENGINE: Executando query booleana: sector
+2026-05-10 15:04:30,685 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=sklearn target=fulltext
+2026-05-10 15:04:30,687 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Sklearn]
+2026-05-10 15:04:43,062 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=fulltext
+2026-05-10 15:04:43,064 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-10 15:04:58,429 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector AND machine' lang=PT processing=stemming algo=boolean target=fulltext
+2026-05-10 15:04:58,429 [DEBUG] QUERY-ENGINE: Executando query booleana: sector AND machine
+2026-05-10 15:05:18,936 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector NOT machine' lang=PT processing=stemming algo=boolean target=fulltext
+2026-05-10 15:05:18,942 [DEBUG] QUERY-ENGINE: Executando query booleana: sector NOT machine
+2026-05-10 15:07:36,788 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector AND machine' lang=EN processing=lemmatization algo=boolean target=fulltext
+2026-05-10 15:07:36,788 [DEBUG] QUERY-ENGINE: Executando query booleana: sector AND machine
+2026-05-10 15:08:22,097 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector NOT machine' lang=EN processing=lemmatization algo=boolean target=fulltext
+2026-05-10 15:08:22,099 [DEBUG] QUERY-ENGINE: Executando query booleana: sector NOT machine
+2026-05-10 15:08:34,000 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector AND machine' lang=EN processing=lemmatization algo=boolean target=fulltext
+2026-05-10 15:08:34,000 [DEBUG] QUERY-ENGINE: Executando query booleana: sector AND machine
+2026-05-10 15:08:43,631 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector NOT machine' lang=EN processing=lemmatization algo=boolean target=fulltext
+2026-05-10 15:08:43,631 [DEBUG] QUERY-ENGINE: Executando query booleana: sector NOT machine
+2026-05-10 15:09:05,532 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector NOT machine' lang=EN processing=lemmatization algo=boolean target=all
+2026-05-10 15:09:05,532 [DEBUG] QUERY-ENGINE: Executando query booleana: sector NOT machine
+2026-05-10 15:09:17,376 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector AND NOT machine' lang=EN processing=lemmatization algo=boolean target=all
+2026-05-10 15:09:17,377 [DEBUG] QUERY-ENGINE: Executando query booleana: sector AND NOT machine
+2026-05-10 15:09:25,318 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector OR machine' lang=EN processing=lemmatization algo=boolean target=all
+2026-05-10 15:09:25,318 [DEBUG] QUERY-ENGINE: Executando query booleana: sector OR machine
+2026-05-10 15:09:27,962 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector OR machine' lang=EN processing=lemmatization algo=boolean target=all
+2026-05-10 15:09:27,963 [DEBUG] QUERY-ENGINE: Executando query booleana: sector OR machine
+2026-05-10 15:10:04,459 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine NOT sector' lang=EN processing=lemmatization algo=boolean target=all
+2026-05-10 15:10:04,459 [DEBUG] QUERY-ENGINE: Executando query booleana: machine NOT sector
