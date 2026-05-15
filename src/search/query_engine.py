@@ -113,6 +113,8 @@ class QueryEngine:
         for doc_id, dot_product in scores.items():
             # Aceder aos metadados do documento (garantindo que o ID é string se necessário)
             doc_info = self.index_obj.documents.get(doc_id) or self.index_obj.documents.get(str(doc_id))
+            if not doc_info and str(doc_id).isdigit():
+                doc_info = self.index_obj.documents.get(int(doc_id))
             doc_magnitude = doc_info.get('magnitude', 1.0) if doc_info else 1.0
             
             # 3.3 Cálculo da Similaridade
@@ -208,7 +210,7 @@ class QueryEngine:
             if i < len(raw_tokens) - 1:
                 curr = token.upper()
                 nxt = raw_tokens[i+1].upper()
-                if curr not in operators and nxt not in operators:
+                if curr not in {"AND", "OR", "NOT"} and nxt not in {"AND", "OR"}:
                     tokens.append("AND")
 
         # 3. Converter para Notação Polaca Inversa (Shunting-yard) - REQ-B45
@@ -232,20 +234,23 @@ class QueryEngine:
 
         # 4. Avaliação da Query usando uma Pilha
         results_stack = []
-        all_doc_ids = set(self.index_obj.documents.keys())
+        all_doc_ids = set(int(k) if str(k).isdigit() else str(k) for k in self.index_obj.documents.keys())
 
         for token in output_queue:
             if token == "NOT":
+                if not results_stack: continue
                 p1, _ = results_stack.pop()
-                all_postings = [[doc_id, []] for doc_id in sorted(all_doc_ids)]
+                all_postings = [[doc_id, []] for doc_id in sorted(list(all_doc_ids))]
                 diff = self.difference(all_postings, p1)
                 results_stack.append((diff, []))
             elif token == "AND":
+                if len(results_stack) < 2: continue
                 p2, s2 = results_stack.pop()
                 p1, s1 = results_stack.pop()
                 res = self.intersect_with_skips(p1, s1, p2, s2)
                 results_stack.append((res, []))
             elif token == "OR":
+                if len(results_stack) < 2: continue
                 p2, _ = results_stack.pop()
                 p1, _ = results_stack.pop()
                 res = self.union(p1, p2)
@@ -443,9 +448,11 @@ class QueryEngine:
         # Correção: Se passarem string em vez de lista, separar para não iterar letra a letra
         if isinstance(query_terms, str):
             # Limpar pontuação básica para não falhar no highlight
-            query_terms = [t for t in re.split(r'\W+', query_terms) if t]
-            
+            raw_terms = [t for t in re.split(r'\W+', query_terms) if t]
+            query_terms = [t for t in raw_terms if t.upper() not in {"AND", "OR", "NOT"}]
         doc = self.index_obj.documents.get(doc_id) or self.index_obj.documents.get(str(doc_id))
+        if not doc and str(doc_id).isdigit():
+            doc = self.index_obj.documents.get(int(doc_id))
         if not doc: return ""
 
         # 1. Tentar ler o texto literal (TXT) em vez dos tokens (JSON)
@@ -481,8 +488,8 @@ class QueryEngine:
         
         for term in query_terms:
             # Procuramos o termo ou o seu início (por causa do stemming)
-            # Usamos re.search para encontrar a posição da palavra no texto original
-            match = re.search(rf'\b{re.escape(term[:4])}\w*', content, re.IGNORECASE)
+            base = term[:5] if len(term) > 5 else term
+            match = re.search(rf'\b{re.escape(base)}\w*', content, re.IGNORECASE)
             if match:
                 match_pos = match.start()
                 found_term = match.group()
@@ -498,7 +505,8 @@ class QueryEngine:
             # 4. Highlight: Meter em negrito no texto original
             # Substituímos todas as ocorrências dos termos da query por eles mesmos entre <b>
             for term in query_terms:
-                pattern = rf'(\b{re.escape(term[:4])}\w*)'
+                base = term[:5] if len(term) > 5 else term
+                pattern = rf'(\b{re.escape(base)}\w*)'
                 snippet = re.sub(pattern, r'<b>\1</b>', snippet, flags=re.IGNORECASE)
                 
             return ("... " if start > 0 else "") + snippet + (" ..." if end < len(content) else "")

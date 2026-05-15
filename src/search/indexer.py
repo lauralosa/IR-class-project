@@ -49,6 +49,15 @@ class InvertedIndex:
                 return text[:idx]
         return text
 
+    def _detect_language(self, text):
+        """Heurística simples para detetar se o documento é PT ou EN."""
+        pt_words = {" o ", " a ", " os ", " as ", " um ", " uma ", " e ", " do ", " da ", " em ", " para ", " com ", " não ", " é "}
+        en_words = {" the ", " a ", " an ", " and ", " of ", " in ", " to ", " with ", " is ", " not ", " for "}
+        text_lower = " " + text.lower() + " "
+        pt_count = sum(text_lower.count(w) for w in pt_words)
+        en_count = sum(text_lower.count(w) for w in en_words)
+        return "PT" if pt_count >= en_count else "EN"
+
     def create_index(self, json_path=None, strategy="stemming", remove_stopwords=True, batch_size=None):
         
         # --- Alteração: Uso de caminhos dinâmicos do settings ---
@@ -105,7 +114,7 @@ class InvertedIndex:
 
 
 
-                if os.path.exists(txt_path):
+                if doc.get('has_full_text') and os.path.exists(txt_path):
                     try:
                         with open(txt_path, 'r', encoding='utf-8') as f_txt:
                             raw_pdf_text = f_txt.read()
@@ -126,6 +135,9 @@ class InvertedIndex:
 
                 # REQ-B43: Categorização Automática
                 doc['category'] = self.classifier.predict_category(doc.get('title', ''), doc.get('abstract', ''))
+
+                # Detetar Idioma do Documento
+                doc['language'] = self._detect_language(full_text)
 
                 # --- Persistência ---
                 processed_path = os.path.join(processed_dir, f"doc_{doc_id}.json")
@@ -330,8 +342,10 @@ class InvertedIndex:
             
             # REQ-B43: Classificar novo documento
             doc['category'] = self.classifier.predict_category(doc.get('title', ''), doc.get('abstract', ''))
-            self.documents[next_id] = doc
+            
             text = f"{doc.get('title', '')} {doc.get('abstract', '')} {doc.get('category', '')}"
+            doc['language'] = self._detect_language(text)
+            self.documents[next_id] = doc
             
             # 1. Atenção aos parâmetros: usa a estratégia guardada nos metadados
             strategy = self.metadata.get('reduction_strategy', 'stemming')

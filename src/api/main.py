@@ -80,8 +80,8 @@ def home():
 def search(
     q: str = Query(..., min_length=2),
     # --- Parâmetros alinhados com o Frontend (Search.jsx) ---
-    # REQ-F11: Idioma (português/inglês)
-    lang: str = Query("PT", pattern="^(PT|EN)$"),
+    # REQ-F11: Idioma (português/inglês/ambos)
+    lang: str = Query("all", pattern="^(all|PT|EN)$"),
     # REQ-F12: Técnica de processamento (stemming ou lemmatization)
     processing: str = Query("stemming", pattern="^(stemming|lemmatization)$"),
     # REQ-F15: Remoção de stop words
@@ -96,7 +96,7 @@ def search(
     year_start: Optional[int] = Query(None),
     year_end: Optional[int] = Query(None),
     # REQ-F34: Ordenação dos Resultados
-    sort_by: str = Query("relevance", pattern="^(relevance|date|title)$"),
+    sort_by: str = Query("relevance", pattern="^(relevance|date_desc|date_asc|title)$"),
     # REQ-F27: Modo de pesquisa por autor
     author_mode: bool = False,
     # REQ-F20: Esquema de pesos SMART (só para algoritmo custom)
@@ -147,6 +147,8 @@ def search(
     filtered_results = []
     for doc_id, score in results:
         doc = indexer.documents.get(doc_id) or indexer.documents.get(str(doc_id))
+        if not doc and str(doc_id).isdigit():
+            doc = indexer.documents.get(int(doc_id))
         if not doc: continue
         
         # Filtro de Área (REQ-F16)
@@ -162,14 +164,23 @@ def search(
             if year_start and y < year_start: continue
             if year_end and y > year_end: continue
             
+        # Filtro de Idioma (NOVO)
+        if lang != "all" and doc.get("language") != lang:
+            continue
+            
         filtered_results.append((doc_id, score))
 
     # --- 2.5. Ordenação (REQ-F34) ---
     def get_sort_doc(d_id):
-        return indexer.documents.get(d_id) or indexer.documents.get(str(d_id)) or {}
+        d = indexer.documents.get(d_id) or indexer.documents.get(str(d_id))
+        if not d and str(d_id).isdigit():
+            d = indexer.documents.get(int(d_id))
+        return d or {}
 
-    if sort_by == "date":
+    if sort_by == "date_desc":
         filtered_results.sort(key=lambda x: get_sort_doc(x[0]).get("year", "0000") or "0000", reverse=True)
+    elif sort_by == "date_asc":
+        filtered_results.sort(key=lambda x: get_sort_doc(x[0]).get("year", "0000") or "0000")
     elif sort_by == "title":
         filtered_results.sort(key=lambda x: get_sort_doc(x[0]).get("title", "").lower())
     else:
@@ -183,10 +194,13 @@ def search(
     
     query_time = time.perf_counter() - start_time
 
-    # --- 4. Formatação da Resposta Final ---
+    # --- 4. Formatação da Saída Final ---
     output = []
     for doc_id, score in paginated_results:
         doc = indexer.documents.get(doc_id) or indexer.documents.get(str(doc_id))
+        if not doc and str(doc_id).isdigit():
+            doc = indexer.documents.get(int(doc_id))
+        if not doc: doc = {}
         snippet = doc.get("abstract", "")[:200] + "..." if author_mode else engine.generate_snippet(doc_id, q)
         output.append({
             "id": doc_id,
