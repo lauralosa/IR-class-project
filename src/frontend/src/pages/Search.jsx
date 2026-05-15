@@ -28,6 +28,58 @@ export default function Search() {
   const [sortOption, setSortOption] = useState('relevance');
   const resultsPerPage = 10; // Quantos resultados por página
 
+  // --- ESTADOS DAS AÇÕES DOS RESULTADOS ---
+  const [expandedDocs, setExpandedDocs] = useState({}); // Controla quais os resumos que estão expandidos (usando ID do doc)
+  const [savedDocs, setSavedDocs] = useState(() => {
+    // Lê a memória do Chrome ao iniciar a página
+    const saved = localStorage.getItem('repositorium_saved');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // --- FUNÇÕES DE AÇÃO NOS DOCUMENTOS ---
+
+  // 1. Ver Resumo (Abre e fecha a caixa de texto completo usando o título ou URL como ID único)
+  const toggleSummary = (docId) => {
+    setExpandedDocs(prev => ({ 
+      ...prev, 
+      [docId]: !prev[docId] 
+    }));
+  };
+
+  // 2. Guardar (Guarda no LocalStorage do Browser)
+  const toggleSave = (doc) => {
+    const docId = doc.url || doc.handle || doc.title; // Usa o link ou titulo como ID único
+    const isSaved = savedDocs.some(d => (d.url || d.handle || d.title) === docId);
+
+    let newSaved;
+    if (isSaved) {
+      newSaved = savedDocs.filter(d => (d.url || d.handle || d.title) !== docId); // Remove se já lá estiver
+    } else {
+      newSaved = [...savedDocs, doc]; // Adiciona se não estiver
+    }
+
+    setSavedDocs(newSaved);
+    localStorage.setItem('repositorium_saved', JSON.stringify(newSaved)); // Grava no PC do utilizador
+  };
+
+  // 3. Exportar (Gera um ficheiro .txt com citação estilo APA e faz download)
+  const handleExport = (doc) => {
+    // Limpar o <b> do título que vem do backend para não ir para o ficheiro de texto
+    const cleanTitle = (doc.title || "Sem título").replace(/<\/?b>/gi, '');
+    const author = doc.authors ? (Array.isArray(doc.authors) ? doc.authors.join(', ') : doc.authors) : (doc.author || "Autor Desconhecido");
+    const year = doc.date || doc.year || "S.d.";
+    const url = doc.url || doc.link || doc.handle || "";
+
+    const citation = `${author} (${year}). ${cleanTitle}. Recuperado de ${url}`;
+
+    // Cria um ficheiro de texto falso e força o browser a fazer download
+    const blob = new Blob([citation], { type: 'text/plain;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `citacao_${cleanTitle.substring(0, 20).replace(/[^a-z0-9]/gi, '_')}.txt`;
+    link.click();
+  };
+
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query.trim()) return; // Não pesquisa se a barra estiver vazia
@@ -68,6 +120,7 @@ export default function Search() {
       setResults(data.results || []);
 
       setCurrentPage(1); // Volta para a primeira página dos novos resultados
+      setExpandedDocs({}); // BÓNUS: Ao fazer nova pesquisa, fecha todos os resumos abertos!
 
     } catch (err) {
       console.error("Erro na pesquisa:", err);
@@ -163,10 +216,11 @@ export default function Search() {
                 onChange={(e) => setResearchArea(e.target.value)}
               >
                 <option value="all">Todas as Áreas</option>
-                <option value="health">Ciências da Saúde</option>
-                <option value="engineering">Engenharia</option>
-                <option value="humanities">Humanidades</option>
-                <option value="sciences">Ciências Exatas</option>
+                <option value="AI & Robotics">IA & Robótica</option>
+                <option value="General Engineering">Engenharia Geral</option>
+                <option value="Systems & Tech">Sistemas e Tecnologia</option>
+                <option value="Education & Society">Educação e Sociedade</option>
+                <option value="Data Science">Ciência de Dados</option>
               </select>
             </div>
 
@@ -356,58 +410,102 @@ export default function Search() {
 
               {/* A LISTA DE DOCUMENTOS */}
               <div className="display-results-list" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                {currentResults.map((item, index) => (
-                  <div key={index} style={{ padding: '20px', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
+                {currentResults.map((item, index) => {
+                  
+                  // NOVO: Criar um ID Único para cada documento (resolve bugs de paginação)
+                  const docUniqueId = item.url || item.title || index;
 
-                    {/* Título (Clicável) e Score */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                      <h3 style={{ margin: 0, fontSize: '1.25rem' }}>
-                        {/* Usamos dangerouslySetInnerHTML para transformar as tags <b> (enviadas pelo backend) em HTML real
-                        */}
-                        <a
-                          href={item.url || item.link || item.handle || "#"}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{ textDecoration: 'none', color: '#1d4ed8' }}
-                          dangerouslySetInnerHTML={{ __html: item.title || "Documento sem título" }}
-                        />
-                      </h3>
-                      <span style={{ background: '#ecfdf5', color: '#059669', padding: '4px 10px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: 'bold', marginLeft: '15px' }}>
-                        Score: {item.score ? Number(item.score).toFixed(4) : "N/A"}
-                      </span>
+                  return (
+                    <div key={docUniqueId} style={{ padding: '20px', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
+
+                      {/* Título (Clicável) e Score */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                        <h3 style={{ margin: 0, fontSize: '1.25rem' }}>
+                          {/* Usamos dangerouslySetInnerHTML para transformar as tags <b> (enviadas pelo backend) em HTML real */}
+                          <a
+                            href={item.url || item.link || item.handle || "#"}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{ textDecoration: 'none', color: '#1d4ed8' }}
+                            dangerouslySetInnerHTML={{ __html: item.title || "Documento sem título" }}
+                          />
+                        </h3>
+                        <span style={{ background: '#ecfdf5', color: '#059669', padding: '4px 10px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: 'bold', marginLeft: '15px' }}>
+                          Score: {item.score ? Number(item.score).toFixed(4) : "N/A"}
+                        </span>
+                      </div>
+
+                      {/* Autores e Data */}
+                      <div style={{ color: '#059669', fontSize: '0.9rem', marginBottom: '12px', display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                        <span>👤 <strong>Autores:</strong> {item.authors ? (Array.isArray(item.authors) ? item.authors.join(', ') : item.authors) : (item.author || "Desconhecido")}</span>
+                        <span>📅 <strong>Ano:</strong> {item.date || item.year || "N/D"}</span>
+                      </div>
+
+                      {/* F26 e F27: Snippet (recolhido) ou Resumo Completo (expandido) */}
+                      <p
+                        className="highlight-backend"
+                        style={{
+                          color: '#4b5563',
+                          fontSize: '0.95rem',
+                          lineHeight: '1.6',
+                          marginBottom: '20px',
+                          // Controla o número de linhas baseado no estado (expandido ou não)
+                          display: expandedDocs[docUniqueId] ? 'block' : '-webkit-box',
+                          WebkitLineClamp: expandedDocs[docUniqueId] ? 'unset' : 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: expandedDocs[docUniqueId] ? 'visible' : 'hidden'
+                        }}
+                        dangerouslySetInnerHTML={{
+                          __html: expandedDocs[docUniqueId]
+                            ? (item.abstract || item.description || item.snippet || "Resumo completo não disponível.")
+                            : (item.snippet || item.abstract || item.description || "Resumo não disponível.")
+                        }}
+                      />
+
+                      {/* Ações nos Resultados */}
+                      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+
+                        {/* Botão Ver Resumo (Alterna o texto usando o ID do documento) */}
+                        <button
+                          onClick={() => toggleSummary(docUniqueId)}
+                          style={{ padding: '8px 16px', background: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: '6px', cursor: 'pointer', fontWeight: '500', transition: '0.2s' }}
+                        >
+                          {expandedDocs[docUniqueId] ? '🔼 Ocultar Resumo' : '👁️ Ver Resumo Completo'}
+                        </button>
+
+                        {/* Abrir PDF */}
+                        <a href={item.url || item.link || item.handle || "#"} target="_blank" rel="noreferrer" style={{ padding: '8px 16px', background: '#fee2e2', color: '#b91c1c', border: '1px solid #fecaca', borderRadius: '6px', cursor: 'pointer', fontWeight: '500', textDecoration: 'none', display: 'inline-block' }}>
+                          📥 Abrir PDF
+                        </a>
+
+                        {/* Botão Guardar (Muda de cor se estiver guardado) */}
+                        <button
+                          onClick={() => toggleSave(item)}
+                          style={{
+                            padding: '8px 16px',
+                            background: savedDocs.some(d => (d.url || d.handle || d.title) === (item.url || item.handle || item.title)) ? '#fef08a' : '#f3f4f6',
+                            color: savedDocs.some(d => (d.url || d.handle || d.title) === (item.url || item.handle || item.title)) ? '#854d0e' : '#374151',
+                            border: savedDocs.some(d => (d.url || d.handle || d.title) === (item.url || item.handle || item.title)) ? '1px solid #fde047' : '1px solid #d1d5db',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            fontWeight: '500',
+                            transition: '0.2s'
+                          }}
+                        >
+                          {savedDocs.some(d => (d.url || d.handle || d.title) === (item.url || item.handle || item.title)) ? '🌟 Guardado' : '⭐ Guardar'}
+                        </button>
+
+                        {/* Botão Exportar */}
+                        <button
+                          onClick={() => handleExport(item)}
+                          style={{ padding: '8px 16px', background: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: '6px', cursor: 'pointer', fontWeight: '500' }}
+                        >
+                          📤 Exportar Citação
+                        </button>
+                      </div>
                     </div>
-
-                    {/* Autores e Data */}
-                    <div style={{ color: '#059669', fontSize: '0.9rem', marginBottom: '12px', display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-                      <span>👤 <strong>Autores:</strong> {item.authors ? (Array.isArray(item.authors) ? item.authors.join(', ') : item.authors) : (item.author || "Desconhecido")}</span>
-                      <span>📅 <strong>Ano:</strong> {item.date || item.year || "N/D"}</span>
-                    </div>
-
-                    {/* Snippet renderizado diretamente do backend */}
-                    {/* A class "highlight-backend" serve para podermos estilizar as tags <b> no CSS */}
-                    <p
-                      className="highlight-backend"
-                      style={{ color: '#4b5563', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '20px' }}
-                      dangerouslySetInnerHTML={{ __html: item.snippet || item.abstract || item.description || "Resumo não disponível para este documento." }}
-                    />
-
-                    {/* Ações nos Resultados */}
-                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                      <button style={{ padding: '8px 16px', background: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: '6px', cursor: 'pointer', fontWeight: '500', transition: '0.2s' }}>
-                        👁️ Ver Resumo
-                      </button>
-                      <a href={item.url || item.link || item.handle || "#"} target="_blank" rel="noreferrer" style={{ padding: '8px 16px', background: '#fee2e2', color: '#b91c1c', border: '1px solid #fecaca', borderRadius: '6px', cursor: 'pointer', fontWeight: '500', textDecoration: 'none', display: 'inline-block' }}>
-                        📥 Abrir PDF
-                      </a>
-                      <button style={{ padding: '8px 16px', background: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: '6px', cursor: 'pointer', fontWeight: '500' }}>
-                        ⭐ Guardar
-                      </button>
-                      <button style={{ padding: '8px 16px', background: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: '6px', cursor: 'pointer', fontWeight: '500' }}>
-                        📤 Exportar
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Paginação */}
