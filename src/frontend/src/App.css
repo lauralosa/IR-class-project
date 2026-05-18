@@ -56,3 +56,33 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .logo-area {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .nav-links a {
+    margin-left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+}

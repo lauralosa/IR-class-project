@@ -6,6 +6,7 @@ from enum import Enum
 from src.search.indexer import InvertedIndex
 from src.search.query_engine import QueryEngine
 from typing import Optional, List
+# pyrefly: ignore [missing-import]
 import dicttoxml
 import logging
 import os
@@ -92,6 +93,10 @@ def search(
     target: str = Query("all", pattern="^(all|title|abstract|fulltext)$"),
     # REQ-F25: Área de investigação
     area: str = "all",
+    # REQ-F44: Tipo de Documento
+    doc_type: str = "all",
+    # REQ-F45: Filtro por Keyword
+    keyword: str = "all",
     # REQ-F43: Filtros de datas
     year_start: Optional[int] = Query(None),
     year_end: Optional[int] = Query(None),
@@ -155,12 +160,35 @@ def search(
         if area != "all" and doc.get("category", "General Engineering") != area:
             continue
             
+        # Inferência de Tipo de Documento (REQ-F44)
+        text_for_type = (doc.get("title", "") + " " + doc.get("abstract", "")).lower()
+        if "doutoramento" in text_for_type or "phd" in text_for_type or "tese" in text_for_type or "thesis" in text_for_type:
+            current_type = "phd"
+        elif "mestrado" in text_for_type or "master" in text_for_type or "msc" in text_for_type or "dissertação" in text_for_type or "dissertation" in text_for_type:
+            current_type = "msc"
+        else:
+            current_type = "article"
+            
+        # Atribuímos ao documento em tempo real para ser retornado
+        doc["inferred_type"] = current_type
+            
+        if doc_type != "all" and current_type != doc_type:
+            continue
+            
+        # Filtro de Keyword (REQ-F45)
+        doc_keywords = [k.lower().strip() for k in doc.get("keywords", [])]
+        if keyword != "all" and keyword.lower() not in doc_keywords:
+            continue
+            
         # Filtro de Datas (REQ-F43)
         if year_start or year_end:
-            doc_year = doc.get("year", "")
-            if not doc_year or not doc_year.isdigit():
+            import re as _re
+            doc_year_raw = str(doc.get("year", "") or doc.get("date", ""))
+            # Extrair o primeiro número de 4 dígitos que comece por 1 ou 2
+            year_match = _re.search(r'\b(1|2)\d{3}\b', doc_year_raw)
+            if not year_match:
                 continue
-            y = int(doc_year)
+            y = int(year_match.group())
             if year_start and y < year_start: continue
             if year_end and y > year_end: continue
             
@@ -186,6 +214,18 @@ def search(
     else:
         filtered_results.sort(key=lambda x: x[1], reverse=True) # Relevance (default)
 
+    # --- 2.75 Facetas de Keywords (REQ-F45) ---
+    keyword_counts = {}
+    for doc_id, score in filtered_results:
+        d = get_sort_doc(doc_id)
+        kws = d.get("keywords", [])
+        for k in kws:
+            kw_clean = k.lower().strip()
+            if kw_clean:
+                keyword_counts[kw_clean] = keyword_counts.get(kw_clean, 0) + 1
+    
+    top_keywords = [{"keyword": k, "count": c} for k, c in sorted(keyword_counts.items(), key=lambda item: item[1], reverse=True)[:15]]
+
     # --- 3. Lógica de Paginação Universal (REQ-F31) ---
     total_results = len(filtered_results)
     start_idx = (page - 1) * page_size
@@ -210,7 +250,9 @@ def search(
             "snippet": snippet,
             "url": doc.get("pdf_url"),
             "authors": doc.get("authors", []),
-            "category": doc.get("category", "General Engineering")
+            "category": doc.get("category", "General Engineering"),
+            "doc_type": doc.get("inferred_type", "article"),
+            "keywords": doc.get("keywords", [])
         })
 
     return format_response({
@@ -219,6 +261,9 @@ def search(
             "page": page,
             "page_size": page_size,
             "time": round(query_time, 4),
+            "facets": {
+                "keywords": top_keywords
+            },
             "config": {
                 "lang": lang,
                 "processing": processing,
@@ -227,6 +272,8 @@ def search(
                 "scope": scope,
                 "weights": weights.value if not author_mode and algo != "boolean" else "N/A",
                 "area": area,
+                "doc_type": doc_type,
+                "keyword": keyword,
                 "year_start": year_start,
                 "year_end": year_end,
                 "sort_by": sort_by
@@ -238,11 +285,151 @@ def search(
 @app.get("/stats", tags=["System"], summary="Estatísticas do Índice (Admin Dashboard)")
 def get_stats():
     """REQ-F55, F56: Retorna métricas do motor para o Dashboard do Frontend."""
+    
+    # REQ-F57: Calcular os top termos no vocabulário (com base no DF)
+    term_counts = []
+    for term, postings in indexer.index.items():
+        if len(term) > 3: # Ignorar termos muito curtos
+            term_counts.append({"term": term, "df": len(postings)})
+            
+    top_terms = sorted(term_counts, key=lambda x: x["df"], reverse=True)[:10]
+
+    # Contagem de categorias para REQ-F58
+    categories = {}
+    for doc in indexer.documents.values():
+        cat = doc.get("category", "General Engineering")
+        categories[cat] = categories.get(cat, 0) + 1
+
     return {
         "num_docs": indexer.num_docs,
         "vocabulary_size": len(indexer.index),
         "author_count": len(indexer.author_index),
-        "metadata": indexer.metadata
+        "metadata": indexer.metadata,
+        "top_terms": top_terms,
+        "categories": categories
+    }
+
+# --- REQ-F35 a F38: Endpoints de Autores ---
+
+@app.get("/authors", tags=["Authors"], summary="Listar/Pesquisar Autores")
+def list_authors(
+    q: Optional[str] = Query(None, description="Filtrar autores por nome"),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=100),
+):
+    """
+    REQ-F35: Lista todos os autores com contagem de publicações.
+    Suporta pesquisa por nome.
+    """
+    all_authors = []
+    for author_name, doc_ids in indexer.author_index.items():
+        if q and q.lower() not in author_name.lower():
+            continue
+        all_authors.append({
+            "name": author_name,
+            "publication_count": len(doc_ids)
+        })
+
+    # Ordenar por número de publicações (desc)
+    all_authors.sort(key=lambda x: x["publication_count"], reverse=True)
+
+    total = len(all_authors)
+    start = (page - 1) * page_size
+    end = start + page_size
+    paginated = all_authors[start:end]
+
+    return {
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "authors": paginated
+    }
+
+
+@app.get("/authors/{author_name}", tags=["Authors"], summary="Perfil de Autor")
+def get_author_profile(author_name: str = Path(..., description="Nome do autor")):
+    """
+    REQ-F35 a F38: Retorna o perfil completo de um autor:
+    - Lista de publicações
+    - Colaboradores (co-autores)
+    - Timeline de publicações por ano
+    """
+    # Procura fuzzy: encontra o autor mais próximo do nome pedido
+    matched_author = None
+    for name in indexer.author_index.keys():
+        if author_name.lower() == name.lower():
+            matched_author = name
+            break
+    if not matched_author:
+        # Tenta procura parcial
+        for name in indexer.author_index.keys():
+            if author_name.lower() in name.lower():
+                matched_author = name
+                break
+
+    if not matched_author:
+        raise HTTPException(status_code=404, detail=f"Autor '{author_name}' não encontrado.")
+
+    doc_ids = indexer.author_index[matched_author]
+
+    # Publicações do autor
+    publications = []
+    co_authors_counter = {}
+    year_counts = {}
+    categories_counter = {}
+
+    for doc_id in doc_ids:
+        doc = indexer.documents.get(doc_id) or indexer.documents.get(str(doc_id))
+        if not doc:
+            continue
+
+        year = doc.get("year", "N/D")
+        category = doc.get("category", "General Engineering")
+
+        publications.append({
+            "id": doc_id,
+            "title": doc.get("title", "Sem título"),
+            "year": year,
+            "url": doc.get("pdf_url"),
+            "authors": doc.get("authors", []),
+            "category": category,
+            "snippet": (doc.get("abstract", "") or "")[:200] + "..."
+        })
+
+        # Contar co-autores (REQ-F38)
+        for co_author in doc.get("authors", []):
+            if co_author != matched_author:
+                co_authors_counter[co_author] = co_authors_counter.get(co_author, 0) + 1
+
+        # Timeline por ano (REQ-F37)
+        if year and str(year).isdigit():
+            year_counts[str(year)] = year_counts.get(str(year), 0) + 1
+
+        # Contagem por categoria
+        categories_counter[category] = categories_counter.get(category, 0) + 1
+
+    # Ordenar publicações por ano (mais recentes primeiro)
+    publications.sort(key=lambda x: x["year"] or "0000", reverse=True)
+
+    # Top co-autores ordenados por nº de colaborações
+    top_collaborators = [
+        {"name": name, "shared_papers": count}
+        for name, count in sorted(co_authors_counter.items(), key=lambda x: x[1], reverse=True)
+    ]
+
+    # Timeline ordenada cronologicamente
+    timeline = [
+        {"year": yr, "count": cnt}
+        for yr, cnt in sorted(year_counts.items())
+    ]
+
+    return {
+        "author": matched_author,
+        "publication_count": len(publications),
+        "publications": publications,
+        "collaborators": top_collaborators[:20],  # Top 20 colaboradores
+        "timeline": timeline,
+        "categories": categories_counter
     }
 
 @app.post("/index/update", tags=["System"], summary="Atualização Incremental do Índice")

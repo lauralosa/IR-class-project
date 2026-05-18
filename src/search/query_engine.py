@@ -4,6 +4,7 @@ import logging
 from src.search.processor import TextProcessor
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+# pyrefly: ignore [missing-import]
 from nltk.corpus import wordnet
 import re
 import json

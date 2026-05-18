@@ -170,7 +170,6 @@ class InvertedIndex:
 
         self._add_skip_pointers()
         self._calculate_doc_magnitudes()
-        self.save_index()
         # --- [FIM B56 & B58] CÁLCULO DE MÉTRICAS ---
         tempo_fim = time.perf_counter()
         mem_depois = process.memory_info().rss / (1024 * 1024) # MB
@@ -184,6 +183,8 @@ class InvertedIndex:
             'memory_usage_mb': round(mem_consumida, 2)
         }
         logger.info(f"Indexação concluída: {tempo_total:.2f}s | Vocabulário: {len(self.index)} termos.")
+        
+        self.save_index()
 
 
     def _calculate_doc_magnitudes(self):
@@ -290,6 +291,11 @@ class InvertedIndex:
         # 5. Gravar no disco (usando o 'path' completo)
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(data_to_save, f, indent=4, ensure_ascii=False)
+            
+        # Gravar índice de autores também
+        author_path = os.path.join(self.storage_dir, "author_index.json")
+        with open(author_path, "w", encoding="utf-8") as f:
+            json.dump(self.author_index, f, ensure_ascii=False, indent=4)
         
         print(f" Índice estruturado com sucesso em: {path}")
 
@@ -316,8 +322,21 @@ class InvertedIndex:
             self.index[term] = content["postings"]
         
         # Restaurar metadados
-        self.metadata['reduction_strategy'] = data["metadata"].get("reduction_strategy", "stemming")
-        self.metadata['stop_words_removed'] = data["metadata"]["stop_words_removed"]
+        self.metadata.update(data.get("metadata", {}))
+        
+        # Restaurar author_index
+        author_path = os.path.join(self.storage_dir, "author_index.json")
+        if os.path.exists(author_path):
+            with open(author_path, "r", encoding="utf-8") as f:
+                self.author_index = json.load(f)
+        else:
+            self.author_index = {}
+            for doc_id, doc in self.documents.items():
+                for author in doc.get('authors', []):
+                    if author not in self.author_index:
+                        self.author_index[author] = []
+                    if doc_id not in self.author_index[author]:
+                        self.author_index[author].append(doc_id)
         
         # Treinar o classificador com os dados carregados
         self.classifier.prepare_and_train(self.documents)

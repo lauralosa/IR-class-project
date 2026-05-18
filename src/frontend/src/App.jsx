@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Search from './pages/Search';
 import Author from './pages/Author';
 import Admin from './pages/Admin';
+import Educational from './pages/Educational';
+import Compare from './pages/Compare';
 import './App.css';
 
 import logoUM from './assets/logo_um.png'; // Importa o logo
@@ -24,6 +26,8 @@ function App() {
             <Link to="/">Pesquisa</Link>
             <Link to="/author">Autores</Link>
             <Link to="/admin">Estatísticas</Link>
+            <Link to="/compare">Comparador (A/B)</Link>
+            <Link to="/educational">Educação IR</Link>
           </nav>
         </header>
 
@@ -32,6 +36,8 @@ function App() {
             <Route path="/" element={<Search />} />
             <Route path="/author" element={<Author />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/compare" element={<Compare />} />
+            <Route path="/educational" element={<Educational />} />
           </Routes>
         </main>
       </div>
