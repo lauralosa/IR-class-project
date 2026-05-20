@@ -14,7 +14,7 @@ from src.ml.classifier import DocumentClassifier
 logger = logging.getLogger("INDEXER")
 
 class InvertedIndex:
-    def __init__(self):
+    def __init__(self, storage_dir: str = None):
         self.index = {}      
         self.skips = {}      
         self.documents = {}  
@@ -30,9 +30,13 @@ class InvertedIndex:
             'stop_words_removed': True
         }
 
-        # REQ-B67: Centralizar pastas usando settings
-        self.storage_dir = settings.STORAGE_DIR
+        # REQ-B67: Centralizar pastas usando settings (pode ser sobrescrito para testes)
+        self.storage_dir = storage_dir or settings.STORAGE_DIR
         os.makedirs(self.storage_dir, exist_ok=True)
+
+        # Pasta de índices: sub-pasta 'indexes' dentro de storage_dir
+        self.indexes_dir = os.path.join(self.storage_dir, "indexes")
+        os.makedirs(self.indexes_dir, exist_ok=True)
 
     def _clean_full_text(self, text):
         """Heurística para remover bibliografia e índices, restrita ao final do documento."""
@@ -229,8 +233,8 @@ class InvertedIndex:
                 if idx not in self.author_index[author]:
                     self.author_index[author].append(idx)
         
-        # Guardar índice de autores (REQ-B09)
-        author_path = os.path.join(self.storage_dir, "author_index.json")
+        # Guardar índice de autores na pasta de índices (REQ-B09)
+        author_path = os.path.join(self.indexes_dir, "author_index.json")
         with open(author_path, "w", encoding="utf-8") as f:
             json.dump(self.author_index, f, ensure_ascii=False, indent=4)
 
@@ -262,9 +266,16 @@ class InvertedIndex:
     def save_index(self, filename=None):
         """
         Guarda a estrutura completa seguindo o REQ-B12 e REQ-B30 (TF e DF).
+        REQ-B18, REQ-B57: cada estratégia guarda no seu próprio ficheiro.
         """
-        # 1. Garantir que o caminho usa o storage_dir definido no projeto
-        path = filename or settings.INDEX_FILE
+        # 1. Determinar o caminho com base na estratégia de redução
+        if filename:
+            path = filename
+        elif self.metadata.get('reduction_strategy') == 'lemmatization':
+            path = settings.INDEX_FILE_LEMMATIZATION
+        else:
+            path = settings.INDEX_FILE_STEMMING
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         # 2. Estruturar o vocabulário para incluir o DF (REQ-B30)
         # Transformamos o índice simples numa estrutura rica
         vocabulary_data = {}
@@ -292,8 +303,8 @@ class InvertedIndex:
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(data_to_save, f, indent=4, ensure_ascii=False)
             
-        # Gravar índice de autores também
-        author_path = os.path.join(self.storage_dir, "author_index.json")
+        # Gravar índice de autores na mesma pasta do index.json
+        author_path = os.path.join(self.indexes_dir, "author_index.json")
         with open(author_path, "w", encoding="utf-8") as f:
             json.dump(self.author_index, f, ensure_ascii=False, indent=4)
         
@@ -324,8 +335,8 @@ class InvertedIndex:
         # Restaurar metadados
         self.metadata.update(data.get("metadata", {}))
         
-        # Restaurar author_index
-        author_path = os.path.join(self.storage_dir, "author_index.json")
+        # Restaurar author_index (na mesma pasta do index.json)
+        author_path = os.path.join(self.indexes_dir, "author_index.json")
         if os.path.exists(author_path):
             with open(author_path, "r", encoding="utf-8") as f:
                 self.author_index = json.load(f)

@@ -681,7 +681,7 @@ export default function Search() {
             </span>
           )}
           <span style={{ background: '#fef2f2', color: '#AA192B', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', border: '1px solid #fecaca' }}>
-            Técnica: <strong>{processing === 'stemming' ? 'Stemming' : 'Lematização'}</strong>
+            Técnica: <strong>{processing === 'none' ? 'Nenhum' : processing === 'stemming' ? 'Stemming' : 'Lematização'}</strong>
           </span>
           {removeStopWords && (
             <span style={{ background: '#fef2f2', color: '#AA192B', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', border: '1px solid #fecaca' }}>
@@ -920,7 +920,16 @@ export default function Search() {
 
             <div className="filter-group">
               <label className="filter-label">Técnica: <span data-tooltip="Stemming corta as palavras pela raiz (mais rápido). Lematização usa dicionário para base correta." className="tooltip-icon">?</span></label>
-              <div className="radio-options">
+              <div className="radio-options vertical">
+                <label>
+                  <input
+                    type="radio"
+                    value="none"
+                    checked={processing === 'none'}
+                    onChange={(e) => setProcessing(e.target.value)}
+                  />
+                  Nenhum
+                </label>
                 <label>
                   <input
                     type="radio"

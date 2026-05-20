@@ -41,7 +41,7 @@ export default function Admin() {
         </div>
         <div className="admin-card">
           <div className="card-icon">🔤</div>
-          <div className="card-value">{stats.vocabulary_size}</div>
+          <div className="card-value">{stats.vocabulary_size?.stemming || stats.vocabulary_size || '0'}</div>
           <div className="card-label">Tamanho do Vocabulário</div>
         </div>
         <div className="admin-card">
@@ -51,8 +51,10 @@ export default function Admin() {
         </div>
         <div className="admin-card">
           <div className="card-icon">⏱️</div>
-          <div className="card-value">{stats.metadata?.performance?.indexing_time_sec?.toFixed(2) || 'N/D'}s</div>
-          <div className="card-label">Tempo de Indexação</div>
+          <div className="card-value">
+            {stats.performance ? (stats.performance.stemming_time_sec + stats.performance.lemmatization_time_sec).toFixed(2) : 'N/D'}s
+          </div>
+          <div className="card-label">Tempo Total de Indexação<br/><span style={{fontSize:'0.8em'}}>(Stemming: {stats.performance?.stemming_time_sec?.toFixed(2)}s | Lematização: {stats.performance?.lemmatization_time_sec?.toFixed(2)}s)</span></div>
         </div>
       </div>
 

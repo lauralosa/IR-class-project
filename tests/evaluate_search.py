@@ -1,6 +1,7 @@
 import time
 from src.search.query_engine import QueryEngine
 from src.search.indexer import InvertedIndex
+from src.config import settings
 
 def calculate_metrics(retrieved, expected):
     """Calcula Precision, Recall e F1-Score."""
@@ -20,7 +21,7 @@ def calculate_metrics(retrieved, expected):
 def run_evaluation():
     # 1. Preparar o motor
     idx = InvertedIndex()
-    if not idx.load_index("index.json"):
+    if not idx.load_index(settings.INDEX_FILE):
         print("Erro: Carrega o índice primeiro!")
         return
     engine = QueryEngine(idx)

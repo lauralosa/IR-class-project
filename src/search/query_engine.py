@@ -48,7 +48,7 @@ class QueryEngine:
         logger.info(f"Pesquisa iniciada: '{query_str}' [Scope: {scope}] [Method: {'Sklearn' if use_sklearn else 'Custom'}]")
 
         if use_sklearn:
-            return self._ranked_search_sklearn(query_str)
+            return self._ranked_search_sklearn(query_str, s, l)
         else:
             return self._ranked_search_custom(query_str, weighting_scheme, s, l, remove_stopwords, scope)
 
@@ -63,7 +63,7 @@ class QueryEngine:
         df_type = weighting_scheme[1].lower()
         norm_type = weighting_scheme[2].lower()
 
-        query_terms = self.processor.process_text(query_str, use_stemming=True, use_lemmatization=l, remove_stopwords=stopwords)
+        query_terms = self.processor.process_text(query_str, use_stemming=s, use_lemmatization=l, remove_stopwords=stopwords)
         if not query_terms: return []
         
 
@@ -132,7 +132,7 @@ class QueryEngine:
 
         return sorted(final_results, key=lambda x: x[1], reverse=True)
 
-    def _ranked_search_sklearn(self, query_str):
+    def _ranked_search_sklearn(self, query_str, s=True, l=False):
         """REQ-B35: Integração com Scikit-Learn para comparação."""
         doc_ids = sorted(self.index_obj.documents.keys())
         if not doc_ids: return []
@@ -144,7 +144,7 @@ class QueryEngine:
         ]
 
         # REQ-B35: Vectorizer usa o NOSSO processor para manter consistência total
-        vectorizer = TfidfVectorizer(analyzer=lambda text: self.processor.process_text(text, use_stemming=True))
+        vectorizer = TfidfVectorizer(analyzer=lambda text: self.processor.process_text(text, use_stemming=s, use_lemmatization=l))
         
         try:
             tfidf_matrix = vectorizer.fit_transform(corpus)

@@ -54,13 +54,21 @@ app.add_middleware(
     allow_headers=["*"], # Permite todos os headers (importante para JSON)
 )
 
-# 2. Carregar o Motor (Otimizado: tentamos carregar primeiro)
-indexer = InvertedIndex()
-if not indexer.load_index(): # Evita re-indexar 110 docs a cada save do código
-    json_path = settings.RAW_DATA_PATH
-    indexer.create_index(json_path)
+# 2. Carregar os dois motores — stemming e lematização (REQ-B18, REQ-B57)
+logger.info("A carregar índice de stemming...")
+indexer_stem = InvertedIndex()
+if not indexer_stem.load_index(settings.INDEX_FILE_STEMMING):
+    logger.info("Índice de stemming não encontrado. A criar (pode demorar)...")
+    indexer_stem.create_index(settings.RAW_DATA_PATH, strategy="stemming")
 
-engine = QueryEngine(indexer)
+logger.info("A carregar índice de lematização...")
+indexer_lemma = InvertedIndex()
+if not indexer_lemma.load_index(settings.INDEX_FILE_LEMMATIZATION):
+    logger.info("Índice de lematização não encontrado. A criar (pode demorar)...")
+    indexer_lemma.create_index(settings.RAW_DATA_PATH, strategy="lemmatization")
+
+engine_stem = QueryEngine(indexer_stem)
+engine_lemma = QueryEngine(indexer_lemma)
 
 # Função auxiliar para XML (REQ-B52)
 def format_response(data, format_type: str):
@@ -84,7 +92,7 @@ def search(
     # REQ-F11: Idioma (português/inglês/ambos)
     lang: str = Query("all", pattern="^(all|PT|EN)$"),
     # REQ-F12: Técnica de processamento (stemming ou lemmatization)
-    processing: str = Query("stemming", pattern="^(stemming|lemmatization)$"),
+    processing: str = Query("stemming", pattern="^(stemming|lemmatization|none)$"),
     # REQ-F15: Remoção de stop words
     stop_words: bool = True,
     # REQ-F18: Algoritmo de ordenação (custom, sklearn, boolean)
@@ -116,6 +124,10 @@ def search(
     logger.info(f"Pesquisa recebida: q='{q}' lang={lang} processing={processing} algo={algo} target={target}")
 
     # --- Traduzir parâmetros do Frontend para o motor de busca ---
+    # Selecionar o índice e motor correto com base na estratégia (REQ-B18, REQ-B57)
+    indexer = indexer_lemma if processing == "lemmatization" else indexer_stem
+    engine = engine_lemma if processing == "lemmatization" else engine_stem
+
     use_stemming = (processing == "stemming")
     use_lemmatization = (processing == "lemmatization")
     # Mapear 'fulltext' para 'all' (o motor já indexa o texto completo)
@@ -285,6 +297,7 @@ def search(
 @app.get("/stats", tags=["System"], summary="Estatísticas do Índice (Admin Dashboard)")
 def get_stats():
     """REQ-F55, F56: Retorna métricas do motor para o Dashboard do Frontend."""
+    indexer = indexer_stem  # usa o índice de stemming como referência principal
     
     # REQ-F57: Calcular os top termos no vocabulário (com base no DF)
     term_counts = []
@@ -302,9 +315,16 @@ def get_stats():
 
     return {
         "num_docs": indexer.num_docs,
-        "vocabulary_size": len(indexer.index),
+        "vocabulary_size": {
+            "stemming": len(indexer_stem.index),
+            "lemmatization": len(indexer_lemma.index)
+        },
         "author_count": len(indexer.author_index),
         "metadata": indexer.metadata,
+        "performance": {
+            "stemming_time_sec": indexer_stem.metadata.get("performance", {}).get("indexing_time_sec", 0),
+            "lemmatization_time_sec": indexer_lemma.metadata.get("performance", {}).get("indexing_time_sec", 0)
+        },
         "top_terms": top_terms,
         "categories": categories
     }
@@ -321,6 +341,7 @@ def list_authors(
     REQ-F35: Lista todos os autores com contagem de publicações.
     Suporta pesquisa por nome.
     """
+    indexer = indexer_stem  # dados de autores são iguais nos dois índices
     all_authors = []
     for author_name, doc_ids in indexer.author_index.items():
         if q and q.lower() not in author_name.lower():
@@ -354,6 +375,7 @@ def get_author_profile(author_name: str = Path(..., description="Nome do autor")
     - Colaboradores (co-autores)
     - Timeline de publicações por ano
     """
+    indexer = indexer_stem  # dados de autores são iguais nos dois índices
     # Procura fuzzy: encontra o autor mais próximo do nome pedido
     matched_author = None
     for name in indexer.author_index.keys():
@@ -440,8 +462,9 @@ def update_index_endpoint(req: UpdateIndexRequest):
     if not os.path.exists(req.filepath):
         raise HTTPException(status_code=404, detail="Ficheiro JSON não encontrado no caminho especificado.")
     try:
-        indexer.update_index(req.filepath)
-        return {"status": "sucesso", "mensagem": f"Índice atualizado. Total de documentos: {indexer.num_docs}"}
+        indexer_stem.update_index(req.filepath)
+        indexer_lemma.update_index(req.filepath)
+        return {"status": "sucesso", "mensagem": f"Ambos os índices atualizados. Total: {indexer_stem.num_docs} documentos."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

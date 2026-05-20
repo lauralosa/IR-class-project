@@ -7,7 +7,9 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     
     STORAGE_DIR: str = "data"
-    INDEX_FILE: str = "data/indexes/index.json"
+    INDEX_FILE_STEMMING: str = "data/indexes/index_stemming.json"
+    INDEX_FILE_LEMMATIZATION: str = "data/indexes/index_lemmatization.json"
+    INDEX_FILE: str = "data/indexes/index_stemming.json"  # alias por compatibilidade
     RAW_DATA_PATH: str = "data/raw_metadata/scraper_results.json"
     PDF_STORAGE_PATH: str = "data/pdfs"
     TXT_STORAGE_PATH: str = "data/extracted_text"

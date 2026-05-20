@@ -13,7 +13,9 @@ def test_indexing():
     print(f"--- TESTE DO ÍNDICE INVERTIDO ---")
     
     # 2. Inicializar o Indexante
-    idx = InvertedIndex()
+    storage_dir = 'data/test'
+    os.makedirs(storage_dir, exist_ok=True)
+    idx = InvertedIndex(storage_dir=storage_dir)
     
     # 3. Criar o Índice
     idx.create_index(json_path, strategy="lemmatization", batch_size=50)
@@ -28,9 +30,8 @@ def test_indexing():
         print(f"Palavra '{term}': encontrada nos documentos {postings}")
 
     # 5. Guardar o índice para ver o ficheiro JSON final
-    idx.save_index('index.json')
-    print("\n[OK] Índice guardado em 'index.json' para inspeção visual.")
+    idx.save_index(os.path.join(storage_dir, 'index.json'))
+    print(f"\n[OK] Índice guardado em '{storage_dir}/index.json' para inspeção visual.")
 
 if __name__ == "__main__":
     test_indexing()
-    

@@ -57,11 +57,18 @@ export default function Compare() {
       </div>
 
       {/* REQ-F53: Tempo de Indexação Global */}
-      {stats && stats.metadata && (
+      {stats && stats.performance && (
         <div className="indexing-stats">
-          <strong>⏱️ Tempo de Indexação do Sistema Atual: </strong>
-          {stats.metadata.performance?.indexing_time_sec ? Number(stats.metadata.performance.indexing_time_sec).toFixed(2) : "N/D"} segundos
-          (para {stats.num_docs} documentos)
+          <strong>⏱️ Tempos de Indexação: </strong>
+          <span style={{ marginLeft: '10px', background: '#fef2f2', color: '#AA192B', padding: '2px 8px', borderRadius: '12px', fontSize: '0.9em' }}>
+            <strong>Stemming:</strong> {stats.performance.stemming_time_sec ? Number(stats.performance.stemming_time_sec).toFixed(2) : "N/D"}s
+          </span>
+          <span style={{ marginLeft: '10px', background: '#fef2f2', color: '#AA192B', padding: '2px 8px', borderRadius: '12px', fontSize: '0.9em' }}>
+            <strong>Lematização:</strong> {stats.performance.lemmatization_time_sec ? Number(stats.performance.lemmatization_time_sec).toFixed(2) : "N/D"}s
+          </span>
+          <span style={{ marginLeft: '10px', color: '#6b7280', fontSize: '0.9em' }}>
+            (para {stats.num_docs} documentos)
+          </span>
         </div>
       )}
 

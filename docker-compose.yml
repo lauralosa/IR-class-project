@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: repositorium_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      # Sincroniza a pasta de dados local com o contentor para não se perder o índice invertido
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - search_network
+
+  frontend:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile
+    container_name: repositorium_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./src/frontend:/app
+      - /app/node_modules
+    environment:
+      # Força o Vite a escutar mudanças nos ficheiros no Windows/Mac usando polling
+      - CHOKIDAR_USEPOLLING=true
+      # Permite ligar o frontend ao backend facilmente
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - search_network
+
+networks:
+  search_network:
+    driver: bridge

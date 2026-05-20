@@ -1634,3 +1634,756 @@ General Engineering       1.00      0.17      0.29         6
 2026-05-18 18:24:34,938 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
 2026-05-18 18:25:08,856 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine´AND' lang=all processing=stemming algo=custom target=all
 2026-05-18 18:25:08,857 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine´AND' [Scope: all] [Method: Custom]
+2026-05-18 19:29:30,207 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-18 19:29:30,286 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-18 19:29:30,340 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-18 19:29:30,341 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-18 19:29:30,341 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-18 19:29:30,342 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-18 19:29:30,343 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-18 19:30:58,847 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=stemming algo=custom target=all
+2026-05-18 19:30:58,848 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
+2026-05-18 19:31:33,559 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND NOT learning' lang=all processing=stemming algo=boolean target=title
+2026-05-18 19:31:33,559 [DEBUG] QUERY-ENGINE: Executando query booleana: machine AND NOT learning
+2026-05-18 19:32:00,172 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND NOT learning' lang=all processing=stemming algo=boolean target=title
+2026-05-18 19:32:00,173 [DEBUG] QUERY-ENGINE: Executando query booleana: machine AND NOT learning
+2026-05-18 19:32:48,853 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND NOT learning' lang=PT processing=stemming algo=boolean target=title
+2026-05-18 19:32:48,853 [DEBUG] QUERY-ENGINE: Executando query booleana: machine AND NOT learning
+2026-05-18 19:34:39,494 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='medicine' lang=all processing=stemming algo=custom target=all
+2026-05-18 19:34:39,495 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'medicine' [Scope: all] [Method: Custom]
+2026-05-18 19:34:39,534 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='medicine' lang=all processing=lemmatization algo=custom target=all
+2026-05-18 19:34:39,534 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'medicine' [Scope: all] [Method: Custom]
+2026-05-18 19:36:15,794 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=title
+2026-05-18 19:36:15,796 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: title] [Method: Custom]
+2026-05-18 19:36:20,866 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=all processing=stemming algo=custom target=title
+2026-05-18 19:36:20,866 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: title] [Method: Custom]
+2026-05-18 19:36:32,294 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=stemming algo=custom target=title
+2026-05-18 19:36:32,295 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: title] [Method: Custom]
+2026-05-18 19:37:03,157 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='system' lang=all processing=stemming algo=custom target=title
+2026-05-18 19:37:03,158 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'system' [Scope: title] [Method: Custom]
+2026-05-18 19:37:11,996 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='system' lang=all processing=stemming algo=custom target=all
+2026-05-18 19:37:11,996 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'system' [Scope: all] [Method: Custom]
+2026-05-18 19:37:43,322 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='NOT system' lang=all processing=stemming algo=boolean target=all
+2026-05-18 19:37:43,323 [DEBUG] QUERY-ENGINE: Executando query booleana: NOT system
+2026-05-19 23:25:42,430 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-19 23:25:42,778 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-19 23:25:42,920 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-19 23:25:42,920 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-19 23:25:42,920 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-19 23:25:42,921 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-19 23:25:42,923 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-19 23:25:43,146 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=all processing=stemming algo=custom target=all
+2026-05-19 23:25:43,148 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-19 23:25:49,200 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=custom target=all
+2026-05-19 23:25:49,201 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Custom]
+2026-05-19 23:25:53,965 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=sklearn target=all
+2026-05-19 23:25:53,966 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Sklearn]
+2026-05-19 23:37:50,052 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-19 23:37:50,185 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-19 23:37:50,257 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-19 23:37:50,258 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-19 23:37:50,258 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-19 23:37:50,258 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-19 23:37:50,261 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:36:29,905 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-20 21:36:29,907 [INFO] API-REPOSITORIUM: A carregar índice de stemming...
+2026-05-20 21:36:29,960 [WARNING] INDEXER: Ficheiro de índice não encontrado.
+2026-05-20 21:36:29,961 [INFO] API-REPOSITORIUM: Índice de stemming não encontrado. A criar (pode demorar)...
+2026-05-20 21:36:29,998 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:36:30,097 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:36:30,098 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:36:30,098 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:36:30,099 [INFO] INDEXER: A processar 110 documentos em lotes de 50...
+2026-05-20 21:36:30,262 [DEBUG] CLASSIFIER: Predição efetuada: 'A Process Tokenisation Framewo...' -> AI & Robotics
+2026-05-20 21:36:30,272 [DEBUG] CLASSIFIER: Predição efetuada: 'Trustable machine learning dev...' -> Systems & Tech
+2026-05-20 21:36:30,279 [DEBUG] CLASSIFIER: Predição efetuada: 'Emotion regulation in confusio...' -> AI & Robotics
+2026-05-20 21:36:30,293 [DEBUG] CLASSIFIER: Predição efetuada: 'Contributions to the industria...' -> AI & Robotics
+2026-05-20 21:36:30,302 [DEBUG] CLASSIFIER: Predição efetuada: 'Context-aware routing model fo...' -> AI & Robotics
+2026-05-20 21:36:30,314 [DEBUG] CLASSIFIER: Predição efetuada: 'Solid-state transformer: uma (...' -> AI & Robotics
+2026-05-20 21:36:30,322 [DEBUG] CLASSIFIER: Predição efetuada: 'Indicadores de desempenho inst...' -> Education & Society
+2026-05-20 21:36:30,332 [DEBUG] CLASSIFIER: Predição efetuada: 'Securing the Internet of Thing...' -> AI & Robotics
+2026-05-20 21:36:30,342 [DEBUG] CLASSIFIER: Predição efetuada: 'ALFA: Advanced LiDAR Framework...' -> Systems & Tech
+2026-05-20 21:36:30,353 [DEBUG] CLASSIFIER: Predição efetuada: 'Use of machine learning to imp...' -> AI & Robotics
+2026-05-20 21:36:30,365 [DEBUG] CLASSIFIER: Predição efetuada: 'Production process improvement...' -> AI & Robotics
+2026-05-20 21:36:30,379 [DEBUG] CLASSIFIER: Predição efetuada: 'Handling mixed-criticality sys...' -> AI & Robotics
+2026-05-20 21:36:30,392 [DEBUG] CLASSIFIER: Predição efetuada: 'A neurodynamics-based system f...' -> AI & Robotics
+2026-05-20 21:36:30,409 [DEBUG] CLASSIFIER: Predição efetuada: 'Evaluation and development of ...' -> AI & Robotics
+2026-05-20 21:36:30,422 [DEBUG] CLASSIFIER: Predição efetuada: 'A maturity model for digital f...' -> AI & Robotics
+2026-05-20 21:36:30,434 [DEBUG] CLASSIFIER: Predição efetuada: 'Minimizing the impact of fores...' -> General Engineering
+2026-05-20 21:36:30,444 [DEBUG] CLASSIFIER: Predição efetuada: 'Automated garment recognition ...' -> AI & Robotics
+2026-05-20 21:36:30,453 [DEBUG] CLASSIFIER: Predição efetuada: 'Embedded intelligence layer: n...' -> AI & Robotics
+2026-05-20 21:36:30,463 [DEBUG] CLASSIFIER: Predição efetuada: 'Medição em tempo real da eficá...' -> AI & Robotics
+2026-05-20 21:36:30,477 [DEBUG] CLASSIFIER: Predição efetuada: 'Group recommender systems for ...' -> General Engineering
+2026-05-20 21:36:30,490 [DEBUG] CLASSIFIER: Predição efetuada: 'Hybrid methods based on optimi...' -> AI & Robotics
+2026-05-20 21:36:30,504 [DEBUG] CLASSIFIER: Predição efetuada: 'Towards trustworthy TrustZone-...' -> General Engineering
+2026-05-20 21:36:30,519 [DEBUG] CLASSIFIER: Predição efetuada: 'Intelligent Decision Support S...' -> AI & Robotics
+2026-05-20 21:36:30,533 [DEBUG] CLASSIFIER: Predição efetuada: 'Avaliação socioeconómica de pr...' -> AI & Robotics
+2026-05-20 21:36:30,549 [DEBUG] CLASSIFIER: Predição efetuada: 'Organizations diagnosis as com...' -> AI & Robotics
+2026-05-20 21:36:30,558 [DEBUG] CLASSIFIER: Predição efetuada: 'Human aware assistance system ...' -> AI & Robotics
+2026-05-20 21:36:30,566 [DEBUG] CLASSIFIER: Predição efetuada: 'Human well-being monitoring: i...' -> AI & Robotics
+2026-05-20 21:36:30,579 [DEBUG] CLASSIFIER: Predição efetuada: 'Improving veracity and value o...' -> AI & Robotics
+2026-05-20 21:36:30,592 [DEBUG] CLASSIFIER: Predição efetuada: 'Development of an intelligent ...' -> AI & Robotics
+2026-05-20 21:36:30,603 [DEBUG] CLASSIFIER: Predição efetuada: 'Ethics and new trends in artif...' -> AI & Robotics
+2026-05-20 21:36:30,615 [DEBUG] CLASSIFIER: Predição efetuada: 'Improving hospital workflows w...' -> AI & Robotics
+2026-05-20 21:36:30,629 [DEBUG] CLASSIFIER: Predição efetuada: 'Online social media agent: an ...' -> AI & Robotics
+2026-05-20 21:36:30,640 [DEBUG] CLASSIFIER: Predição efetuada: 'Multichannel mobile companion ...' -> General Engineering
+2026-05-20 21:36:30,649 [DEBUG] CLASSIFIER: Predição efetuada: 'ChamelIoT: agnostic operating ...' -> Systems & Tech
+2026-05-20 21:36:30,661 [DEBUG] CLASSIFIER: Predição efetuada: 'An intelligent decision suppor...' -> AI & Robotics
+2026-05-20 21:36:30,677 [DEBUG] CLASSIFIER: Predição efetuada: 'MEMS scanners with diffractive...' -> AI & Robotics
+2026-05-20 21:36:30,684 [DEBUG] CLASSIFIER: Predição efetuada: 'Smart human mobility in smart ...' -> AI & Robotics
+2026-05-20 21:36:30,695 [DEBUG] CLASSIFIER: Predição efetuada: 'Artificial intelligence collab...' -> AI & Robotics
+2026-05-20 21:36:30,704 [DEBUG] CLASSIFIER: Predição efetuada: 'A QFD-MCDM approach considerin...' -> AI & Robotics
+2026-05-20 21:36:30,717 [DEBUG] CLASSIFIER: Predição efetuada: 'Context-aware routing and forw...' -> Systems & Tech
+2026-05-20 21:36:30,739 [DEBUG] CLASSIFIER: Predição efetuada: 'An automated and efficient Mac...' -> Education & Society
+2026-05-20 21:36:30,756 [DEBUG] CLASSIFIER: Predição efetuada: 'Wave-based sensor, actuator an...' -> General Engineering
+2026-05-20 21:36:30,779 [DEBUG] CLASSIFIER: Predição efetuada: 'Distributed scheduling based o...' -> AI & Robotics
+2026-05-20 21:36:30,797 [DEBUG] CLASSIFIER: Predição efetuada: 'Modelo Preditivo de Qualidade ...' -> AI & Robotics
+2026-05-20 21:36:30,819 [DEBUG] CLASSIFIER: Predição efetuada: 'Bringing empirical big data to...' -> AI & Robotics
+2026-05-20 21:36:30,841 [DEBUG] CLASSIFIER: Predição efetuada: 'Smart power conditioners for e...' -> AI & Robotics
+2026-05-20 21:36:30,860 [DEBUG] CLASSIFIER: Predição efetuada: 'Smart framework for continuous...' -> AI & Robotics
+2026-05-20 21:36:30,882 [DEBUG] CLASSIFIER: Predição efetuada: 'A hybrid approach based on a r...' -> AI & Robotics
+2026-05-20 21:36:30,896 [DEBUG] CLASSIFIER: Predição efetuada: 'An intelligent decision suppor...' -> Education & Society
+2026-05-20 21:36:30,907 [DEBUG] CLASSIFIER: Predição efetuada: 'Argumentation dialogues in web...' -> AI & Robotics
+2026-05-20 21:36:30,909 [INFO] INDEXER: Lote concluído: 50/110
+2026-05-20 21:36:30,917 [DEBUG] CLASSIFIER: Predição efetuada: 'Dynamic inductive wireless pow...' -> AI & Robotics
+2026-05-20 21:36:30,927 [DEBUG] CLASSIFIER: Predição efetuada: 'Risk management of occupationa...' -> AI & Robotics
+2026-05-20 21:36:30,941 [DEBUG] CLASSIFIER: Predição efetuada: 'Smart spaces: aware of users, ...' -> AI & Robotics
+2026-05-20 21:36:30,951 [DEBUG] CLASSIFIER: Predição efetuada: 'Empirical software engineering...' -> AI & Robotics
+2026-05-20 21:36:30,961 [DEBUG] CLASSIFIER: Predição efetuada: 'An intelligent decision suppor...' -> AI & Robotics
+2026-05-20 21:36:30,971 [DEBUG] CLASSIFIER: Predição efetuada: 'Desenvolvimento de um modelo d...' -> AI & Robotics
+2026-05-20 21:36:30,988 [DEBUG] CLASSIFIER: Predição efetuada: 'A Big Data perspective on Cybe...' -> AI & Robotics
+2026-05-20 21:36:31,008 [DEBUG] CLASSIFIER: Predição efetuada: 'Open innovation strategies in ...' -> AI & Robotics
+2026-05-20 21:36:31,026 [DEBUG] CLASSIFIER: Predição efetuada: 'Integrating quality and innova...' -> General Engineering
+2026-05-20 21:36:31,044 [DEBUG] CLASSIFIER: Predição efetuada: 'Intelligent intrusion detectio...' -> Systems & Tech
+2026-05-20 21:36:31,059 [DEBUG] CLASSIFIER: Predição efetuada: 'Raciocínio baseado na ética mé...' -> General Engineering
+2026-05-20 21:36:31,078 [DEBUG] CLASSIFIER: Predição efetuada: 'Classificação e gestão de stoc...' -> AI & Robotics
+2026-05-20 21:36:31,095 [DEBUG] CLASSIFIER: Predição efetuada: 'Production control system for ...' -> AI & Robotics
+2026-05-20 21:36:31,107 [DEBUG] CLASSIFIER: Predição efetuada: 'New generation of interactive ...' -> AI & Robotics
+2026-05-20 21:36:31,123 [DEBUG] CLASSIFIER: Predição efetuada: 'Development of multifunctional...' -> AI & Robotics
+2026-05-20 21:36:31,134 [DEBUG] CLASSIFIER: Predição efetuada: 'Eddy current angular position ...' -> AI & Robotics
+2026-05-20 21:36:31,148 [DEBUG] CLASSIFIER: Predição efetuada: 'Impacto da utilização da tecno...' -> AI & Robotics
+2026-05-20 21:36:31,158 [DEBUG] CLASSIFIER: Predição efetuada: 'The integration of Lean Thinki...' -> Data Science
+2026-05-20 21:36:31,166 [DEBUG] CLASSIFIER: Predição efetuada: 'Self-healing radio maps of wir...' -> AI & Robotics
+2026-05-20 21:36:31,174 [DEBUG] CLASSIFIER: Predição efetuada: 'Tutoría inteligente para mejor...' -> AI & Robotics
+2026-05-20 21:36:31,184 [DEBUG] CLASSIFIER: Predição efetuada: 'O valor da informação cientifi...' -> AI & Robotics
+2026-05-20 21:36:31,199 [DEBUG] CLASSIFIER: Predição efetuada: 'Definição de um modelo para cr...' -> AI & Robotics
+2026-05-20 21:36:31,218 [DEBUG] CLASSIFIER: Predição efetuada: 'An agile process for modeling ...' -> AI & Robotics
+2026-05-20 21:36:31,247 [DEBUG] CLASSIFIER: Predição efetuada: 'Practices and tools for situat...' -> General Engineering
+2026-05-20 21:36:31,262 [DEBUG] CLASSIFIER: Predição efetuada: 'Fourier Transform Infrared (FT...' -> General Engineering
+2026-05-20 21:36:31,276 [DEBUG] CLASSIFIER: Predição efetuada: 'An evolving cognitive approach...' -> AI & Robotics
+2026-05-20 21:36:31,293 [DEBUG] CLASSIFIER: Predição efetuada: 'Low-pressure resonant MEMS acc...' -> General Engineering
+2026-05-20 21:36:31,317 [DEBUG] CLASSIFIER: Predição efetuada: 'Low-pressure closed-loop MEMS ...' -> General Engineering
+2026-05-20 21:36:31,337 [DEBUG] CLASSIFIER: Predição efetuada: 'Uncertainty and incompleteness...' -> AI & Robotics
+2026-05-20 21:36:31,354 [DEBUG] CLASSIFIER: Predição efetuada: 'Knowledge engineering for inte...' -> AI & Robotics
+2026-05-20 21:36:31,376 [DEBUG] CLASSIFIER: Predição efetuada: 'Emotional state detection thro...' -> AI & Robotics
+2026-05-20 21:36:31,396 [DEBUG] CLASSIFIER: Predição efetuada: 'Readout circuit for time-based...' -> AI & Robotics
+2026-05-20 21:36:31,418 [DEBUG] CLASSIFIER: Predição efetuada: 'Automatic prediction of ischem...' -> AI & Robotics
+2026-05-20 21:36:31,430 [DEBUG] CLASSIFIER: Predição efetuada: 'A novel system to assist elder...' -> AI & Robotics
+2026-05-20 21:36:31,443 [DEBUG] CLASSIFIER: Predição efetuada: 'A decision support system base...' -> AI & Robotics
+2026-05-20 21:36:31,452 [DEBUG] CLASSIFIER: Predição efetuada: 'Modern optimization of predict...' -> Education & Society
+2026-05-20 21:36:31,462 [DEBUG] CLASSIFIER: Predição efetuada: 'Development of human body pose...' -> General Engineering
+2026-05-20 21:36:31,474 [DEBUG] CLASSIFIER: Predição efetuada: 'An intelligent decision suppor...' -> Data Science
+2026-05-20 21:36:31,482 [DEBUG] CLASSIFIER: Predição efetuada: 'A conflict management environm...' -> AI & Robotics
+2026-05-20 21:36:31,494 [DEBUG] CLASSIFIER: Predição efetuada: 'Self-regulation learning in ne...' -> AI & Robotics
+2026-05-20 21:36:31,501 [DEBUG] CLASSIFIER: Predição efetuada: 'Priorização de indicadores pró...' -> General Engineering
+2026-05-20 21:36:31,512 [DEBUG] CLASSIFIER: Predição efetuada: 'Let’s be sensitive: social sig...' -> AI & Robotics
+2026-05-20 21:36:31,525 [DEBUG] CLASSIFIER: Predição efetuada: 'The internet of people approac...' -> AI & Robotics
+2026-05-20 21:36:31,532 [DEBUG] CLASSIFIER: Predição efetuada: 'Improving clinical problem lis...' -> AI & Robotics
+2026-05-20 21:36:31,542 [DEBUG] CLASSIFIER: Predição efetuada: 'Towards enhanced safety stock ...' -> AI & Robotics
+2026-05-20 21:36:31,551 [DEBUG] CLASSIFIER: Predição efetuada: 'Sobre a qualidade dos dados em...' -> Data Science
+2026-05-20 21:36:31,566 [DEBUG] CLASSIFIER: Predição efetuada: 'Side-channel timing attack on ...' -> General Engineering
+2026-05-20 21:36:31,579 [DEBUG] CLASSIFIER: Predição efetuada: 'Real-time simulation of supply...' -> AI & Robotics
+2026-05-20 21:36:31,592 [DEBUG] CLASSIFIER: Predição efetuada: 'Smart wearable orthosis to ass...' -> AI & Robotics
+2026-05-20 21:36:31,606 [DEBUG] CLASSIFIER: Predição efetuada: 'Modelo para a implantação da c...' -> AI & Robotics
+2026-05-20 21:36:31,609 [INFO] INDEXER: Lote concluído: 100/110
+2026-05-20 21:36:31,619 [DEBUG] CLASSIFIER: Predição efetuada: 'Tailoring PMI and OGC framewor...' -> AI & Robotics
+2026-05-20 21:36:31,645 [DEBUG] CLASSIFIER: Predição efetuada: 'Automatic segmentation and cla...' -> General Engineering
+2026-05-20 21:36:31,655 [DEBUG] CLASSIFIER: Predição efetuada: 'An hybrid and adaptive approac...' -> General Engineering
+2026-05-20 21:36:31,669 [DEBUG] CLASSIFIER: Predição efetuada: 'Advancing the design and imple...' -> AI & Robotics
+2026-05-20 21:36:31,686 [DEBUG] CLASSIFIER: Predição efetuada: 'Utilizando ambientes virtuais ...' -> AI & Robotics
+2026-05-20 21:36:31,709 [DEBUG] CLASSIFIER: Predição efetuada: 'A ciência de serviços na melho...' -> AI & Robotics
+2026-05-20 21:36:31,720 [DEBUG] CLASSIFIER: Predição efetuada: 'Instrumento para medição da re...' -> AI & Robotics
+2026-05-20 21:36:31,738 [DEBUG] CLASSIFIER: Predição efetuada: 'FastGraph - unsupervised locat...' -> General Engineering
+2026-05-20 21:36:31,749 [DEBUG] CLASSIFIER: Predição efetuada: 'Sensing technologies in pervas...' -> AI & Robotics
+2026-05-20 21:36:31,759 [DEBUG] CLASSIFIER: Predição efetuada: 'Information theoretic stochast...' -> General Engineering
+2026-05-20 21:36:31,762 [INFO] INDEXER: Lote concluído: 110/110
+2026-05-20 21:36:31,786 [INFO] INDEXER: Indexação concluída: 1.82s | Vocabulário: 4815 termos.
+2026-05-20 21:36:32,032 [INFO] API-REPOSITORIUM: A carregar índice de lematização...
+2026-05-20 21:36:32,034 [WARNING] INDEXER: Ficheiro de índice não encontrado.
+2026-05-20 21:36:32,035 [INFO] API-REPOSITORIUM: Índice de lematização não encontrado. A criar (pode demorar)...
+2026-05-20 21:36:32,042 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:36:32,100 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:36:32,100 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:36:32,100 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:36:32,101 [INFO] INDEXER: A processar 110 documentos em lotes de 50...
+2026-05-20 21:36:35,616 [DEBUG] CLASSIFIER: Predição efetuada: 'A Process Tokenisation Framewo...' -> AI & Robotics
+2026-05-20 21:36:35,621 [DEBUG] CLASSIFIER: Predição efetuada: 'Trustable machine learning dev...' -> Systems & Tech
+2026-05-20 21:36:35,629 [DEBUG] CLASSIFIER: Predição efetuada: 'Emotion regulation in confusio...' -> AI & Robotics
+2026-05-20 21:36:35,635 [DEBUG] CLASSIFIER: Predição efetuada: 'Contributions to the industria...' -> AI & Robotics
+2026-05-20 21:36:35,644 [DEBUG] CLASSIFIER: Predição efetuada: 'Context-aware routing model fo...' -> AI & Robotics
+2026-05-20 21:36:35,651 [DEBUG] CLASSIFIER: Predição efetuada: 'Solid-state transformer: uma (...' -> AI & Robotics
+2026-05-20 21:36:35,659 [DEBUG] CLASSIFIER: Predição efetuada: 'Indicadores de desempenho inst...' -> Education & Society
+2026-05-20 21:36:35,667 [DEBUG] CLASSIFIER: Predição efetuada: 'Securing the Internet of Thing...' -> AI & Robotics
+2026-05-20 21:36:35,674 [DEBUG] CLASSIFIER: Predição efetuada: 'ALFA: Advanced LiDAR Framework...' -> Systems & Tech
+2026-05-20 21:36:35,680 [DEBUG] CLASSIFIER: Predição efetuada: 'Use of machine learning to imp...' -> AI & Robotics
+2026-05-20 21:36:35,686 [DEBUG] CLASSIFIER: Predição efetuada: 'Production process improvement...' -> AI & Robotics
+2026-05-20 21:36:35,694 [DEBUG] CLASSIFIER: Predição efetuada: 'Handling mixed-criticality sys...' -> AI & Robotics
+2026-05-20 21:36:35,701 [DEBUG] CLASSIFIER: Predição efetuada: 'A neurodynamics-based system f...' -> AI & Robotics
+2026-05-20 21:36:35,711 [DEBUG] CLASSIFIER: Predição efetuada: 'Evaluation and development of ...' -> AI & Robotics
+2026-05-20 21:36:35,720 [DEBUG] CLASSIFIER: Predição efetuada: 'A maturity model for digital f...' -> AI & Robotics
+2026-05-20 21:36:35,732 [DEBUG] CLASSIFIER: Predição efetuada: 'Minimizing the impact of fores...' -> General Engineering
+2026-05-20 21:36:35,742 [DEBUG] CLASSIFIER: Predição efetuada: 'Automated garment recognition ...' -> AI & Robotics
+2026-05-20 21:36:35,754 [DEBUG] CLASSIFIER: Predição efetuada: 'Embedded intelligence layer: n...' -> AI & Robotics
+2026-05-20 21:36:35,766 [DEBUG] CLASSIFIER: Predição efetuada: 'Medição em tempo real da eficá...' -> AI & Robotics
+2026-05-20 21:36:35,778 [DEBUG] CLASSIFIER: Predição efetuada: 'Group recommender systems for ...' -> General Engineering
+2026-05-20 21:36:35,787 [DEBUG] CLASSIFIER: Predição efetuada: 'Hybrid methods based on optimi...' -> AI & Robotics
+2026-05-20 21:36:35,799 [DEBUG] CLASSIFIER: Predição efetuada: 'Towards trustworthy TrustZone-...' -> General Engineering
+2026-05-20 21:36:35,811 [DEBUG] CLASSIFIER: Predição efetuada: 'Intelligent Decision Support S...' -> AI & Robotics
+2026-05-20 21:36:35,820 [DEBUG] CLASSIFIER: Predição efetuada: 'Avaliação socioeconómica de pr...' -> AI & Robotics
+2026-05-20 21:36:35,832 [DEBUG] CLASSIFIER: Predição efetuada: 'Organizations diagnosis as com...' -> AI & Robotics
+2026-05-20 21:36:35,844 [DEBUG] CLASSIFIER: Predição efetuada: 'Human aware assistance system ...' -> AI & Robotics
+2026-05-20 21:36:35,852 [DEBUG] CLASSIFIER: Predição efetuada: 'Human well-being monitoring: i...' -> AI & Robotics
+2026-05-20 21:36:35,867 [DEBUG] CLASSIFIER: Predição efetuada: 'Improving veracity and value o...' -> AI & Robotics
+2026-05-20 21:36:35,880 [DEBUG] CLASSIFIER: Predição efetuada: 'Development of an intelligent ...' -> AI & Robotics
+2026-05-20 21:36:35,892 [DEBUG] CLASSIFIER: Predição efetuada: 'Ethics and new trends in artif...' -> AI & Robotics
+2026-05-20 21:36:35,901 [DEBUG] CLASSIFIER: Predição efetuada: 'Improving hospital workflows w...' -> AI & Robotics
+2026-05-20 21:36:35,915 [DEBUG] CLASSIFIER: Predição efetuada: 'Online social media agent: an ...' -> AI & Robotics
+2026-05-20 21:36:35,926 [DEBUG] CLASSIFIER: Predição efetuada: 'Multichannel mobile companion ...' -> General Engineering
+2026-05-20 21:36:35,939 [DEBUG] CLASSIFIER: Predição efetuada: 'ChamelIoT: agnostic operating ...' -> Systems & Tech
+2026-05-20 21:36:35,950 [DEBUG] CLASSIFIER: Predição efetuada: 'An intelligent decision suppor...' -> AI & Robotics
+2026-05-20 21:36:35,963 [DEBUG] CLASSIFIER: Predição efetuada: 'MEMS scanners with diffractive...' -> AI & Robotics
+2026-05-20 21:36:35,975 [DEBUG] CLASSIFIER: Predição efetuada: 'Smart human mobility in smart ...' -> AI & Robotics
+2026-05-20 21:36:35,989 [DEBUG] CLASSIFIER: Predição efetuada: 'Artificial intelligence collab...' -> AI & Robotics
+2026-05-20 21:36:36,009 [DEBUG] CLASSIFIER: Predição efetuada: 'A QFD-MCDM approach considerin...' -> AI & Robotics
+2026-05-20 21:36:36,022 [DEBUG] CLASSIFIER: Predição efetuada: 'Context-aware routing and forw...' -> Systems & Tech
+2026-05-20 21:36:36,033 [DEBUG] CLASSIFIER: Predição efetuada: 'An automated and efficient Mac...' -> Education & Society
+2026-05-20 21:36:36,050 [DEBUG] CLASSIFIER: Predição efetuada: 'Wave-based sensor, actuator an...' -> General Engineering
+2026-05-20 21:36:36,064 [DEBUG] CLASSIFIER: Predição efetuada: 'Distributed scheduling based o...' -> AI & Robotics
+2026-05-20 21:36:36,076 [DEBUG] CLASSIFIER: Predição efetuada: 'Modelo Preditivo de Qualidade ...' -> AI & Robotics
+2026-05-20 21:36:36,086 [DEBUG] CLASSIFIER: Predição efetuada: 'Bringing empirical big data to...' -> AI & Robotics
+2026-05-20 21:36:36,102 [DEBUG] CLASSIFIER: Predição efetuada: 'Smart power conditioners for e...' -> AI & Robotics
+2026-05-20 21:36:36,115 [DEBUG] CLASSIFIER: Predição efetuada: 'Smart framework for continuous...' -> AI & Robotics
+2026-05-20 21:36:36,129 [DEBUG] CLASSIFIER: Predição efetuada: 'A hybrid approach based on a r...' -> AI & Robotics
+2026-05-20 21:36:36,141 [DEBUG] CLASSIFIER: Predição efetuada: 'An intelligent decision suppor...' -> Education & Society
+2026-05-20 21:36:36,153 [DEBUG] CLASSIFIER: Predição efetuada: 'Argumentation dialogues in web...' -> AI & Robotics
+2026-05-20 21:36:36,156 [INFO] INDEXER: Lote concluído: 50/110
+2026-05-20 21:36:36,165 [DEBUG] CLASSIFIER: Predição efetuada: 'Dynamic inductive wireless pow...' -> AI & Robotics
+2026-05-20 21:36:36,179 [DEBUG] CLASSIFIER: Predição efetuada: 'Risk management of occupationa...' -> AI & Robotics
+2026-05-20 21:36:36,190 [DEBUG] CLASSIFIER: Predição efetuada: 'Smart spaces: aware of users, ...' -> AI & Robotics
+2026-05-20 21:36:36,202 [DEBUG] CLASSIFIER: Predição efetuada: 'Empirical software engineering...' -> AI & Robotics
+2026-05-20 21:36:36,215 [DEBUG] CLASSIFIER: Predição efetuada: 'An intelligent decision suppor...' -> AI & Robotics
+2026-05-20 21:36:36,228 [DEBUG] CLASSIFIER: Predição efetuada: 'Desenvolvimento de um modelo d...' -> AI & Robotics
+2026-05-20 21:36:36,242 [DEBUG] CLASSIFIER: Predição efetuada: 'A Big Data perspective on Cybe...' -> AI & Robotics
+2026-05-20 21:36:36,253 [DEBUG] CLASSIFIER: Predição efetuada: 'Open innovation strategies in ...' -> AI & Robotics
+2026-05-20 21:36:36,265 [DEBUG] CLASSIFIER: Predição efetuada: 'Integrating quality and innova...' -> General Engineering
+2026-05-20 21:36:36,276 [DEBUG] CLASSIFIER: Predição efetuada: 'Intelligent intrusion detectio...' -> Systems & Tech
+2026-05-20 21:36:36,289 [DEBUG] CLASSIFIER: Predição efetuada: 'Raciocínio baseado na ética mé...' -> General Engineering
+2026-05-20 21:36:36,305 [DEBUG] CLASSIFIER: Predição efetuada: 'Classificação e gestão de stoc...' -> AI & Robotics
+2026-05-20 21:36:36,317 [DEBUG] CLASSIFIER: Predição efetuada: 'Production control system for ...' -> AI & Robotics
+2026-05-20 21:36:36,328 [DEBUG] CLASSIFIER: Predição efetuada: 'New generation of interactive ...' -> AI & Robotics
+2026-05-20 21:36:36,341 [DEBUG] CLASSIFIER: Predição efetuada: 'Development of multifunctional...' -> AI & Robotics
+2026-05-20 21:36:36,351 [DEBUG] CLASSIFIER: Predição efetuada: 'Eddy current angular position ...' -> AI & Robotics
+2026-05-20 21:36:36,363 [DEBUG] CLASSIFIER: Predição efetuada: 'Impacto da utilização da tecno...' -> AI & Robotics
+2026-05-20 21:36:36,377 [DEBUG] CLASSIFIER: Predição efetuada: 'The integration of Lean Thinki...' -> Data Science
+2026-05-20 21:36:36,386 [DEBUG] CLASSIFIER: Predição efetuada: 'Self-healing radio maps of wir...' -> AI & Robotics
+2026-05-20 21:36:36,402 [DEBUG] CLASSIFIER: Predição efetuada: 'Tutoría inteligente para mejor...' -> AI & Robotics
+2026-05-20 21:36:36,414 [DEBUG] CLASSIFIER: Predição efetuada: 'O valor da informação cientifi...' -> AI & Robotics
+2026-05-20 21:36:36,426 [DEBUG] CLASSIFIER: Predição efetuada: 'Definição de um modelo para cr...' -> AI & Robotics
+2026-05-20 21:36:36,439 [DEBUG] CLASSIFIER: Predição efetuada: 'An agile process for modeling ...' -> AI & Robotics
+2026-05-20 21:36:36,456 [DEBUG] CLASSIFIER: Predição efetuada: 'Practices and tools for situat...' -> General Engineering
+2026-05-20 21:36:36,468 [DEBUG] CLASSIFIER: Predição efetuada: 'Fourier Transform Infrared (FT...' -> General Engineering
+2026-05-20 21:36:36,479 [DEBUG] CLASSIFIER: Predição efetuada: 'An evolving cognitive approach...' -> AI & Robotics
+2026-05-20 21:36:36,490 [DEBUG] CLASSIFIER: Predição efetuada: 'Low-pressure resonant MEMS acc...' -> General Engineering
+2026-05-20 21:36:36,505 [DEBUG] CLASSIFIER: Predição efetuada: 'Low-pressure closed-loop MEMS ...' -> General Engineering
+2026-05-20 21:36:36,521 [DEBUG] CLASSIFIER: Predição efetuada: 'Uncertainty and incompleteness...' -> AI & Robotics
+2026-05-20 21:36:36,534 [DEBUG] CLASSIFIER: Predição efetuada: 'Knowledge engineering for inte...' -> AI & Robotics
+2026-05-20 21:36:36,546 [DEBUG] CLASSIFIER: Predição efetuada: 'Emotional state detection thro...' -> AI & Robotics
+2026-05-20 21:36:36,562 [DEBUG] CLASSIFIER: Predição efetuada: 'Readout circuit for time-based...' -> AI & Robotics
+2026-05-20 21:36:36,580 [DEBUG] CLASSIFIER: Predição efetuada: 'Automatic prediction of ischem...' -> AI & Robotics
+2026-05-20 21:36:36,596 [DEBUG] CLASSIFIER: Predição efetuada: 'A novel system to assist elder...' -> AI & Robotics
+2026-05-20 21:36:36,609 [DEBUG] CLASSIFIER: Predição efetuada: 'A decision support system base...' -> AI & Robotics
+2026-05-20 21:36:36,619 [DEBUG] CLASSIFIER: Predição efetuada: 'Modern optimization of predict...' -> Education & Society
+2026-05-20 21:36:36,635 [DEBUG] CLASSIFIER: Predição efetuada: 'Development of human body pose...' -> General Engineering
+2026-05-20 21:36:36,647 [DEBUG] CLASSIFIER: Predição efetuada: 'An intelligent decision suppor...' -> Data Science
+2026-05-20 21:36:36,660 [DEBUG] CLASSIFIER: Predição efetuada: 'A conflict management environm...' -> AI & Robotics
+2026-05-20 21:36:36,672 [DEBUG] CLASSIFIER: Predição efetuada: 'Self-regulation learning in ne...' -> AI & Robotics
+2026-05-20 21:36:36,679 [DEBUG] CLASSIFIER: Predição efetuada: 'Priorização de indicadores pró...' -> General Engineering
+2026-05-20 21:36:36,686 [DEBUG] CLASSIFIER: Predição efetuada: 'Let’s be sensitive: social sig...' -> AI & Robotics
+2026-05-20 21:36:36,694 [DEBUG] CLASSIFIER: Predição efetuada: 'The internet of people approac...' -> AI & Robotics
+2026-05-20 21:36:36,699 [DEBUG] CLASSIFIER: Predição efetuada: 'Improving clinical problem lis...' -> AI & Robotics
+2026-05-20 21:36:36,710 [DEBUG] CLASSIFIER: Predição efetuada: 'Towards enhanced safety stock ...' -> AI & Robotics
+2026-05-20 21:36:36,719 [DEBUG] CLASSIFIER: Predição efetuada: 'Sobre a qualidade dos dados em...' -> Data Science
+2026-05-20 21:36:36,731 [DEBUG] CLASSIFIER: Predição efetuada: 'Side-channel timing attack on ...' -> General Engineering
+2026-05-20 21:36:36,744 [DEBUG] CLASSIFIER: Predição efetuada: 'Real-time simulation of supply...' -> AI & Robotics
+2026-05-20 21:36:36,758 [DEBUG] CLASSIFIER: Predição efetuada: 'Smart wearable orthosis to ass...' -> AI & Robotics
+2026-05-20 21:36:36,770 [DEBUG] CLASSIFIER: Predição efetuada: 'Modelo para a implantação da c...' -> AI & Robotics
+2026-05-20 21:36:36,773 [INFO] INDEXER: Lote concluído: 100/110
+2026-05-20 21:36:36,781 [DEBUG] CLASSIFIER: Predição efetuada: 'Tailoring PMI and OGC framewor...' -> AI & Robotics
+2026-05-20 21:36:36,803 [DEBUG] CLASSIFIER: Predição efetuada: 'Automatic segmentation and cla...' -> General Engineering
+2026-05-20 21:36:36,815 [DEBUG] CLASSIFIER: Predição efetuada: 'An hybrid and adaptive approac...' -> General Engineering
+2026-05-20 21:36:36,828 [DEBUG] CLASSIFIER: Predição efetuada: 'Advancing the design and imple...' -> AI & Robotics
+2026-05-20 21:36:36,844 [DEBUG] CLASSIFIER: Predição efetuada: 'Utilizando ambientes virtuais ...' -> AI & Robotics
+2026-05-20 21:36:36,859 [DEBUG] CLASSIFIER: Predição efetuada: 'A ciência de serviços na melho...' -> AI & Robotics
+2026-05-20 21:36:36,870 [DEBUG] CLASSIFIER: Predição efetuada: 'Instrumento para medição da re...' -> AI & Robotics
+2026-05-20 21:36:36,885 [DEBUG] CLASSIFIER: Predição efetuada: 'FastGraph - unsupervised locat...' -> General Engineering
+2026-05-20 21:36:36,901 [DEBUG] CLASSIFIER: Predição efetuada: 'Sensing technologies in pervas...' -> AI & Robotics
+2026-05-20 21:36:36,916 [DEBUG] CLASSIFIER: Predição efetuada: 'Information theoretic stochast...' -> General Engineering
+2026-05-20 21:36:36,919 [INFO] INDEXER: Lote concluído: 110/110
+2026-05-20 21:36:36,968 [INFO] INDEXER: Indexação concluída: 4.93s | Vocabulário: 6082 termos.
+2026-05-20 21:36:37,270 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:36:37,271 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:38:34,587 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='comput' lang=PT processing=stemming algo=sklearn target=all
+2026-05-20 21:38:34,588 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'comput' [Scope: all] [Method: Sklearn]
+2026-05-20 21:38:48,855 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='comput' lang=all processing=stemming algo=sklearn target=all
+2026-05-20 21:38:48,855 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'comput' [Scope: all] [Method: Sklearn]
+2026-05-20 21:39:00,416 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=sklearn target=all
+2026-05-20 21:39:00,417 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Sklearn]
+2026-05-20 21:39:15,006 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=custom target=all
+2026-05-20 21:39:15,008 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:39:15,099 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 21:39:15,100 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:40:46,335 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 21:40:46,335 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 21:40:57,526 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 21:40:57,527 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 21:44:19,585 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 21:44:19,586 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:45:14,362 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-20 21:45:14,363 [INFO] API-REPOSITORIUM: A carregar índice de stemming...
+2026-05-20 21:45:14,533 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:45:14,635 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:45:14,635 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:45:14,636 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:45:14,636 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-20 21:45:14,638 [INFO] API-REPOSITORIUM: A carregar índice de lematização...
+2026-05-20 21:45:14,735 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:45:14,815 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:45:14,815 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:45:14,815 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:45:14,816 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-20 21:45:14,819 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:45:14,820 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:47:19,252 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=custom target=all
+2026-05-20 21:47:19,255 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:47:19,257 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 21:47:19,257 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:48:04,417 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-20 21:48:04,418 [INFO] API-REPOSITORIUM: A carregar índice de stemming...
+2026-05-20 21:48:04,507 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:48:04,557 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:48:04,558 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:48:04,558 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:48:04,559 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-20 21:48:04,559 [INFO] API-REPOSITORIUM: A carregar índice de lematização...
+2026-05-20 21:48:04,635 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:48:04,681 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:48:04,682 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:48:04,682 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:48:04,683 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-20 21:48:04,684 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:48:04,685 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:48:28,239 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=custom target=all
+2026-05-20 21:48:28,240 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:48:28,242 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 21:48:28,243 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:50:48,062 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=custom target=all
+2026-05-20 21:50:48,064 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:50:48,070 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 21:50:48,071 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:50:53,496 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=custom target=all
+2026-05-20 21:50:53,497 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:50:53,589 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 21:50:53,590 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:51:03,466 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=sklearn target=all
+2026-05-20 21:51:03,467 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Sklearn]
+2026-05-20 21:51:22,044 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=sklearn target=all
+2026-05-20 21:51:22,045 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Sklearn]
+2026-05-20 21:53:19,392 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 21:53:19,392 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:53:55,920 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-20 21:53:55,921 [INFO] API-REPOSITORIUM: A carregar índice de stemming...
+2026-05-20 21:53:56,065 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:53:56,126 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:53:56,127 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:53:56,127 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:53:56,127 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-20 21:53:56,128 [INFO] API-REPOSITORIUM: A carregar índice de lematização...
+2026-05-20 21:53:56,204 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:53:56,286 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:53:56,286 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:53:56,287 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:53:56,288 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-20 21:53:56,292 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:53:56,297 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:54:10,869 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-20 21:54:10,870 [INFO] API-REPOSITORIUM: A carregar índice de stemming...
+2026-05-20 21:54:11,018 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:54:11,100 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:54:11,101 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:54:11,102 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:54:11,104 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-20 21:54:11,105 [INFO] API-REPOSITORIUM: A carregar índice de lematização...
+2026-05-20 21:54:11,192 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:54:11,281 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:54:11,282 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:54:11,282 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:54:11,282 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-20 21:54:11,285 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:54:11,287 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:54:31,195 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 21:54:31,195 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:55:31,109 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=custom target=all
+2026-05-20 21:55:31,111 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:55:31,116 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 21:55:31,117 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:55:56,933 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=sklearn target=all
+2026-05-20 21:55:56,934 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Sklearn]
+2026-05-20 21:56:10,991 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=custom target=all
+2026-05-20 21:56:10,992 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:56:19,011 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=sklearn target=all
+2026-05-20 21:56:19,012 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Sklearn]
+2026-05-20 21:56:28,930 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 21:56:28,931 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 21:56:40,068 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=sklearn target=all
+2026-05-20 21:56:40,069 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Sklearn]
+2026-05-20 21:56:48,806 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=boolean target=all
+2026-05-20 21:56:48,806 [DEBUG] QUERY-ENGINE: Executando query booleana: computer
+2026-05-20 21:56:57,020 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=boolean target=all
+2026-05-20 21:56:57,020 [DEBUG] QUERY-ENGINE: Executando query booleana: computer
+2026-05-20 21:58:34,150 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-20 21:58:34,151 [INFO] API-REPOSITORIUM: A carregar índice de stemming...
+2026-05-20 21:58:34,288 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:58:34,343 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:58:34,344 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:58:34,345 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:58:34,345 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-20 21:58:34,348 [INFO] API-REPOSITORIUM: A carregar índice de lematização...
+2026-05-20 21:58:34,437 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 21:58:34,491 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 21:58:34,491 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 21:58:34,491 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 21:58:34,492 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-20 21:58:34,495 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 21:58:34,497 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 22:00:13,167 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:00:13,168 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 22:00:15,329 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 22:00:15,329 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 22:00:21,673 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=none algo=custom target=all
+2026-05-20 22:00:21,674 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 22:00:23,732 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='the data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:00:23,732 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'the data' [Scope: all] [Method: Custom]
+2026-05-20 22:00:26,039 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='the data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:00:26,040 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'the data' [Scope: all] [Method: Custom]
+2026-05-20 22:00:28,261 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=sklearn target=all
+2026-05-20 22:00:28,261 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Sklearn]
+2026-05-20 22:00:31,062 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer AND data' lang=all processing=stemming algo=boolean target=all
+2026-05-20 22:00:31,062 [DEBUG] QUERY-ENGINE: Executando query booleana: computer AND data
+2026-05-20 22:00:33,092 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:00:33,092 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:00:35,264 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:00:35,265 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:00:37,417 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:00:37,417 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:00:39,657 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:00:39,657 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:00:41,969 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:00:41,970 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:00:44,045 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:00:44,046 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:00:46,154 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='silva' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:00:57,090 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:00:57,090 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 22:00:59,230 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=lemmatization algo=custom target=all
+2026-05-20 22:00:59,231 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 22:01:01,352 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=none algo=custom target=all
+2026-05-20 22:01:01,352 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 22:01:03,372 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='the data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:01:03,372 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'the data' [Scope: all] [Method: Custom]
+2026-05-20 22:01:05,555 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='the data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:01:05,556 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'the data' [Scope: all] [Method: Custom]
+2026-05-20 22:01:07,745 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=sklearn target=all
+2026-05-20 22:01:07,745 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Sklearn]
+2026-05-20 22:01:10,640 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer AND data' lang=all processing=stemming algo=boolean target=all
+2026-05-20 22:01:10,640 [DEBUG] QUERY-ENGINE: Executando query booleana: computer AND data
+2026-05-20 22:01:12,656 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:01:12,657 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:01:14,824 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:01:14,825 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:01:16,987 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:01:16,987 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:01:19,174 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:01:19,175 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:01:21,404 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:01:21,404 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:01:23,431 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='data' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:01:23,432 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'data' [Scope: all] [Method: Custom]
+2026-05-20 22:01:25,563 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='silva' lang=all processing=stemming algo=custom target=all
+2026-05-20 22:03:03,034 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=boolean target=all
+2026-05-20 22:03:03,035 [DEBUG] QUERY-ENGINE: Executando query booleana: computer
+2026-05-20 22:03:03,047 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=boolean target=all
+2026-05-20 22:03:03,048 [DEBUG] QUERY-ENGINE: Executando query booleana: computer
+2026-05-20 22:05:05,831 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=boolean target=all
+2026-05-20 22:05:05,832 [DEBUG] QUERY-ENGINE: Executando query booleana: computer
+2026-05-20 22:05:05,847 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=stemming algo=boolean target=all
+2026-05-20 22:05:05,848 [DEBUG] QUERY-ENGINE: Executando query booleana: computer
+2026-05-20 22:05:16,303 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer' lang=all processing=none algo=custom target=all
+2026-05-20 22:05:16,303 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer' [Scope: all] [Method: Custom]
+2026-05-20 22:16:21,531 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-20 22:16:21,532 [INFO] API-REPOSITORIUM: A carregar índice de stemming...
+2026-05-20 22:16:21,650 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 22:16:21,705 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 22:16:21,706 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 22:16:21,706 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 22:16:21,707 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-20 22:16:21,708 [INFO] API-REPOSITORIUM: A carregar índice de lematização...
+2026-05-20 22:16:21,767 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 22:16:21,833 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 22:16:21,833 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 22:16:21,834 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 22:16:21,834 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-20 22:16:21,836 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 22:16:21,837 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 22:38:24,328 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-20 22:38:24,329 [INFO] API-REPOSITORIUM: A carregar índice de stemming...
+2026-05-20 22:38:24,395 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 22:38:24,445 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 22:38:24,446 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 22:38:24,446 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 22:38:24,446 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-20 22:38:24,447 [INFO] API-REPOSITORIUM: A carregar índice de lematização...
+2026-05-20 22:38:24,494 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-20 22:38:24,535 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-20 22:38:24,536 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5455
+2026-05-20 22:38:24,536 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.52      1.00      0.69        11
+       Data Science       0.00      0.00      0.00         1
+Education & Society       0.00      0.00      0.00         1
+General Engineering       1.00      0.17      0.29         6
+     Systems & Tech       0.00      0.00      0.00         3
+
+           accuracy                           0.55        22
+          macro avg       0.30      0.23      0.19        22
+       weighted avg       0.53      0.55      0.42        22
+
+2026-05-20 22:38:24,537 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-20 22:38:24,538 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-20 22:38:24,539 [INFO] QUERY-ENGINE: QueryEngine inicializado.

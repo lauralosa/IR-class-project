@@ -8,7 +8,7 @@ def run_incremental_test():
     # 1. Carregar o índice atual (os 110 docs)
     print("---  PASSO 1: Carregar índice existente ---")
     if not indexer.load_index():
-        print("Erro: Precisas de ter um 'index.json' já criado. Corre o indexador primeiro!")
+        print("Erro: Precisas de ter um índice criado. Corre a API ou o test_indexer primeiro!")
         return
     
     docs_antes = indexer.num_docs

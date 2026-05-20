@@ -31,7 +31,7 @@ class TextProcessor:
 
     
 
-    def process_text(self, text, use_stemming=True, use_lemmatization=False, remove_stopwords=True):
+    def process_text(self, text, use_stemming=False, use_lemmatization=False, remove_stopwords=True):
         """
         Realiza o pré-processamento do texto
         """
