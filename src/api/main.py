@@ -260,6 +260,7 @@ def search(
             "title": doc.get("title"),
             "year": doc.get("year"),
             "snippet": snippet,
+            "abstract": doc.get("abstract", ""),
             "url": doc.get("pdf_url"),
             "authors": doc.get("authors", []),
             "category": doc.get("category", "General Engineering"),
