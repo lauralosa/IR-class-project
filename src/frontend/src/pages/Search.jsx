@@ -13,7 +13,7 @@ export default function Search() {
   const [query, setQuery] = useState(() => searchParams.get('q') || '');
 
   // REQ-F63, F64: Memória das configurações da Sidebar (Guardadas no localStorage)
-  const [processing, setProcessing] = useState(() => searchParams.get('processing') || localStorage.getItem('pref_processing') || 'stemming');
+  const [processing, setProcessing] = useState(() => searchParams.get('processing') || localStorage.getItem('pref_processing') || 'lemmatization');
   const [removeStopWords, setRemoveStopWords] = useState(() => localStorage.getItem('pref_removeStopWords') !== 'false');
   const [language, setLanguage] = useState(() => searchParams.get('lang') || localStorage.getItem('pref_language') || 'all');
   const [algorithm, setAlgorithm] = useState(() => searchParams.get('algo') || localStorage.getItem('pref_algorithm') || 'custom');
@@ -157,7 +157,7 @@ export default function Search() {
   const [searchTime, setSearchTime] = useState(null);  // Tempo real de pesquisa (vem da API)
 
   // --- ESTADOS DAS AÇÕES DOS RESULTADOS ---
-  const [expandedDocs, setExpandedDocs] = useState({}); // Controla quais os resumos que estão expandidos (usando ID do doc)
+  const [abstractModal, setAbstractModal] = useState(null); // { title, abstract, authors, year } ou null
   const [savedDocs, setSavedDocs] = useState(() => {
     // Lê a memória do Chrome ao iniciar a página
     const saved = localStorage.getItem('repositorium_saved');
@@ -166,12 +166,19 @@ export default function Search() {
 
   // --- FUNÇÕES DE AÇÃO NOS DOCUMENTOS ---
 
-  // 1. Ver Resumo (Abre e fecha a caixa de texto completo usando o título ou URL como ID único)
-  const toggleSummary = (docId) => {
-    setExpandedDocs(prev => ({
-      ...prev,
-      [docId]: !prev[docId]
-    }));
+  // 1. Ver Resumo — abre modal com o abstract completo
+  const openAbstractModal = (doc) => {
+    setAbstractModal(doc);
+  };
+  const closeAbstractModal = () => setAbstractModal(null);
+
+  // Utilitário: Destaca os termos da query no texto (para quando o backend não enviou <b>)
+  const highlightQuery = (text, q) => {
+    if (!text || !q) return text || '';
+    const rawTerms = q.split(/\W+/).filter(t => t && !['AND','OR','NOT'].includes(t.toUpperCase()));
+    if (!rawTerms.length) return text;
+    const pattern = new RegExp(`(${rawTerms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi');
+    return text.replace(pattern, '<b>$1</b>');
   };
 
   // 2. Guardar (Guarda no LocalStorage do Browser)
@@ -253,7 +260,6 @@ export default function Search() {
       setFacetsKeywords(cached.metadata?.facets?.keywords || []);
       setCurrentPage(page);
       setSortOption(sort);
-      setExpandedDocs({});
       setIsLoading(false);
       return;
     }
@@ -273,7 +279,6 @@ export default function Search() {
       setFacetsKeywords(data.metadata?.facets?.keywords || []);
       setCurrentPage(page);
       setSortOption(sort);
-      setExpandedDocs({});
 
       // REQ-F59: Registar no histórico
       if (page === 1 && query.trim()) {
@@ -1101,7 +1106,7 @@ export default function Search() {
                         </div>
                       )}
 
-                      {/* F26 e F27: Snippet (recolhido) ou Resumo Completo (expandido) */}
+                      {/* F26 e F27: Snippet com highlighting dos termos da query */}
                       <p
                         className="highlight-backend"
                         style={{
@@ -1109,28 +1114,31 @@ export default function Search() {
                           fontSize: '0.95rem',
                           lineHeight: '1.6',
                           marginBottom: '20px',
-                          // Controla o número de linhas baseado no estado (expandido ou não)
-                          display: expandedDocs[docUniqueId] ? 'block' : '-webkit-box',
-                          WebkitLineClamp: expandedDocs[docUniqueId] ? 'none' : 3,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 3,
                           WebkitBoxOrient: 'vertical',
-                          overflow: expandedDocs[docUniqueId] ? 'visible' : 'hidden'
+                          overflow: 'hidden'
                         }}
                         dangerouslySetInnerHTML={{
-                          __html: expandedDocs[docUniqueId]
-                            ? (item.abstract || item.snippet || item.description || 'Resumo completo não disponível.')
-                            : (item.snippet || item.abstract || item.description || 'Resumo não disponível.')
+                          __html: (() => {
+                            const snippetHtml = item.snippet || item.description || '';
+                            // Se o snippet já tem <b> (destacado pelo backend), usa-o diretamente
+                            // Se não tem <b>, destaca no frontend com a query atual
+                            if (snippetHtml.includes('<b>')) return snippetHtml;
+                            return highlightQuery(snippetHtml, query);
+                          })()
                         }}
                       />
 
                       {/* Ações nos Resultados */}
                       <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
 
-                        {/* Botão Ver Resumo (Alterna o texto usando o ID do documento) */}
+                        {/* Botão Ver Resumo — abre modal com abstract completo */}
                         <button
-                          onClick={() => toggleSummary(docUniqueId)}
+                          onClick={() => openAbstractModal(item)}
                           style={{ padding: '8px 16px', background: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: '6px', cursor: 'pointer', fontWeight: '500', transition: '0.2s' }}
                         >
-                          {expandedDocs[docUniqueId] ? '🔼 Ocultar Resumo' : '👁️ Ver Resumo Completo'}
+                          👁️ Ver Resumo
                         </button>
 
                         {/* Abrir PDF */}
@@ -1209,6 +1217,102 @@ export default function Search() {
           )}
         </section>
       </div>
+
+      {/* Modal de Resumo / Abstract */}
+      {abstractModal && (
+        <div
+          onClick={closeAbstractModal}
+          style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 2000, padding: '1rem'
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: 'white', borderRadius: '16px',
+              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.35)',
+              maxWidth: '720px', width: '100%',
+              maxHeight: '85vh', display: 'flex', flexDirection: 'column',
+              overflow: 'hidden'
+            }}
+          >
+            {/* Cabeçalho do modal */}
+            <div style={{
+              background: 'linear-gradient(135deg, #AA192B 0%, #7f1220 100%)',
+              padding: '1.5rem 2rem',
+              display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
+              gap: '1rem'
+            }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', fontWeight: '600', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  📄 Resumo / Abstract
+                </div>
+                <h2
+                  style={{ color: 'white', margin: 0, fontSize: '1.15rem', lineHeight: '1.5', fontWeight: '700' }}
+                  dangerouslySetInnerHTML={{ __html: abstractModal.title || 'Documento sem título' }}
+                />
+                <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.88rem', marginTop: '10px', display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                  <span>👤 {abstractModal.authors ? (Array.isArray(abstractModal.authors) ? abstractModal.authors.join(', ') : abstractModal.authors) : 'Desconhecido'}</span>
+                  <span>📅 {abstractModal.year || 'N/D'}</span>
+                </div>
+              </div>
+              <button
+                onClick={closeAbstractModal}
+                style={{
+                  background: 'rgba(255,255,255,0.15)', border: 'none',
+                  color: 'white', borderRadius: '8px', cursor: 'pointer',
+                  width: '36px', height: '36px', fontSize: '1.1rem',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0, transition: '0.2s'
+                }}
+                title="Fechar"
+              >✕</button>
+            </div>
+
+            {/* Corpo do modal — abstract */}
+            <div style={{ overflowY: 'auto', padding: '2rem', flex: 1 }}>
+              {abstractModal.abstract ? (
+                <p style={{
+                  color: '#374151', fontSize: '0.98rem', lineHeight: '1.8',
+                  margin: 0, textAlign: 'justify'
+                }}>
+                  {abstractModal.abstract}
+                </p>
+              ) : (
+                <p style={{ color: '#9ca3af', fontStyle: 'italic' }}>
+                  Resumo não disponível para este documento.
+                </p>
+              )}
+            </div>
+
+            {/* Rodapé do modal */}
+            {(abstractModal.url && abstractModal.url !== 'N/A') && (
+              <div style={{
+                padding: '1rem 2rem',
+                borderTop: '1px solid #f3f4f6',
+                display: 'flex', justifyContent: 'flex-end', gap: '10px'
+              }}>
+                <a
+                  href={abstractModal.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    padding: '8px 20px', background: '#AA192B', color: 'white',
+                    border: 'none', borderRadius: '8px', cursor: 'pointer',
+                    fontWeight: '600', textDecoration: 'none', fontSize: '0.95rem',
+                    display: 'inline-flex', alignItems: 'center', gap: '6px'
+                  }}
+                >
+                  📥 Abrir PDF
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

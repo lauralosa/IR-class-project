@@ -63,7 +63,7 @@ class QueryEngine:
         df_type = weighting_scheme[1].lower()
         norm_type = weighting_scheme[2].lower()
 
-        query_terms = self.processor.process_text(query_str, use_stemming=True, use_lemmatization=l, remove_stopwords=stopwords)
+        query_terms = self.processor.process_text(query_str, use_stemming=s, use_lemmatization=l, remove_stopwords=stopwords)
         if not query_terms: return []
         
 

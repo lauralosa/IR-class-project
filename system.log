@@ -1634,3 +1634,219 @@ General Engineering       1.00      0.17      0.29         6
 2026-05-18 18:24:34,938 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
 2026-05-18 18:25:08,856 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine´AND' lang=all processing=stemming algo=custom target=all
 2026-05-18 18:25:08,857 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine´AND' [Scope: all] [Method: Custom]
+2026-05-19 23:12:31,956 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-19 23:12:32,549 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-19 23:12:32,606 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-19 23:12:32,607 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5909
+2026-05-19 23:12:32,607 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.59      1.00      0.74        13
+       Data Science       0.00      0.00      0.00         2
+Education & Society       0.00      0.00      0.00         2
+General Engineering       0.00      0.00      0.00         3
+     Systems & Tech       0.00      0.00      0.00         2
+
+           accuracy                           0.59        22
+          macro avg       0.12      0.20      0.15        22
+       weighted avg       0.35      0.59      0.44        22
+
+2026-05-19 23:12:32,608 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-19 23:12:32,616 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-19 23:15:05,589 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND learning' lang=all processing=stemming algo=boolean target=all
+2026-05-19 23:15:05,589 [DEBUG] QUERY-ENGINE: Executando query booleana: machine AND learning
+2026-05-19 23:16:07,027 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND learning' lang=all processing=lemmatization algo=boolean target=all
+2026-05-19 23:16:07,027 [DEBUG] QUERY-ENGINE: Executando query booleana: machine AND learning
+2026-05-19 23:17:12,373 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND learning' lang=all processing=lemmatization algo=boolean target=all
+2026-05-19 23:17:12,373 [DEBUG] QUERY-ENGINE: Executando query booleana: machine AND learning
+2026-05-19 23:17:18,132 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND learning' lang=all processing=lemmatization algo=boolean target=all
+2026-05-19 23:17:18,134 [DEBUG] QUERY-ENGINE: Executando query booleana: machine AND learning
+2026-05-19 23:17:23,122 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND learning' lang=all processing=lemmatization algo=boolean target=all
+2026-05-19 23:17:23,123 [DEBUG] QUERY-ENGINE: Executando query booleana: machine AND learning
+2026-05-19 23:19:23,421 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND learning' lang=all processing=lemmatization algo=boolean target=all
+2026-05-19 23:19:23,421 [DEBUG] QUERY-ENGINE: Executando query booleana: machine AND learning
+2026-05-19 23:19:31,603 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND learning' lang=all processing=lemmatization algo=boolean target=all
+2026-05-19 23:19:31,603 [DEBUG] QUERY-ENGINE: Executando query booleana: machine AND learning
+2026-05-19 23:20:26,092 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND learning' lang=all processing=lemmatization algo=sklearn target=all
+2026-05-19 23:20:26,093 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine AND learning' [Scope: all] [Method: Sklearn]
+2026-05-19 23:20:33,246 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND learning' lang=all processing=lemmatization algo=sklearn target=all
+2026-05-19 23:20:33,247 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine AND learning' [Scope: all] [Method: Sklearn]
+2026-05-19 23:20:48,744 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine AND learning' lang=PT processing=lemmatization algo=sklearn target=all
+2026-05-19 23:20:48,745 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine AND learning' [Scope: all] [Method: Sklearn]
+2026-05-19 23:21:04,305 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='setor' lang=PT processing=lemmatization algo=sklearn target=all
+2026-05-19 23:21:04,306 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'setor' [Scope: all] [Method: Sklearn]
+2026-05-19 23:21:09,195 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=lemmatization algo=sklearn target=all
+2026-05-19 23:21:09,197 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Sklearn]
+2026-05-19 23:21:31,803 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=all processing=lemmatization algo=sklearn target=all
+2026-05-19 23:21:31,803 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Sklearn]
+2026-05-19 23:23:19,019 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=sklearn target=all
+2026-05-19 23:23:19,020 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Sklearn]
+2026-05-19 23:25:57,043 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-19 23:25:57,352 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-19 23:25:57,379 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-19 23:25:57,379 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5909
+2026-05-19 23:25:57,379 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.59      1.00      0.74        13
+       Data Science       0.00      0.00      0.00         2
+Education & Society       0.00      0.00      0.00         2
+General Engineering       0.00      0.00      0.00         3
+     Systems & Tech       0.00      0.00      0.00         2
+
+           accuracy                           0.59        22
+          macro avg       0.12      0.20      0.15        22
+       weighted avg       0.35      0.59      0.44        22
+
+2026-05-19 23:25:57,379 [INFO] INDEXER: Índice carregado (stemming).
+2026-05-19 23:25:57,383 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-19 23:26:51,555 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=sklearn target=all
+2026-05-19 23:26:51,555 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Sklearn]
+2026-05-19 23:29:29,626 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-19 23:29:30,130 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-19 23:29:30,157 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-19 23:29:30,157 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5909
+2026-05-19 23:29:30,157 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.59      1.00      0.74        13
+       Data Science       0.00      0.00      0.00         2
+Education & Society       0.00      0.00      0.00         2
+General Engineering       0.00      0.00      0.00         3
+     Systems & Tech       0.00      0.00      0.00         2
+
+           accuracy                           0.59        22
+          macro avg       0.12      0.20      0.15        22
+       weighted avg       0.35      0.59      0.44        22
+
+2026-05-19 23:29:30,158 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-19 23:29:30,163 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-19 23:29:39,703 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=sklearn target=all
+2026-05-19 23:29:39,704 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'sector' [Scope: all] [Method: Sklearn]
+2026-05-19 23:29:55,654 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='apoiados' lang=PT processing=stemming algo=sklearn target=all
+2026-05-19 23:29:55,654 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'apoiados' [Scope: all] [Method: Sklearn]
+2026-05-19 23:41:35,764 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='blockchain' lang=PT processing=stemming algo=sklearn target=all
+2026-05-19 23:41:35,764 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'blockchain' [Scope: all] [Method: Sklearn]
+2026-05-19 23:41:52,048 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='blockchain' lang=all processing=stemming algo=sklearn target=all
+2026-05-19 23:41:52,050 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'blockchain' [Scope: all] [Method: Sklearn]
+2026-05-19 23:42:43,498 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='inteligência AND veículo' lang=all processing=stemming algo=boolean target=all
+2026-05-19 23:42:43,498 [DEBUG] QUERY-ENGINE: Executando query booleana: inteligência AND veículo
+2026-05-19 23:46:21,166 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='systems' lang=all processing=stemming algo=boolean target=all
+2026-05-19 23:46:21,166 [DEBUG] QUERY-ENGINE: Executando query booleana: systems
+2026-05-19 23:46:58,667 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='systems' lang=all processing=stemming algo=boolean target=all
+2026-05-19 23:46:58,669 [DEBUG] QUERY-ENGINE: Executando query booleana: systems
+2026-05-19 23:47:10,912 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='systems' lang=all processing=stemming algo=boolean target=all
+2026-05-19 23:47:10,912 [DEBUG] QUERY-ENGINE: Executando query booleana: systems
+2026-05-19 23:47:29,422 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='systems' lang=PT processing=stemming algo=boolean target=all
+2026-05-19 23:47:29,422 [DEBUG] QUERY-ENGINE: Executando query booleana: systems
+2026-05-19 23:51:31,606 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='systems' lang=PT processing=stemming algo=boolean target=all
+2026-05-19 23:51:31,607 [DEBUG] QUERY-ENGINE: Executando query booleana: systems
+2026-05-19 23:52:21,950 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='systems' lang=PT processing=stemming algo=boolean target=all
+2026-05-19 23:52:21,950 [DEBUG] QUERY-ENGINE: Executando query booleana: systems
+2026-05-19 23:52:32,229 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='systems' lang=PT processing=stemming algo=boolean target=all
+2026-05-19 23:52:32,230 [DEBUG] QUERY-ENGINE: Executando query booleana: systems
+2026-05-19 23:53:12,886 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='systems' lang=PT processing=stemming algo=boolean target=all
+2026-05-19 23:53:12,887 [DEBUG] QUERY-ENGINE: Executando query booleana: systems
+2026-05-19 23:54:40,078 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='systems' lang=PT processing=stemming algo=boolean target=all
+2026-05-19 23:54:40,078 [DEBUG] QUERY-ENGINE: Executando query booleana: systems
+2026-05-19 23:56:24,575 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer graphics' lang=all processing=stemming algo=custom target=all
+2026-05-19 23:56:24,576 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer graphics' [Scope: all] [Method: Custom]
+2026-05-19 23:56:24,700 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='computer graphics' lang=all processing=lemmatization algo=custom target=all
+2026-05-19 23:56:24,700 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'computer graphics' [Scope: all] [Method: Custom]
+2026-05-21 11:27:17,743 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-21 11:27:18,196 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-21 11:27:18,231 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-21 11:27:18,232 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5909
+2026-05-21 11:27:18,232 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.59      1.00      0.74        13
+       Data Science       0.00      0.00      0.00         2
+Education & Society       0.00      0.00      0.00         2
+General Engineering       0.00      0.00      0.00         3
+     Systems & Tech       0.00      0.00      0.00         2
+
+           accuracy                           0.59        22
+          macro avg       0.12      0.20      0.15        22
+       weighted avg       0.35      0.59      0.44        22
+
+2026-05-21 11:27:18,232 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-21 11:27:18,237 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-21 11:29:02,383 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='sector' lang=PT processing=stemming algo=boolean target=all
+2026-05-21 11:29:02,383 [DEBUG] QUERY-ENGINE: Executando query booleana: sector
+2026-05-21 11:30:11,071 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine learning' lang=PT processing=stemming algo=boolean target=all
+2026-05-21 11:30:11,072 [DEBUG] QUERY-ENGINE: Executando query booleana: machine learning
+2026-05-21 11:32:52,926 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine learning' lang=PT processing=stemming algo=custom target=all
+2026-05-21 11:32:52,927 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine learning' [Scope: all] [Method: Custom]
+2026-05-21 11:33:49,410 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine learning' lang=all processing=stemming algo=custom target=all
+2026-05-21 11:33:49,411 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine learning' [Scope: all] [Method: Custom]
+2026-05-21 11:35:18,827 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-21 11:35:19,248 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-21 11:35:19,273 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-21 11:35:19,274 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5909
+2026-05-21 11:35:19,274 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.59      1.00      0.74        13
+       Data Science       0.00      0.00      0.00         2
+Education & Society       0.00      0.00      0.00         2
+General Engineering       0.00      0.00      0.00         3
+     Systems & Tech       0.00      0.00      0.00         2
+
+           accuracy                           0.59        22
+          macro avg       0.12      0.20      0.15        22
+       weighted avg       0.35      0.59      0.44        22
+
+2026-05-21 11:35:19,274 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-21 11:35:19,280 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-21 11:35:29,730 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine learning' lang=PT processing=stemming algo=custom target=all
+2026-05-21 11:35:29,731 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine learning' [Scope: all] [Method: Custom]
+2026-05-21 11:35:29,796 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine learning' lang=PT processing=stemming algo=custom target=all
+2026-05-21 11:35:29,799 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine learning' [Scope: all] [Method: Custom]
+2026-05-21 11:36:00,736 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine learning' lang=PT processing=stemming algo=boolean target=all
+2026-05-21 11:36:00,737 [DEBUG] QUERY-ENGINE: Executando query booleana: machine learning
+2026-05-21 11:36:16,379 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine learning' lang=all processing=stemming algo=boolean target=all
+2026-05-21 11:36:16,381 [DEBUG] QUERY-ENGINE: Executando query booleana: machine learning
+2026-05-21 11:36:21,920 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=stemming algo=boolean target=all
+2026-05-21 11:36:21,921 [DEBUG] QUERY-ENGINE: Executando query booleana: machine
+2026-05-21 11:36:36,126 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=stemming algo=custom target=all
+2026-05-21 11:36:36,126 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
+2026-05-21 11:38:27,988 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=stemming algo=custom target=all
+2026-05-21 11:38:27,988 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
+2026-05-21 11:38:56,511 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=stemming algo=custom target=all
+2026-05-21 11:38:56,512 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
+2026-05-21 11:38:56,516 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=stemming algo=custom target=all
+2026-05-21 11:38:56,520 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
+2026-05-21 11:38:58,460 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=stemming algo=custom target=all
+2026-05-21 11:38:58,460 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
+2026-05-21 11:38:58,467 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=stemming algo=custom target=all
+2026-05-21 11:38:58,467 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
+2026-05-21 11:39:16,713 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=lemmatization algo=custom target=all
+2026-05-21 11:39:16,714 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
+2026-05-21 11:42:58,867 [INFO] API-REPOSITORIUM: Sistema RepositóriUM Search Engine a iniciar em modo development...
+2026-05-21 11:42:59,287 [INFO] CLASSIFIER: A iniciar treino do classificador com 110 documentos...
+2026-05-21 11:42:59,312 [INFO] CLASSIFIER: --- PERFORMANCE DO CLASSIFICADOR ---
+2026-05-21 11:42:59,312 [INFO] CLASSIFIER: Precisão Global (Accuracy): 0.5909
+2026-05-21 11:42:59,313 [DEBUG] CLASSIFIER: 
+                     precision    recall  f1-score   support
+
+      AI & Robotics       0.59      1.00      0.74        13
+       Data Science       0.00      0.00      0.00         2
+Education & Society       0.00      0.00      0.00         2
+General Engineering       0.00      0.00      0.00         3
+     Systems & Tech       0.00      0.00      0.00         2
+
+           accuracy                           0.59        22
+          macro avg       0.12      0.20      0.15        22
+       weighted avg       0.35      0.59      0.44        22
+
+2026-05-21 11:42:59,314 [INFO] INDEXER: Índice carregado (lemmatization).
+2026-05-21 11:42:59,318 [INFO] QUERY-ENGINE: QueryEngine inicializado.
+2026-05-21 11:47:45,308 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=lemmatization algo=custom target=all
+2026-05-21 11:47:45,309 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
+2026-05-21 11:49:11,771 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=lemmatization algo=custom target=all
+2026-05-21 11:49:11,772 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
+2026-05-21 11:50:10,746 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=lemmatization algo=custom target=all
+2026-05-21 11:50:10,747 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
+2026-05-21 11:50:35,360 [INFO] API-REPOSITORIUM: Pesquisa recebida: q='machine' lang=all processing=lemmatization algo=custom target=all
+2026-05-21 11:50:35,361 [INFO] QUERY-ENGINE: Pesquisa iniciada: 'machine' [Scope: all] [Method: Custom]
